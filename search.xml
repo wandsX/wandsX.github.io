@@ -3,24 +3,13 @@
   <entry>
     <title><![CDATA[c++ primer 第二章学习笔记]]></title>
     <url>%2F2019%2F05%2F20%2Fc-primer-%E7%AC%AC%E4%BA%8C%E7%AB%A0%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0%2F</url>
-    <content type="text"><![CDATA[[TOC] 初始化指变量在创建时给它赋值。赋值是将当前对象的值擦除掉,而以一个新值来代替.声明和定义的关系声明: 使得名字被程序所知道,一个文件如果想使用别处定义的名字则必须包含那个对那个名字的声明。 定义: 负责创建和名字关联的实体 声明一个变量而非定义它,就在变量名前添加关键字extern,而且不要显示化的初始化变量。 123extern int i; // 声明但没定义int j; //声明并定义extern double pi = 3.1416; // 定义 变量只能被定义一次,但是可以被多次声明。 引用必须初始化 void* 可以存放任意对象的地址 const 限定符const对象必须初始化指向常量的指针和应用都是自以为是,就是不能通过本身去改变指向对象的值。 const 指针 int *const ptr = &var; 常量指针必须初始化。 常量指针能不能通过指针去修改所指向对象的值,却决于指向对象的类型。 顶层const : 表示本身是一个常量 底层const : 表示指向的对象是一个常量 constexpr和常量表达式常量表达式是指不会改变并且在编译过程就能得到计算结果的表达式。for example123const int buf_size = 20; // 常量表达式const int limit = buf_size + 1 // 常量表达式int size = 10; // 不是常量表达式 constexpr : 由编译器来验证变量的值是否为常量表达式。声明为constexpr变量一定是一个常量,而且必须用常量表达式初始化。 constexpr 指针初始值一定要是nullptr 或 0 autoauto 一般会忽略掉顶层const，保留底层const。123456789int i = 0;const int ci = i, &amp;cr = ci;auto b = ci; // b是一个整数 const特性被忽略掉auto a = cr; // c是一个整数auto d = &amp;i; // d是一个整形指针auto e = &amp;ci; // e是一个指向常量整数的指针 底层constconst auto f = ci; // 这个时候f才有顶层const特性。 decltype declttype(( variable ))结果永远是引用 decltype( variable ) 只有variable本身是引用才是引用。]]></content>
+    <content type="text"><![CDATA[初始化指变量在创建时给它赋值。赋值是将当前对象的值擦除掉,而以一个新值来代替.声明和定义的关系声明: 使得名字被程序所知道,一个文件如果想使用别处定义的名字则必须包含那个对那个名字的声明。 定义: 负责创建和名字关联的实体 声明一个变量而非定义它,就在变量名前添加关键字extern,而且不要显示化的初始化变量。 123extern int i; // 声明但没定义int j; //声明并定义extern double pi = 3.1416; // 定义 变量只能被定义一次,但是可以被多次声明。 引用必须初始化 void* 可以存放任意对象的地址 const 限定符const对象必须初始化指向常量的指针和应用都是自以为是,就是不能通过本身去改变指向对象的值。 const 指针 int *const ptr = &var; 常量指针必须初始化。 常量指针能不能通过指针去修改所指向对象的值,却决于指向对象的类型。 顶层const : 表示本身是一个常量 底层const : 表示指向的对象是一个常量 constexpr和常量表达式常量表达式是指不会改变并且在编译过程就能得到计算结果的表达式。for example123const int buf_size = 20; // 常量表达式const int limit = buf_size + 1 // 常量表达式int size = 10; // 不是常量表达式 constexpr : 由编译器来验证变量的值是否为常量表达式。声明为constexpr变量一定是一个常量,而且必须用常量表达式初始化。 constexpr 指针初始值一定要是nullptr 或 0 autoauto 一般会忽略掉顶层const，保留底层const。123456789int i = 0;const int ci = i, &amp;cr = ci;auto b = ci; // b是一个整数 const特性被忽略掉auto a = cr; // c是一个整数auto d = &amp;i; // d是一个整形指针auto e = &amp;ci; // e是一个指向常量整数的指针 底层constconst auto f = ci; // 这个时候f才有顶层const特性。 decltype declttype(( variable ))结果永远是引用 decltype( variable ) 只有variable本身是引用才是引用。]]></content>
       <categories>
         <category>c++ primer</category>
       </categories>
       <tags>
         <tag>c++</tag>
         <tag>c++ 学习笔记</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title><![CDATA[背影]]></title>
-    <url>%2F2019%2F05%2F18%2F%E8%83%8C%E5%BD%B1%2F</url>
-    <content type="text"><![CDATA[dasdadasdas]]></content>
-      <categories>
-        <category>c++ primer</category>
-      </categories>
-      <tags>
-        <tag>c++</tag>
       </tags>
   </entry>
   <entry>
