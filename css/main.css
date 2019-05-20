@@ -1590,9 +1590,10 @@ pre .javascript .function {
   margin-left: 5px;
 }
 .posts-expand .post-eof {
+  display: block;
   margin: 80px auto 60px;
-  width: 8%;
-  height: 1px;
+  width: 0%;
+  height: 0px;
   background: #ccc;
   text-align: center;
 }
@@ -1774,7 +1775,7 @@ pre .javascript .function {
   width: 4px;
   height: 4px;
   border-radius: 50%;
-  background: #6cc4bd;
+  background: #6ede77;
 }
 .feed-link,
 .chat {
