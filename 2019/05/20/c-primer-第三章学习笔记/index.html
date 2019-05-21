@@ -115,7 +115,7 @@
 <meta property="og:site_name" content="疯癫">
 <meta property="og:description" content="本文初识标准库和迭代器,以及using在 c++11中新用处。">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2019-05-20T15:55:50.077Z">
+<meta property="og:updated_time" content="2019-05-21T15:27:19.386Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="c++ primer 第三章学习笔记">
 <meta name="twitter:description" content="本文初识标准库和迭代器,以及using在 c++11中新用处。">
@@ -428,12 +428,24 @@
                 
               
 
-              <time title="创建时间：2019-05-20 23:36:59 / 修改时间：23:55:50" itemprop="dateCreated datePublished" datetime="2019-05-20T23:36:59+08:00">2019-05-20</time>
+              <time title="创建时间：2019-05-20 23:36:59" itemprop="dateCreated datePublished" datetime="2019-05-20T23:36:59+08:00">2019-05-20</time>
             
 
             
               
 
+              
+                
+                <span class="post-meta-divider">|</span>
+                
+
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">更新于</span>
+                
+                <time title="修改时间：2019-05-21 23:27:19" itemprop="dateModified" datetime="2019-05-21T23:27:19+08:00">2019-05-21</time>
               
             
           </span>
@@ -520,7 +532,8 @@
       
 
       
-        <p><strong>本文初识标准库和迭代器,以及using在 c++11中新用处。</strong></p>
+        <center><b>本文初识标准库和迭代器,以及using在 c++11中新用处。</b></center>
+
 <a id="more"></a>
 <h3 id="3-1-using-声明"><a href="#3-1-using-声明" class="headerlink" title="3.1 using 声明"></a>3.1 using 声明</h3><p>头文件不应该使用using 声明,因为头文件的内容会拷贝到所有引用它的文件中。这样容易产生名字冲突。</p>
 <h3 id="3-2-string"><a href="#3-2-string" class="headerlink" title="3.2 string"></a>3.2 string</h3><h4 id="初始化"><a href="#初始化" class="headerlink" title="初始化"></a>初始化</h4><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">string</span> s1;          <span class="comment">// 默认初始化 空串</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="built_in">string</span> <span class="title">s2</span><span class="params">(s1)</span></span>;      <span class="comment">// s2是s1的副本。</span></span><br><span class="line"></span><br><span class="line"><span class="built_in">string</span> s2 = s1;     <span class="comment">// 等价于s2(s1)。</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="built_in">string</span> <span class="title">s3</span><span class="params">(<span class="string">"value"</span>)</span></span>; <span class="comment">// 等价写法 string s3 = "value";</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="built_in">string</span> <span class="title">s4</span><span class="params">(n, <span class="string">'c'</span>)</span></span>;  <span class="comment">// s4为连续n个字符c组成的字符串。</span></span><br></pre></td></tr></table></figure>
