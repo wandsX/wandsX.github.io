@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
-    <title><![CDATA[第六章学习笔记]]></title>
+    <title><![CDATA[c++ primer 第三章学习笔记]]></title>
     <url>%2F2019%2F12%2F08%2F%E7%AC%AC%E5%85%AD%E7%AB%A0%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0%2F</url>
-    <content type="text"></content>
+    <content type="text"><![CDATA[本章主要介绍函数的定义和声明 六一.function函数的基础就不多说了。 函数的调用完成两项工作: 实参初始化函数对应的形参 将控制权转移给被调用函数]]></content>
       <categories>
         <category>c++ primer</category>
       </categories>
