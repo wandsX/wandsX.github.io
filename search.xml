@@ -1,9 +1,21 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title><![CDATA[const对指针和引用的限定]]></title>
+    <url>%2F2019%2F12%2F08%2Fconst%E5%AF%B9%E6%8C%87%E9%92%88%E5%92%8C%E5%BC%95%E7%94%A8%E7%9A%84%E9%99%90%E5%AE%9A%2F</url>
+    <content type="text"><![CDATA[本文讲述const和指针，引用之间微妙的关系 const 与指针指向常量的指针(pointer to const) 指向常量的指针没有规定其所指的对象必须是一个常量,指向常量的指针是指不能通过指针来改变所指的变量的值。。 123456const double pi1 = 3.14;double pi2 = 3.14;// 下面两条赋值语句都是合法的。const double *cptr1 = &amp;pi1;const double *cptr2 = &amp;pi2; 常量指针(const pointer) 常量指针必须初始化，一旦初始化完成，那么它的值将不会在变化。 const poiter 不变的是指针本身的值而不是所指向的那个值，所以const pointer可以通过指针修改所指对象的值。1234567 int errNum = 0;int *const curErr = &amp;errNum;const double pi = 3.14; // 将*放在const可以说明指针是一个常量const double* const pip = &amp;pi; // pip是一个指向常量对象的常量指针。 const 介绍 顶层 const 代表对象本身是个常量。 底层 const 代表指针所指的对象是一个常量。 指针既可以是顶层const，也可以是底层const int i = 0; int *const p1 = &amp;i; // const pointer -- 这是顶层const const int ci = 42; // const var -- 这是顶层const const int *p2 = &amp;ci; // pointer to const -- 这是底层const const int *const p3 = p2; // 右边是顶层const， 左边是底层const const int &amp;r = ci; // 用于声明引用的const 都是底层const 如果进行copy时，顶层const的不受影响，但是底层const受限制。 进行copy的对象，拷入和拷出必须具有相同的底层const资格，或者两个对象的数据类型必须能够转换。一般来说，非常量可以转换成常量，但是反之不行。]]></content>
+      <categories>
+        <category>c++ primer</category>
+      </categories>
+      <tags>
+        <tag>c++</tag>
+        <tag>c++ 学习笔记</tag>
+      </tags>
+  </entry>
+  <entry>
     <title><![CDATA[c++ primer 第三章学习笔记]]></title>
     <url>%2F2019%2F12%2F08%2F%E7%AC%AC%E5%85%AD%E7%AB%A0%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0%2F</url>
-    <content type="text"><![CDATA[本章主要介绍函数的定义和声明 六一.function函数的基础就不多说了。 函数的调用完成两项工作: 实参初始化函数对应的形参 将控制权转移给被调用函数]]></content>
+    <content type="text"><![CDATA[本章主要介绍函数的定义和声明 函数函数的基础就不多说了。 函数的调用完成两项工作: 实参初始化函数对应的形参 将控制权转移给被调用函数 参数传递在c++中，多使用引用代替指针。]]></content>
       <categories>
         <category>c++ primer</category>
       </categories>
