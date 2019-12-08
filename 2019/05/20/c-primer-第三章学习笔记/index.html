@@ -115,7 +115,7 @@
 <meta property="og:site_name" content="疯癫">
 <meta property="og:description" content="本文初识标准库和迭代器,以及using在 c++11中新用处。">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2019-05-21T15:27:19.386Z">
+<meta property="og:updated_time" content="2019-12-08T12:15:44.267Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="c++ primer 第三章学习笔记">
 <meta name="twitter:description" content="本文初识标准库和迭代器,以及using在 c++11中新用处。">
@@ -445,7 +445,7 @@
                 
                   <span class="post-meta-item-text">更新于</span>
                 
-                <time title="修改时间：2019-05-21 23:27:19" itemprop="dateModified" datetime="2019-05-21T23:27:19+08:00">2019-05-21</time>
+                <time title="修改时间：2019-12-08 20:15:44" itemprop="dateModified" datetime="2019-12-08T20:15:44+08:00">2019-12-08</time>
               
             
           </span>
@@ -532,9 +532,7 @@
       
 
       
-        <center><b>本文初识标准库和迭代器,以及using在 c++11中新用处。</b></center>
-
-<a id="more"></a>
+        <p><center><b>本文初识标准库和迭代器,以及using在 c++11中新用处。</b></center><br><a id="more"></a></p>
 <h3 id="3-1-using-声明"><a href="#3-1-using-声明" class="headerlink" title="3.1 using 声明"></a>3.1 using 声明</h3><p>头文件不应该使用using 声明,因为头文件的内容会拷贝到所有引用它的文件中。这样容易产生名字冲突。</p>
 <h3 id="3-2-string"><a href="#3-2-string" class="headerlink" title="3.2 string"></a>3.2 string</h3><h4 id="初始化"><a href="#初始化" class="headerlink" title="初始化"></a>初始化</h4><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">string</span> s1;          <span class="comment">// 默认初始化 空串</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="built_in">string</span> <span class="title">s2</span><span class="params">(s1)</span></span>;      <span class="comment">// s2是s1的副本。</span></span><br><span class="line"></span><br><span class="line"><span class="built_in">string</span> s2 = s1;     <span class="comment">// 等价于s2(s1)。</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="built_in">string</span> <span class="title">s3</span><span class="params">(<span class="string">"value"</span>)</span></span>; <span class="comment">// 等价写法 string s3 = "value";</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="built_in">string</span> <span class="title">s4</span><span class="params">(n, <span class="string">'c'</span>)</span></span>;  <span class="comment">// s4为连续n个字符c组成的字符串。</span></span><br></pre></td></tr></table></figure>
 <p>如果使用等号初始化一个变量的时候, 实际上执行的是拷贝初始化。<br>反之则是直接初始化。</p>
@@ -603,7 +601,8 @@
 </tbody>
 </table>
 </blockquote>
-<h3 id="3-5-array"><a href="#3-5-array" class="headerlink" title="3.5 array"></a>3.5 array</h3>
+<p>### </p>
+
       
     </div>
 
@@ -726,7 +725,7 @@
                 
                   <a href="/archives/">
                 
-                    <span class="site-state-item-count">3</span>
+                    <span class="site-state-item-count">4</span>
                     <span class="site-state-item-name">日志</span>
                   </a>
                 </div>
@@ -804,7 +803,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#3-1-using-声明"><span class="nav-number">1.</span> <span class="nav-text">3.1 using 声明</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-2-string"><span class="nav-number">2.</span> <span class="nav-text">3.2 string</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#初始化"><span class="nav-number">2.1.</span> <span class="nav-text">初始化</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#读写string-对象"><span class="nav-number">2.2.</span> <span class="nav-text">读写string 对象</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#string的比较"><span class="nav-number">2.3.</span> <span class="nav-text">string的比较</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-3-vector"><span class="nav-number">3.</span> <span class="nav-text">3.3 vector</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#初始化-1"><span class="nav-number">3.1.</span> <span class="nav-text">初始化</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#添加元素"><span class="nav-number">3.2.</span> <span class="nav-text">添加元素</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#迭代器"><span class="nav-number">4.</span> <span class="nav-text">迭代器</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#迭代器运算"><span class="nav-number">4.1.</span> <span class="nav-text">迭代器运算</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-5-array"><span class="nav-number">5.</span> <span class="nav-text">3.5 array</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#3-1-using-声明"><span class="nav-number">1.</span> <span class="nav-text">3.1 using 声明</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-2-string"><span class="nav-number">2.</span> <span class="nav-text">3.2 string</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#初始化"><span class="nav-number">2.1.</span> <span class="nav-text">初始化</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#读写string-对象"><span class="nav-number">2.2.</span> <span class="nav-text">读写string 对象</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#string的比较"><span class="nav-number">2.3.</span> <span class="nav-text">string的比较</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-3-vector"><span class="nav-number">3.</span> <span class="nav-text">3.3 vector</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#初始化-1"><span class="nav-number">3.1.</span> <span class="nav-text">初始化</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#添加元素"><span class="nav-number">3.2.</span> <span class="nav-text">添加元素</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#迭代器"><span class="nav-number">4.</span> <span class="nav-text">迭代器</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#迭代器运算"><span class="nav-number">4.1.</span> <span class="nav-text">迭代器运算</span></a></li></ol></li></ol></div>
             
 
           </div>
