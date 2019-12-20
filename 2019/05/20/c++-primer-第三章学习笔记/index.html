@@ -16,7 +16,7 @@
 
 <html class="theme-next gemini use-motion" lang="zh-CN">
 <head><meta name="generator" content="Hexo 3.8.0">
-  <meta charset="UTF-8">
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="UTF-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
 <meta name="theme-color" content="#222">
@@ -107,18 +107,18 @@
 
 
 
-  <meta name="description" content="本章介绍了STL的语法。">
+  <meta name="description" content="本文初识标准库和迭代器,以及using在 c++11中新用处。">
 <meta name="keywords" content="c++,c++ 学习笔记">
 <meta property="og:type" content="article">
-<meta property="og:title" content="c++ primer 第九章学习笔记">
-<meta property="og:url" content="http://yoursite.com/2019/05/20/c-primer-第九章学习笔记/index.html">
+<meta property="og:title" content="c++ primer 第三章学习笔记">
+<meta property="og:url" content="http://yoursite.com/2019/05/20/c++-primer-第三章学习笔记/index.html">
 <meta property="og:site_name" content="疯癫">
-<meta property="og:description" content="本章介绍了STL的语法。">
+<meta property="og:description" content="本文初识标准库和迭代器,以及using在 c++11中新用处。">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2019-12-08T12:21:38.398Z">
+<meta property="og:updated_time" content="2019-12-20T07:59:16.865Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="c++ primer 第九章学习笔记">
-<meta name="twitter:description" content="本章介绍了STL的语法。">
+<meta name="twitter:title" content="c++ primer 第三章学习笔记">
+<meta name="twitter:description" content="本文初识标准库和迭代器,以及using在 c++11中新用处。">
 
 
 
@@ -126,7 +126,7 @@
 
   
   
-  <link rel="canonical" href="http://yoursite.com/2019/05/20/c-primer-第九章学习笔记/">
+  <link rel="canonical" href="http://yoursite.com/2019/05/20/c++-primer-第三章学习笔记/">
 
 
 
@@ -136,7 +136,7 @@
   };
 </script>
 
-  <title>c++ primer 第九章学习笔记 | 疯癫</title>
+  <title>c++ primer 第三章学习笔记 | 疯癫</title>
   
 
 
@@ -173,7 +173,7 @@
   .use-motion .logo-line-before i { left: initial; }
   .use-motion .logo-line-after i { right: initial; }
   </style>
-</noscript>
+</noscript><!-- hexo-inject:begin --><!-- hexo-inject:end -->
 
 </head>
 
@@ -184,7 +184,7 @@
     
   
 
-  <div class="container sidebar-position-left page-post-detail">
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><div class="container sidebar-position-left page-post-detail">
     <div class="headband"></div>
 
     <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
@@ -385,7 +385,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/05/20/c-primer-第九章学习笔记/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/05/20/c++-primer-第三章学习笔记/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Yw">
@@ -402,7 +402,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">c++ primer 第九章学习笔记
+          <h1 class="post-title" itemprop="name headline">c++ primer 第三章学习笔记
 
               
             
@@ -428,7 +428,7 @@
                 
               
 
-              <time title="创建时间：2019-05-20 23:37:27" itemprop="dateCreated datePublished" datetime="2019-05-20T23:37:27+08:00">2019-05-20</time>
+              <time title="创建时间：2019-05-20 23:36:59" itemprop="dateCreated datePublished" datetime="2019-05-20T23:36:59+08:00">2019-05-20</time>
             
 
             
@@ -445,7 +445,7 @@
                 
                   <span class="post-meta-item-text">更新于</span>
                 
-                <time title="修改时间：2019-12-08 20:21:38" itemprop="dateModified" datetime="2019-12-08T20:21:38+08:00">2019-12-08</time>
+                <time title="修改时间：2019-12-20 15:59:16" itemprop="dateModified" datetime="2019-12-20T15:59:16+08:00">2019-12-20</time>
               
             
           </span>
@@ -498,7 +498,7 @@
                 
                   <span class="post-meta-item-text">本文字数：</span>
                 
-                <span title="本文字数">2.3k</span>
+                <span title="本文字数">1.6k</span>
               
 
               
@@ -512,7 +512,7 @@
                 
                   <span class="post-meta-item-text">阅读时长 &asymp;</span>
                 
-                <span title="阅读时长">4 分钟</span>
+                <span title="阅读时长">3 分钟</span>
               
             </div>
           
@@ -532,166 +532,34 @@
       
 
       
-        <p><center><b>本章介绍了STL的语法。</b></center><br><a id="more"></a></p>
-<h3 id="9-1概述"><a href="#9-1概述" class="headerlink" title="9.1概述"></a>9.1概述</h3><table>
-<thead>
-<tr>
-<th>name</th>
-<th>instruction</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>vector</td>
-<td>可变大小的数组,支持快速随机访问.在尾部之外的位置插入或删除元素可能很慢</td>
-</tr>
-<tr>
-<td>deque</td>
-<td>双端队列。支持快速随机访问,在头尾位置插入/删除速度很快</td>
-</tr>
-<tr>
-<td>list</td>
-<td>双向链表。只支持双向顺序访问.在list中任何位置插入/删除操作速度都很快。</td>
-</tr>
-<tr>
-<td>forward_list</td>
-<td>单向链表.只支持单向顺序访问。在链表任何位置进行插入/删除操作速度都很快。</td>
-</tr>
-<tr>
-<td>array</td>
-<td>固定大小数组。支持快速随机访问,不能添加元素或删除元素。</td>
-</tr>
-<tr>
-<td>string</td>
-<td>随机访问快,与vector类似,但专门用于保存字符.在尾部插入/删除速度快。</td>
-</tr>
-</tbody>
-</table>
-<p><strong>选择容器的原则</strong></p>
+        <p><center><b>本文初识标准库和迭代器,以及using在 c++11中新用处。</b></center><br><a id="more"></a></p>
+<h3 id="3-1-using-声明"><a href="#3-1-using-声明" class="headerlink" title="3.1 using 声明"></a>3.1 using 声明</h3><p>头文件不应该使用using 声明,因为头文件的内容会拷贝到所有引用它的文件中。这样容易产生名字冲突。</p>
+<h3 id="3-2-string"><a href="#3-2-string" class="headerlink" title="3.2 string"></a>3.2 string</h3><h4 id="初始化"><a href="#初始化" class="headerlink" title="初始化"></a>初始化</h4><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">string</span> s1;          <span class="comment">// 默认初始化 空串</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="built_in">string</span> <span class="title">s2</span><span class="params">(s1)</span></span>;      <span class="comment">// s2是s1的副本。</span></span><br><span class="line"></span><br><span class="line"><span class="built_in">string</span> s2 = s1;     <span class="comment">// 等价于s2(s1)。</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="built_in">string</span> <span class="title">s3</span><span class="params">(<span class="string">"value"</span>)</span></span>; <span class="comment">// 等价写法 string s3 = "value";</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="built_in">string</span> <span class="title">s4</span><span class="params">(n, <span class="string">'c'</span>)</span></span>;  <span class="comment">// s4为连续n个字符c组成的字符串。</span></span><br></pre></td></tr></table></figure>
+<p>如果使用等号初始化一个变量的时候, 实际上执行的是拷贝初始化。<br>反之则是直接初始化。</p>
+<h4 id="读写string-对象"><a href="#读写string-对象" class="headerlink" title="读写string 对象"></a>读写string 对象</h4><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="built_in">string</span> str;</span><br><span class="line">    <span class="built_in">cin</span> &gt;&gt; str;</span><br><span class="line">    </span><br><span class="line">    <span class="built_in">cout</span> &lt;&lt; str &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><strong>string对象回自动忽略开头的空白(空格符, 换行符, 制表符等)并从第一个真正的字符开始读起,直到遇到下一个空白开始。</strong></p>
+<p>getline读取一整行，直到遇到换行符，所读的内容存入string对象中。换行符也被读进来了,但是被丢弃了,并没有存储到string对象中</p>
+<p>size()函数的返回值是string::size_type类型,这是一个与机器无关的无符号整数类型。</p>
+<p>所以当出现string.size()就不要使用int了。</p>
+<h4 id="string的比较"><a href="#string的比较" class="headerlink" title="string的比较"></a>string的比较</h4><p>关系运算符 &lt; &lt;= &gt; &gt;=都遵循以下的字典顺序</p>
+<ol>
+<li>如果两个string对象的长度不同,而且较短string对象的每个字符都与较长string对象对应位置上的字符相同,就说较短的小于较长的。</li>
+<li>如果两个string对象在某些对应位置上不一致,则string对象比较的结果实际上是第一对相异字符比较的结果。</li>
+</ol>
+<h3 id="3-3-vector"><a href="#3-3-vector" class="headerlink" title="3.3 vector"></a>3.3 vector</h3><p>实例化:编译器根据模板创建类和函数的过程。</p>
+<h4 id="初始化-1"><a href="#初始化-1" class="headerlink" title="初始化"></a>初始化</h4><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">vector</span>(T) v1;   <span class="comment">// v1是一个空vector,执行T类型的默认初始化。</span></span><br><span class="line"></span><br><span class="line"><span class="built_in">vector</span>(T) v2(v1);   <span class="comment">// v2中包含了v1所有元素的副本。</span></span><br><span class="line"></span><br><span class="line"><span class="built_in">vector</span>(T) v2 = v1;   <span class="comment">//等价于v2(v1)。</span></span><br><span class="line"></span><br><span class="line"><span class="built_in">vector</span>(T) v3(n, nval); <span class="comment">// v3包含了n个重复的元素,每个元素的值都是val。</span></span><br><span class="line"></span><br><span class="line"><span class="built_in">vector</span>(T) V4(n);        <span class="comment">// n个执行了T类型的值初始化的对象。</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment">// 列表初始化</span></span><br><span class="line"><span class="built_in">vector</span>(T) v5&#123;a, b, c ...&#125; <span class="comment">// v5包含了初始值个数的元素。</span></span><br><span class="line"></span><br><span class="line"><span class="built_in">vector</span>(T) v5 = &#123;a, b, c ...&#125; <span class="comment">// 等价于v5&#123;a, b, c ...&#125;</span></span><br></pre></td></tr></table></figure>
+<h4 id="添加元素"><a href="#添加元素" class="headerlink" title="添加元素"></a>添加元素</h4><p><strong>push_back()添加到vector的尾端。</strong></p>
+<p>c++ 更习惯于先创建空的vector对象,在运行的时候动态添加元素。</p>
+<p>vector不能使用下标运算符去添加元素,但是可以用于访问已经存在的元素。</p>
+<h3 id="迭代器"><a href="#迭代器" class="headerlink" title="迭代器"></a>迭代器</h3><p>怎样称为一个有效的迭代器呢？</p>
 <ul>
-<li>首选vector,除非你有更好的选择</li>
-<li>如果你的程序有很小的元素,且空间的额外开销很重要.则不要使用list或forward_list。</li>
-<li>如果程序要求随机访问元素,应使用vector或deque。</li>
-<li>如果程序要求在容器的中间插入或删除元素,应使用list或forward_list</li>
-<li>如果程序要求在首尾端插入或删除元素,但不会在中间位置进行插入或删除操作。用deque</li>
+<li>或者指向某个元素,或者指向容器中尾元素的下一个位置</li>
 </ul>
-<p><strong>如果你不确定使用哪种容器,那么可以在程序中只使用vector和list公共的操作:使用迭代器,不使用下标操作,避免随机访问。这样,在必要时选择使用vector或list方便。</strong></p>
-<h3 id="9-2"><a href="#9-2" class="headerlink" title="9.2"></a>9.2</h3><h5 id="容器操作表"><a href="#容器操作表" class="headerlink" title="容器操作表"></a>容器操作表</h5><table>
-<thead>
-<tr>
-<th>类型别名</th>
-<th>说明</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>iterator</td>
-<td>迭代器类型</td>
-</tr>
-<tr>
-<td>const_itertor</td>
-<td>只读迭代器</td>
-</tr>
-<tr>
-<td>size_type</td>
-<td>无符号整数类型,足够保存容器类型最大可能容器的大小</td>
-</tr>
-<tr>
-<td>difference_type</td>
-<td>带符号整数类型,保存两个迭代器之间的距离</td>
-</tr>
-<tr>
-<td>value_type</td>
-<td>元素类型</td>
-</tr>
-<tr>
-<td>reference</td>
-<td>元素的左值类型,与value_type&amp;含义相同</td>
-</tr>
-</tbody>
-</table>
-<table>
-<thead>
-<tr>
-<th>构造函数</th>
-<th>说明</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>C c</td>
-<td>默认构造函数,空容器</td>
-</tr>
-<tr>
-<td>C c1(c2)</td>
-<td>构造c2的拷贝c1</td>
-</tr>
-<tr>
-<td>C c(b, e)</td>
-<td>构造c, 将迭代器b和e指定范围内的元素拷贝到c(不支持array)</td>
-</tr>
-<tr>
-<td>C c{a, b, c…};</td>
-<td>列表初始化</td>
-</tr>
-</tbody>
-</table>
-<h5 id="添加删除函数-不适用于array"><a href="#添加删除函数-不适用于array" class="headerlink" title="添加删除函数(不适用于array)"></a>添加删除函数(不适用于array)</h5><table>
-<thead>
-<tr>
-<th>构造函数</th>
-<th>说明</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>c.insert(args)</td>
-<td>将args中的元素copy到c</td>
-</tr>
-<tr>
-<td>c.emplace(inits)</td>
-<td>使用inits构造c中的一个元素</td>
-</tr>
-<tr>
-<td>c.erase(args)</td>
-<td>删除args指定的元素</td>
-</tr>
-<tr>
-<td>c.clear()</td>
-<td>删除c中的所有元素。</td>
-</tr>
-</tbody>
-</table>
-<h5 id="关系运算符"><a href="#关系运算符" class="headerlink" title="关系运算符"></a>关系运算符</h5><p>所有容器都支持相等(不等)运算符,<br>&lt;, &lt;=, &gt;, &gt;= (无序关联容器不支持)</p>
-<h4 id="9-2-1-迭代器"><a href="#9-2-1-迭代器" class="headerlink" title="9.2.1 迭代器"></a>9.2.1 迭代器</h4><p>forward_list 迭代器不支持递减运算符(–)</p>
-<p><strong>标准库使用左闭合范围的好处</strong>     </p>
-<p>假定begin和end构成了一个合法的迭代器范围.</p>
-<ul>
-<li>如果begin和end相等,则范围为空</li>
-<li>如果begin和end不等,则范围至少包含一个元素,且begin指向该范围中的第一个元素</li>
-<li>我们可以对begin递增若干次,使得begin==end</li>
-</ul>
-<h4 id="9-2-2-容器类型成员"><a href="#9-2-2-容器类型成员" class="headerlink" title="9.2.2 容器类型成员"></a>9.2.2 容器类型成员</h4><p><strong>值得注意的是:</strong>   </p>
-<blockquote>
-<p>begin()返回是否为const_iterator 取决于容器类型是否为const.</p>
-<p>cbegin() cend()返回就是const_iterator 与容器类型是否为const无关。</p>
-<p>auto 前面加const 保证了顶层const的特性。</p>
-</blockquote>
-<h4 id="9-2-4容器的初始化"><a href="#9-2-4容器的初始化" class="headerlink" title="9.2.4容器的初始化"></a>9.2.4容器的初始化</h4><p>创建一个容器为了和容器实现匹配, 必须保证容器类型的高度一致。</p>
-<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">list</span> &lt;<span class="built_in">string</span>&gt; l1 = &#123;<span class="string">"sadd"</span>, <span class="string">"hello "</span>, <span class="string">"world"</span>&#125;;</span><br><span class="line"><span class="built_in">vector</span>(<span class="keyword">const</span> <span class="keyword">char</span>*) a1 = &#123;<span class="string">"a"</span>, <span class="string">"an"</span>, <span class="string">"bre"</span>&#125;;</span><br><span class="line"></span><br><span class="line"><span class="built_in">deque</span> &lt;<span class="built_in">string</span>&gt; d1(l1); </span><br><span class="line"><span class="built_in">vector</span>&lt;<span class="built_in">string</span>&gt; words(a1); <span class="comment">// 容器类型匹配不一致。</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">forward_list&lt;<span class="built_in">string</span>&gt; words (a1.bengin(), a1.end()); <span class="comment">//</span></span><br></pre></td></tr></table></figure>
-<p>但是可以通过两个迭代器所代表的范围来初始化。</p>
-<h4 id="9-2-5-赋值和交换"><a href="#9-2-5-赋值和交换" class="headerlink" title="9.2.5 赋值和交换"></a>9.2.5 赋值和交换</h4><h6 id="容器的赋值运算-swap函数"><a href="#容器的赋值运算-swap函数" class="headerlink" title="容器的赋值运算 swap函数()"></a><strong>容器的赋值运算 swap函数()</strong></h6><p>swap(contains, contains)比拷贝元素要快。</p>
-<ul>
-<li>除了array之外,swap函数不对任何元素进行拷贝,删除或插入操作,因此可以保证在常数时间完成。</li>
-<li>除了string之外,swap函数执行之后,容器的迭代器,引用和指针都不会失效。</li>
-</ul>
-<p><strong>建议使用非成员函数版本的swap函数</strong></p>
-<p>assign操作不适用于关联容器和array</p>
-<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">(<span class="keyword">int</span> argc, <span class="keyword">char</span> <span class="keyword">const</span> *argv[])</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="built_in">list</span>&lt;<span class="keyword">int</span>&gt; l1 = &#123;<span class="number">0</span>, <span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>, <span class="number">5</span>, <span class="number">6</span>, <span class="number">7</span>, <span class="number">8</span>, <span class="number">9</span>&#125;;</span><br><span class="line">    <span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt; v2 = &#123;<span class="number">100</span>, <span class="number">1000</span>, <span class="number">10000</span>&#125;;</span><br><span class="line"></span><br><span class="line">    l1.assign(v2.begin(), v2.end());</span><br><span class="line"></span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">auto</span> it : l1)</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="built_in">cout</span> &lt;&lt; it &lt;&lt; <span class="string">" "</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="built_in">cout</span> &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<blockquote>
-<p>output: 100 1000 10000</p>
-</blockquote>
-<h4 id="array"><a href="#array" class="headerlink" title="array"></a>array</h4><p><strong>array初始化必须指定大小</strong></p>
+<p>怎样获取迭代器？</p>
+<p>begin() 和 end()  ：end()获取的是一个尾后迭代器,指向尾部元素的下一个位置,仅仅是一个标记而已。  end() 返回的迭代器并不实际指示某个元素,所以不能对其进行递增或解引用的操作</p>
+<p><strong>但凡是使用了迭代器的循环体,都不要向使用迭代器所属的容器添加元素。因为会使迭代器失效。</strong></p>
+<h4 id="迭代器运算"><a href="#迭代器运算" class="headerlink" title="迭代器运算"></a>迭代器运算</h4><p>所有标准库容器都有支持递增运算的迭代器。</p>
+<p>string和vector迭代器支持更多运算。</p>
 
       
     </div>
@@ -732,8 +600,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2019/05/20/c-primer-第三章学习笔记/" rel="next" title="c++ primer 第三章学习笔记">
-                <i class="fa fa-chevron-left"></i> c++ primer 第三章学习笔记
+              <a href="/2019/05/20/c++-primer-第二章学习笔记/" rel="next" title="c++ primer 第二章学习笔记">
+                <i class="fa fa-chevron-left"></i> c++ primer 第二章学习笔记
               </a>
             
           </div>
@@ -742,7 +610,7 @@
 
           <div class="post-nav-prev post-nav-item">
             
-              <a href="/2019/12/08/第六章学习笔记/" rel="prev" title="c++ primer 第三章学习笔记">
+              <a href="/2019/12/08/c++-primer-第六章学习笔记/" rel="prev" title="c++ primer 第三章学习笔记">
                 c++ primer 第三章学习笔记 <i class="fa fa-chevron-right"></i>
               </a>
             
@@ -815,7 +683,7 @@
                 
                   <a href="/archives/">
                 
-                    <span class="site-state-item-count">5</span>
+                    <span class="site-state-item-count">7</span>
                     <span class="site-state-item-name">日志</span>
                   </a>
                 </div>
@@ -834,7 +702,11 @@
                     
                       
                     
-                    <span class="site-state-item-count">1</span>
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">3</span>
                     <span class="site-state-item-name">分类</span>
                   </a>
                 </div>
@@ -855,7 +727,11 @@
                     
                       
                     
-                    <span class="site-state-item-count">2</span>
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">4</span>
                     <span class="site-state-item-name">标签</span>
                   </a>
                 </div>
@@ -893,7 +769,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#9-1概述"><span class="nav-number">1.</span> <span class="nav-text">9.1概述</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#9-2"><span class="nav-number">2.</span> <span class="nav-text">9.2</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#容器操作表"><span class="nav-number">2.0.1.</span> <span class="nav-text">容器操作表</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#添加删除函数-不适用于array"><span class="nav-number">2.0.2.</span> <span class="nav-text">添加删除函数(不适用于array)</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#关系运算符"><span class="nav-number">2.0.3.</span> <span class="nav-text">关系运算符</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#9-2-1-迭代器"><span class="nav-number">2.1.</span> <span class="nav-text">9.2.1 迭代器</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#9-2-2-容器类型成员"><span class="nav-number">2.2.</span> <span class="nav-text">9.2.2 容器类型成员</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#9-2-4容器的初始化"><span class="nav-number">2.3.</span> <span class="nav-text">9.2.4容器的初始化</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#9-2-5-赋值和交换"><span class="nav-number">2.4.</span> <span class="nav-text">9.2.5 赋值和交换</span></a><ol class="nav-child"><li class="nav-item nav-level-6"><a class="nav-link" href="#容器的赋值运算-swap函数"><span class="nav-number">2.4.0.1.</span> <span class="nav-text">容器的赋值运算 swap函数()</span></a></li></ol></li></ol><li class="nav-item nav-level-4"><a class="nav-link" href="#array"><span class="nav-number">2.5.</span> <span class="nav-text">array</span></a></li></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#3-1-using-声明"><span class="nav-number">1.</span> <span class="nav-text">3.1 using 声明</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-2-string"><span class="nav-number">2.</span> <span class="nav-text">3.2 string</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#初始化"><span class="nav-number">2.1.</span> <span class="nav-text">初始化</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#读写string-对象"><span class="nav-number">2.2.</span> <span class="nav-text">读写string 对象</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#string的比较"><span class="nav-number">2.3.</span> <span class="nav-text">string的比较</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-3-vector"><span class="nav-number">3.</span> <span class="nav-text">3.3 vector</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#初始化-1"><span class="nav-number">3.1.</span> <span class="nav-text">初始化</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#添加元素"><span class="nav-number">3.2.</span> <span class="nav-text">添加元素</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#迭代器"><span class="nav-number">4.</span> <span class="nav-text">迭代器</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#迭代器运算"><span class="nav-number">4.1.</span> <span class="nav-text">迭代器运算</span></a></li></ol></li></ol></div>
             
 
           </div>
@@ -928,7 +804,7 @@
     
       <span class="post-meta-item-text">站点总字数：</span>
     
-    <span title="站点总字数">6k</span>
+    <span title="站点总字数">13k</span>
   
 
   
@@ -939,7 +815,7 @@
     
       <span class="post-meta-item-text">站点阅读时长 &asymp;</span>
     
-    <span title="站点阅读时长">11 分钟</span>
+    <span title="站点阅读时长">22 分钟</span>
   
 </div>
 
@@ -1426,6 +1302,13 @@
   
 
   
+  
+
+  
+  
+
+  
+
 
   
 
@@ -1477,7 +1360,24 @@
       }, 300);
     }).append(e);
   })
+</script><!-- hexo-inject:begin --><!-- Begin: Injected MathJax -->
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({"tex2jax":{"inlineMath":[["$","$"],["\\(","\\)"]],"skipTags":["script","noscript","style","textarea","pre","code"],"processEscapes":true},"TeX":{"equationNumbers":{"autoNumber":"AMS"}}});
 </script>
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for(i=0; i < all.length; i += 1) {
+      all[i].SourceElement().parentNode.className += ' has-jax';
+    }
+  });
+</script>
+
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js">
+</script>
+<!-- End: Injected MathJax -->
+<!-- hexo-inject:end -->
 
 
   

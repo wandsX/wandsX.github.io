@@ -16,7 +16,7 @@
 
 <html class="theme-next gemini use-motion" lang="zh-CN">
 <head><meta name="generator" content="Hexo 3.8.0">
-  <meta charset="UTF-8">
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="UTF-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
 <meta name="theme-color" content="#222">
@@ -107,18 +107,18 @@
 
 
 
-  <meta name="description" content="本章主要介绍函数的定义和声明">
-<meta name="keywords" content="c++,c++ 学习笔记">
+  <meta name="description" content="学习C#数据类型">
+<meta name="keywords" content="c#,c# 语法">
 <meta property="og:type" content="article">
-<meta property="og:title" content="c++ primer 第三章学习笔记">
-<meta property="og:url" content="http://yoursite.com/2019/12/08/第六章学习笔记/index.html">
+<meta property="og:title" content="cs语法数据类型">
+<meta property="og:url" content="http://yoursite.com/2019/12/20/cs语法数据类型/index.html">
 <meta property="og:site_name" content="疯癫">
-<meta property="og:description" content="本章主要介绍函数的定义和声明">
+<meta property="og:description" content="学习C#数据类型">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2019-12-08T14:21:24.196Z">
+<meta property="og:updated_time" content="2019-12-20T08:16:13.028Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="c++ primer 第三章学习笔记">
-<meta name="twitter:description" content="本章主要介绍函数的定义和声明">
+<meta name="twitter:title" content="cs语法数据类型">
+<meta name="twitter:description" content="学习C#数据类型">
 
 
 
@@ -126,7 +126,7 @@
 
   
   
-  <link rel="canonical" href="http://yoursite.com/2019/12/08/第六章学习笔记/">
+  <link rel="canonical" href="http://yoursite.com/2019/12/20/cs语法数据类型/">
 
 
 
@@ -136,7 +136,7 @@
   };
 </script>
 
-  <title>c++ primer 第三章学习笔记 | 疯癫</title>
+  <title>cs语法数据类型 | 疯癫</title>
   
 
 
@@ -173,7 +173,7 @@
   .use-motion .logo-line-before i { left: initial; }
   .use-motion .logo-line-after i { right: initial; }
   </style>
-</noscript>
+</noscript><!-- hexo-inject:begin --><!-- hexo-inject:end -->
 
 </head>
 
@@ -184,7 +184,7 @@
     
   
 
-  <div class="container sidebar-position-left page-post-detail">
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><div class="container sidebar-position-left page-post-detail">
     <div class="headband"></div>
 
     <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
@@ -385,7 +385,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/12/08/第六章学习笔记/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/12/20/cs语法数据类型/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Yw">
@@ -402,7 +402,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">c++ primer 第三章学习笔记
+          <h1 class="post-title" itemprop="name headline">cs语法数据类型
 
               
             
@@ -428,7 +428,7 @@
                 
               
 
-              <time title="创建时间：2019-12-08 20:23:28 / 修改时间：22:21:24" itemprop="dateCreated datePublished" datetime="2019-12-08T20:23:28+08:00">2019-12-08</time>
+              <time title="创建时间：2019-12-20 11:00:10 / 修改时间：16:16:13" itemprop="dateCreated datePublished" datetime="2019-12-20T11:00:10+08:00">2019-12-20</time>
             
 
             
@@ -450,7 +450,7 @@
                 <span class="post-meta-item-text">分类于</span>
               
               
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/c-primer/" itemprop="url" rel="index"><span itemprop="name">c++ primer</span></a></span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/c-本质论/" itemprop="url" rel="index"><span itemprop="name">c#本质论</span></a></span>
 
                 
                 
@@ -486,7 +486,7 @@
                 
                   <span class="post-meta-item-text">本文字数：</span>
                 
-                <span title="本文字数">94</span>
+                <span title="本文字数">1.8k</span>
               
 
               
@@ -500,7 +500,7 @@
                 
                   <span class="post-meta-item-text">阅读时长 &asymp;</span>
                 
-                <span title="阅读时长">1 分钟</span>
+                <span title="阅读时长">3 分钟</span>
               
             </div>
           
@@ -520,15 +520,48 @@
       
 
       
-        <p><center><b> 本章主要介绍函数的定义和声明</b> </center><br><a id="more"></a></p>
-<h3 id="函数"><a href="#函数" class="headerlink" title="函数"></a>函数</h3><p>函数的基础就不多说了。</p>
-<p><br></p>
-<p><strong>函数的调用完成两项工作:</strong></p>
-<ul>
-<li>实参初始化函数对应的形参</li>
-<li>将控制权转移给被调用函数</li>
-</ul>
-<h3 id="参数传递"><a href="#参数传递" class="headerlink" title="参数传递"></a>参数传递</h3><p>在c++中，多使用引用代替指针。</p>
+        <h2 id><a href="#" class="headerlink" title=" "></a> </h2><p><center><b>学习C#数据类型</b></center><br><a id="more"></a></p>
+<h2 id="基本数据类型"><a href="#基本数据类型" class="headerlink" title="基本数据类型"></a>基本数据类型</h2><p>c#基本数据类型包括：整数类型， 浮点类型，decimal类型（特殊的浮点类型，能存储大数字而无表示错误）。</p>
+<h3 id="整数类型"><a href="#整数类型" class="headerlink" title="整数类型"></a>整数类型</h3><script type="math/tex; mode=display">
+\begin{array}\\
+{\text {类型}} & { \text { 大小 }} & {范围} & {\text { BCL名称}}\\
+{\text { sbyte }} & {8 \text { 位 }} & {-128-127} & {\text { system. SByte }} \\
+{\text { byte }} & {8 \text { 位 }} & {0-255} & {\text { system. Byte }} \\
+{\text { short }} & {16 \text {位 }} & {0-255} & {\text { System. Int16 } }\\
+{\text { ushort }} & {16 \text { 位 }} & {0-32768-32767} & {\text { System. UInt 16 } } \\
+{\text { int }} & {32 \text { 位 }} & {0-65535647483647} & {\text { system. Int 32 }} \\
+{\text { uint }} & {32 \text { 位}} & {0-4294967295} & {\text { System. UInt 32 }} \\
+{\text { Long }} & {64 \text { 位 }} & {-9223372036854775808-9223372036854775807}& {\text { System. Int 64 }} \\
+{\text { ulong }} & {64 \text { 位 }}&{0-18446744073709551615} & {\text { system. UInt } 64}
+\end{array}</script><blockquote>
+<p>BCL名称是基类库中的类型名称。</p>
+<p>设计规范：指定数据类型时使用c#关键字而不是BCL名称，且保持一致。</p>
+</blockquote>
+<h3 id="浮点类型"><a href="#浮点类型" class="headerlink" title="浮点类型"></a>浮点类型</h3><script type="math/tex; mode=display">
+\begin{array}\\
+\hline 
+\text{类型} & {大小} & {  范围 }    & {BCL名称} & {有效数位} & {后缀}               \\
+\hline
+\text { float } & {32位}  & {\pm 1.5 \times 10^{-3}-\pm 3.4 \times 10^{35}} & 
+      {\text { System. Single }} & {7} &   {F \text { 或 f}}                 \\
+\hline 
+\text { double } & {64 \text { 位 }} & 
+      {\pm 5.0 \times 10^{-134}}{-\pm 1.7 \times 10^{100}} & 
+      {\text { System. Double }} & {15-16} & {\text { D 或 d}}                 \\
+\hline
+\end{array}</script><h3 id="decimal类型"><a href="#decimal类型" class="headerlink" title="decimal类型"></a>decimal类型</h3><p>c#提供了128位精度的十进制浮点类型。</p>
+<script type="math/tex; mode=display">
+\begin{array}\\
+\hline
+\text {类型} & {大小 }&    {范围} & {BCL名称} & { 有效数位 } & {后缀}                        \\    \hline
+\text { decimal } 
+    & 128 \text { 位 } 
+    &\left(-7.9 \times 10^{3}-7.9 \times 10^{8}\right) /\left(10^{6}-10^{8}\right)
+    & \text { system. Decimal }
+    & 28-29 & \text { M或 } m\\
+\hline
+\end{array}</script><p>decimal类型和浮点数不一样，decimal类型保证范围内所有十进制数都是精确的。所以0.1就是0.1,而不是近似值。</p>
+<p>此外decimal类型精度很高，但是范围较小。</p>
 
       
     </div>
@@ -554,9 +587,9 @@
       
         <div class="post-tags">
           
-            <a href="/tags/c/" <i class="fa fa-tag"> c++</a>
+            <a href="/tags/c/" <i class="fa fa-tag"> c#</a>
           
-            <a href="/tags/c-学习笔记/" <i class="fa fa-tag"> c++ 学习笔记</a>
+            <a href="/tags/c-语法/" <i class="fa fa-tag"> c# 语法</a>
           
         </div>
       
@@ -569,8 +602,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2019/05/20/c-primer-第九章学习笔记/" rel="next" title="c++ primer 第九章学习笔记">
-                <i class="fa fa-chevron-left"></i> c++ primer 第九章学习笔记
+              <a href="/2019/12/13/深入理解cs泛型/" rel="next" title="深入理解cs泛型">
+                <i class="fa fa-chevron-left"></i> 深入理解cs泛型
               </a>
             
           </div>
@@ -578,10 +611,6 @@
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2019/12/08/const对指针和引用的限定/" rel="prev" title="const对指针和引用的限定">
-                const对指针和引用的限定 <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>
@@ -652,7 +681,7 @@
                 
                   <a href="/archives/">
                 
-                    <span class="site-state-item-count">5</span>
+                    <span class="site-state-item-count">7</span>
                     <span class="site-state-item-name">日志</span>
                   </a>
                 </div>
@@ -671,7 +700,11 @@
                     
                       
                     
-                    <span class="site-state-item-count">1</span>
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">3</span>
                     <span class="site-state-item-name">分类</span>
                   </a>
                 </div>
@@ -692,7 +725,11 @@
                     
                       
                     
-                    <span class="site-state-item-count">2</span>
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">4</span>
                     <span class="site-state-item-name">标签</span>
                   </a>
                 </div>
@@ -730,7 +767,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#函数"><span class="nav-number">1.</span> <span class="nav-text">函数</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#参数传递"><span class="nav-number">2.</span> <span class="nav-text">参数传递</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#"><span class="nav-number">1.</span> <span class="nav-text"> </span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#基本数据类型"><span class="nav-number">2.</span> <span class="nav-text">基本数据类型</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#整数类型"><span class="nav-number">2.1.</span> <span class="nav-text">整数类型</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#浮点类型"><span class="nav-number">2.2.</span> <span class="nav-text">浮点类型</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#decimal类型"><span class="nav-number">2.3.</span> <span class="nav-text">decimal类型</span></a></li></ol></li></ol></div>
             
 
           </div>
@@ -765,7 +802,7 @@
     
       <span class="post-meta-item-text">站点总字数：</span>
     
-    <span title="站点总字数">6k</span>
+    <span title="站点总字数">13k</span>
   
 
   
@@ -776,7 +813,7 @@
     
       <span class="post-meta-item-text">站点阅读时长 &asymp;</span>
     
-    <span title="站点阅读时长">11 分钟</span>
+    <span title="站点阅读时长">22 分钟</span>
   
 </div>
 
@@ -1263,6 +1300,53 @@
   
 
   
+  
+
+  
+  
+
+  
+    
+      <script type="text/x-mathjax-config">
+  
+
+  MathJax.Hub.Config({
+    tex2jax: {
+      inlineMath: [ ['$', '$'], ['\\(', '\\)'] ],
+      processEscapes: true,
+      skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+    },
+    TeX: {
+      
+      equationNumbers: {
+        autoNumber: 'AMS'
+      }
+    }
+  });
+  MathJax.Hub.Register.StartupHook('TeX Jax Ready', function() {
+    MathJax.InputJax.TeX.prefilterHooks.Add(function(data) {
+      if (data.display) {
+        var next = data.script.nextSibling;
+        while (next && next.nodeName.toLowerCase() === '#text') { next = next.nextSibling }
+        if (next && next.nodeName.toLowerCase() === 'br') { next.parentNode.removeChild(next) }
+      }
+    });
+  });
+</script>
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for (i = 0; i < all.length; i += 1) {
+      document.getElementById(all[i].inputID + '-Frame').parentNode.className += ' has-jax';
+    }
+  });
+</script>
+<script src="//cdn.jsdelivr.net/npm/mathjax@2/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+    
+  
+
 
   
 
@@ -1314,7 +1398,24 @@
       }, 300);
     }).append(e);
   })
+</script><!-- hexo-inject:begin --><!-- Begin: Injected MathJax -->
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({"tex2jax":{"inlineMath":[["$","$"],["\\(","\\)"]],"skipTags":["script","noscript","style","textarea","pre","code"],"processEscapes":true},"TeX":{"equationNumbers":{"autoNumber":"AMS"}}});
 </script>
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for(i=0; i < all.length; i += 1) {
+      all[i].SourceElement().parentNode.className += ' has-jax';
+    }
+  });
+</script>
+
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js">
+</script>
+<!-- End: Injected MathJax -->
+<!-- hexo-inject:end -->
 
 
   

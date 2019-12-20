@@ -16,7 +16,7 @@
 
 <html class="theme-next gemini use-motion" lang="zh-CN">
 <head><meta name="generator" content="Hexo 3.8.0">
-  <meta charset="UTF-8">
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="UTF-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
 <meta name="theme-color" content="#222">
@@ -107,18 +107,18 @@
 
 
 
-  <meta name="description" content="本文讲述const和指针，引用之间微妙的关系">
+  <meta name="description" content="本章主要讲述了c++变量声明,以及各种修饰符的作用和技巧">
 <meta name="keywords" content="c++,c++ 学习笔记">
 <meta property="og:type" content="article">
-<meta property="og:title" content="const对指针和引用的限定">
-<meta property="og:url" content="http://yoursite.com/2019/12/08/const对指针和引用的限定/index.html">
+<meta property="og:title" content="c++ primer 第二章学习笔记">
+<meta property="og:url" content="http://yoursite.com/2019/05/20/c++-primer-第二章学习笔记/index.html">
 <meta property="og:site_name" content="疯癫">
-<meta property="og:description" content="本文讲述const和指针，引用之间微妙的关系">
+<meta property="og:description" content="本章主要讲述了c++变量声明,以及各种修饰符的作用和技巧">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2019-12-08T14:21:14.874Z">
+<meta property="og:updated_time" content="2019-12-20T08:17:12.861Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="const对指针和引用的限定">
-<meta name="twitter:description" content="本文讲述const和指针，引用之间微妙的关系">
+<meta name="twitter:title" content="c++ primer 第二章学习笔记">
+<meta name="twitter:description" content="本章主要讲述了c++变量声明,以及各种修饰符的作用和技巧">
 
 
 
@@ -126,7 +126,7 @@
 
   
   
-  <link rel="canonical" href="http://yoursite.com/2019/12/08/const对指针和引用的限定/">
+  <link rel="canonical" href="http://yoursite.com/2019/05/20/c++-primer-第二章学习笔记/">
 
 
 
@@ -136,7 +136,7 @@
   };
 </script>
 
-  <title>const对指针和引用的限定 | 疯癫</title>
+  <title>c++ primer 第二章学习笔记 | 疯癫</title>
   
 
 
@@ -173,7 +173,7 @@
   .use-motion .logo-line-before i { left: initial; }
   .use-motion .logo-line-after i { right: initial; }
   </style>
-</noscript>
+</noscript><!-- hexo-inject:begin --><!-- hexo-inject:end -->
 
 </head>
 
@@ -184,7 +184,7 @@
     
   
 
-  <div class="container sidebar-position-left page-post-detail">
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><div class="container sidebar-position-left page-post-detail">
     <div class="headband"></div>
 
     <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
@@ -385,7 +385,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/12/08/const对指针和引用的限定/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/05/20/c++-primer-第二章学习笔记/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Yw">
@@ -402,7 +402,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">const对指针和引用的限定
+          <h1 class="post-title" itemprop="name headline">c++ primer 第二章学习笔记
 
               
             
@@ -428,12 +428,24 @@
                 
               
 
-              <time title="创建时间：2019-12-08 21:34:18 / 修改时间：22:21:14" itemprop="dateCreated datePublished" datetime="2019-12-08T21:34:18+08:00">2019-12-08</time>
+              <time title="创建时间：2019-05-20 08:29:33" itemprop="dateCreated datePublished" datetime="2019-05-20T08:29:33+08:00">2019-05-20</time>
             
 
             
               
 
+              
+                
+                <span class="post-meta-divider">|</span>
+                
+
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">更新于</span>
+                
+                <time title="修改时间：2019-12-20 16:17:12" itemprop="dateModified" datetime="2019-12-20T16:17:12+08:00">2019-12-20</time>
               
             
           </span>
@@ -486,7 +498,7 @@
                 
                   <span class="post-meta-item-text">本文字数：</span>
                 
-                <span title="本文字数">1k</span>
+                <span title="本文字数">1.1k</span>
               
 
               
@@ -520,37 +532,30 @@
       
 
       
-        <p><center> <b>本文讲述const和指针，引用之间微妙的关系</b> </center><br><a id="more"></a></p>
-<h3 id="const-与指针"><a href="#const-与指针" class="headerlink" title="const 与指针"></a>const 与指针</h3><h4 id="指向常量的指针-pointer-to-const"><a href="#指向常量的指针-pointer-to-const" class="headerlink" title="指向常量的指针(pointer to const)"></a>指向常量的指针(pointer to const)</h4><blockquote>
-<p>指向常量的指针没有规定其所指的对象必须是一个常量,指向常量的指针是指不能通过指针来改变所指的变量的值。。</p>
-</blockquote>
-<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> <span class="keyword">double</span> pi1 = <span class="number">3.14</span>;</span><br><span class="line"><span class="keyword">double</span> pi2 = <span class="number">3.14</span>;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 下面两条赋值语句都是合法的。</span></span><br><span class="line"><span class="keyword">const</span> <span class="keyword">double</span> *cptr1 = &amp;pi1;</span><br><span class="line"><span class="keyword">const</span> <span class="keyword">double</span> *cptr2 = &amp;pi2;</span><br></pre></td></tr></table></figure>
-<p><br></p>
-<h4 id="常量指针-const-pointer"><a href="#常量指针-const-pointer" class="headerlink" title="常量指针(const pointer)"></a>常量指针(const pointer)</h4><blockquote>
-<p>常量指针必须初始化，一旦初始化完成，那么它的值将不会在变化。</p>
-</blockquote>
+        <p><center><b>本章主要讲述了c++变量声明,以及各种修饰符的作用和技巧</b></center><br><a id="more"></a></p>
+<h6 id="初始化指变量在创建时给它赋值。"><a href="#初始化指变量在创建时给它赋值。" class="headerlink" title="初始化指变量在创建时给它赋值。"></a>初始化指变量在创建时给它赋值。</h6><h6 id="赋值是将当前对象的值擦除掉-而以一个新值来代替"><a href="#赋值是将当前对象的值擦除掉-而以一个新值来代替" class="headerlink" title="赋值是将当前对象的值擦除掉,而以一个新值来代替."></a>赋值是将当前对象的值擦除掉,而以一个新值来代替.</h6><h3 id="声明和定义的关系"><a href="#声明和定义的关系" class="headerlink" title="声明和定义的关系"></a>声明和定义的关系</h3><p><strong>声明: 使得名字被程序所知道,一个文件如果想使用别处定义的名字则必须包含那个对那个名字的声明。</strong></p>
+<p><strong>定义: 负责创建和名字关联的实体</strong><br>声明一个变量而非定义它,就在变量名前添加关键字extern,而且不要显示化的初始化变量。</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">extern</span> <span class="keyword">int</span> i;                    <span class="comment">// 声明但没定义</span></span><br><span class="line"><span class="keyword">int</span> j;                           <span class="comment">//声明并定义</span></span><br><span class="line"><span class="keyword">extern</span> <span class="keyword">double</span> pi = <span class="number">3.1416</span>;      <span class="comment">// 定义</span></span><br></pre></td></tr></table></figure>
 <ul>
-<li><strong>const poiter 不变的是指针本身的值而不是所指向的那个值，所以const pointer可以通过指针修改所指对象的值。</strong><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">   </span><br><span class="line">   <span class="keyword">int</span> errNum = <span class="number">0</span>;</span><br><span class="line"><span class="keyword">int</span> *<span class="keyword">const</span> curErr = &amp;errNum;</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> <span class="keyword">double</span> pi = <span class="number">3.14</span>;</span><br><span class="line">   <span class="comment">// 将*放在const可以说明指针是一个常量</span></span><br><span class="line"><span class="keyword">const</span> <span class="keyword">double</span>* <span class="keyword">const</span> pip = &amp;pi; <span class="comment">// pip是一个指向常量对象的常量指针。</span></span><br></pre></td></tr></table></figure>
-</li>
+<li>变量只能被定义一次,但是可以被多次声明。  </li>
 </ul>
-<h3 id="const-介绍"><a href="#const-介绍" class="headerlink" title="const 介绍"></a>const 介绍</h3><ul>
-<li>顶层 const 代表对象本身是个常量。</li>
-<li>底层 const 代表指针所指的对象是一个常量。</li>
-<li>指针既可以是顶层const，也可以是底层const</li>
+<p><strong>引用必须初始化</strong></p>
+<p> void* 可以存放任意对象的地址</p>
+<h3 id="const-限定符"><a href="#const-限定符" class="headerlink" title="const 限定符"></a>const 限定符</h3><h6 id="const对象必须初始化"><a href="#const对象必须初始化" class="headerlink" title="const对象必须初始化"></a>const对象必须初始化</h6><p>指向常量的指针和应用都是自以为是,就是不能通过本身去改变指向对象的值。</p>
+<h6 id="const-指针"><a href="#const-指针" class="headerlink" title="const 指针"></a>const 指针</h6><p><strong>int *const ptr = &var;</strong></p>
+<p>常量指针必须初始化。</p>
+<p>常量指针能不能通过指针去修改所指向对象的值,却决于指向对象的类型。</p>
+<p><strong>顶层const : 表示本身是一个常量</strong></p>
+<p><strong>底层const : 表示指向的对象是一个常量</strong></p>
+<h3 id="constexpr和常量表达式"><a href="#constexpr和常量表达式" class="headerlink" title="constexpr和常量表达式"></a>constexpr和常量表达式</h3><h6 id="常量表达式是指不会改变并且在编译过程就能得到计算结果的表达式。"><a href="#常量表达式是指不会改变并且在编译过程就能得到计算结果的表达式。" class="headerlink" title="常量表达式是指不会改变并且在编译过程就能得到计算结果的表达式。"></a>常量表达式是指不会改变并且在编译过程就能得到计算结果的表达式。</h6><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> <span class="keyword">int</span> buf_size = <span class="number">20</span>;        <span class="comment">// 常量表达式</span></span><br><span class="line"><span class="keyword">const</span> <span class="keyword">int</span> limit = buf_size + <span class="number">1</span>  <span class="comment">// 常量表达式</span></span><br><span class="line"><span class="keyword">int</span> size = <span class="number">10</span>;                  <span class="comment">// 不是常量表达式</span></span><br></pre></td></tr></table></figure>
+<h6 id="constexpr-由编译器来验证变量的值是否为常量表达式。"><a href="#constexpr-由编译器来验证变量的值是否为常量表达式。" class="headerlink" title="constexpr : 由编译器来验证变量的值是否为常量表达式。"></a>constexpr : 由编译器来验证变量的值是否为常量表达式。</h6><p>声明为constexpr变量一定是一个常量,而且必须用常量表达式初始化。</p>
+<p>constexpr 指针初始值一定要是nullptr 或 0</p>
+<h3 id="auto"><a href="#auto" class="headerlink" title="auto"></a>auto</h3><p>auto 一般会忽略掉顶层const，保留底层const。</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">int</span> i = <span class="number">0</span>;</span><br><span class="line"><span class="keyword">const</span> <span class="keyword">int</span> ci = i, &amp;cr = ci;</span><br><span class="line"><span class="keyword">auto</span> b = ci;    <span class="comment">// b是一个整数 const特性被忽略掉</span></span><br><span class="line"><span class="keyword">auto</span> a = cr;    <span class="comment">// c是一个整数</span></span><br><span class="line"><span class="keyword">auto</span> d = &amp;i;    <span class="comment">// d是一个整形指针</span></span><br><span class="line"><span class="keyword">auto</span> e = &amp;ci;   <span class="comment">// e是一个指向常量整数的指针 底层const</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> <span class="keyword">auto</span> f = ci; <span class="comment">// 这个时候f才有顶层const特性。</span></span><br></pre></td></tr></table></figure>
+<h3 id="decltype"><a href="#decltype" class="headerlink" title="decltype"></a>decltype</h3><ul>
+<li>declttype(( variable ))结果永远是引用</li>
+<li>decltype( variable ) 只有variable本身是引用才是引用。</li>
 </ul>
-<pre><code class="cpp"><span class="keyword">int</span> i = <span class="number">0</span>;
-<span class="keyword">int</span> *<span class="keyword">const</span> p1 = &amp;i;           <span class="comment">//  const pointer -- 这是顶层const </span>
-<span class="keyword">const</span> <span class="keyword">int</span> ci = <span class="number">42</span>;            <span class="comment">// const var -- 这是顶层const</span>
-<span class="keyword">const</span> <span class="keyword">int</span> *p2 = &amp;ci;          <span class="comment">// pointer to const -- 这是底层const</span>
-<span class="keyword">const</span> <span class="keyword">int</span> *<span class="keyword">const</span> p3 = p2;     <span class="comment">// 右边是顶层const， 左边是底层const</span>
-
-<span class="keyword">const</span> <span class="keyword">int</span> &amp;r = ci;            <span class="comment">// 用于声明引用的const 都是底层const</span>
-</code></pre>
-<p>如果进行copy时，顶层const的不受影响，但是底层const受限制。</p>
-<ul>
-<li>进行copy的对象，拷入和拷出必须具有相同的底层const资格，或者两个对象的数据类型必须能够转换。<strong>一般来说，非常量可以转换成常量，但是反之不行。</strong></li>
-</ul>
-<p><br></p>
 
       
     </div>
@@ -591,15 +596,15 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2019/12/08/第六章学习笔记/" rel="next" title="c++ primer 第三章学习笔记">
-                <i class="fa fa-chevron-left"></i> c++ primer 第三章学习笔记
-              </a>
-            
           </div>
 
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2019/05/20/c++-primer-第三章学习笔记/" rel="prev" title="c++ primer 第三章学习笔记">
+                c++ primer 第三章学习笔记 <i class="fa fa-chevron-right"></i>
+              </a>
             
           </div>
         </div>
@@ -670,7 +675,7 @@
                 
                   <a href="/archives/">
                 
-                    <span class="site-state-item-count">5</span>
+                    <span class="site-state-item-count">7</span>
                     <span class="site-state-item-name">日志</span>
                   </a>
                 </div>
@@ -689,7 +694,11 @@
                     
                       
                     
-                    <span class="site-state-item-count">1</span>
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">3</span>
                     <span class="site-state-item-name">分类</span>
                   </a>
                 </div>
@@ -710,7 +719,11 @@
                     
                       
                     
-                    <span class="site-state-item-count">2</span>
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">4</span>
                     <span class="site-state-item-name">标签</span>
                   </a>
                 </div>
@@ -748,7 +761,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#const-与指针"><span class="nav-number">1.</span> <span class="nav-text">const 与指针</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#指向常量的指针-pointer-to-const"><span class="nav-number">1.1.</span> <span class="nav-text">指向常量的指针(pointer to const)</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#常量指针-const-pointer"><span class="nav-number">1.2.</span> <span class="nav-text">常量指针(const pointer)</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#const-介绍"><span class="nav-number">2.</span> <span class="nav-text">const 介绍</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-6"><a class="nav-link" href="#初始化指变量在创建时给它赋值。"><span class="nav-number">1.</span> <span class="nav-text">初始化指变量在创建时给它赋值。</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#赋值是将当前对象的值擦除掉-而以一个新值来代替"><span class="nav-number">2.</span> <span class="nav-text">赋值是将当前对象的值擦除掉,而以一个新值来代替.</span></a></li></ol><li class="nav-item nav-level-3"><a class="nav-link" href="#声明和定义的关系"><span class="nav-number"></span> <span class="nav-text">声明和定义的关系</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#const-限定符"><span class="nav-number"></span> <span class="nav-text">const 限定符</span></a><ol class="nav-child"><li class="nav-item nav-level-6"><a class="nav-link" href="#const对象必须初始化"><span class="nav-number">1.</span> <span class="nav-text">const对象必须初始化</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#const-指针"><span class="nav-number">2.</span> <span class="nav-text">const 指针</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#constexpr和常量表达式"><span class="nav-number"></span> <span class="nav-text">constexpr和常量表达式</span></a><ol class="nav-child"><li class="nav-item nav-level-6"><a class="nav-link" href="#常量表达式是指不会改变并且在编译过程就能得到计算结果的表达式。"><span class="nav-number">1.</span> <span class="nav-text">常量表达式是指不会改变并且在编译过程就能得到计算结果的表达式。</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#constexpr-由编译器来验证变量的值是否为常量表达式。"><span class="nav-number">2.</span> <span class="nav-text">constexpr : 由编译器来验证变量的值是否为常量表达式。</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#auto"><span class="nav-number"></span> <span class="nav-text">auto</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#decltype"><span class="nav-number"></span> <span class="nav-text">decltype</span></a></li></div>
             
 
           </div>
@@ -783,7 +796,7 @@
     
       <span class="post-meta-item-text">站点总字数：</span>
     
-    <span title="站点总字数">6k</span>
+    <span title="站点总字数">13k</span>
   
 
   
@@ -794,7 +807,7 @@
     
       <span class="post-meta-item-text">站点阅读时长 &asymp;</span>
     
-    <span title="站点阅读时长">11 分钟</span>
+    <span title="站点阅读时长">22 分钟</span>
   
 </div>
 
@@ -1281,6 +1294,13 @@
   
 
   
+  
+
+  
+  
+
+  
+
 
   
 
@@ -1332,7 +1352,24 @@
       }, 300);
     }).append(e);
   })
+</script><!-- hexo-inject:begin --><!-- Begin: Injected MathJax -->
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({"tex2jax":{"inlineMath":[["$","$"],["\\(","\\)"]],"skipTags":["script","noscript","style","textarea","pre","code"],"processEscapes":true},"TeX":{"equationNumbers":{"autoNumber":"AMS"}}});
 </script>
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for(i=0; i < all.length; i += 1) {
+      all[i].SourceElement().parentNode.className += ' has-jax';
+    }
+  });
+</script>
+
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js">
+</script>
+<!-- End: Injected MathJax -->
+<!-- hexo-inject:end -->
 
 
   

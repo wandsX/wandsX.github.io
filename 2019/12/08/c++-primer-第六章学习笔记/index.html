@@ -16,7 +16,7 @@
 
 <html class="theme-next gemini use-motion" lang="zh-CN">
 <head><meta name="generator" content="Hexo 3.8.0">
-  <meta charset="UTF-8">
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="UTF-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
 <meta name="theme-color" content="#222">
@@ -107,18 +107,18 @@
 
 
 
-  <meta name="description" content="本章主要讲述了c++变量声明,以及各种修饰符的作用和技巧">
+  <meta name="description" content="本章主要介绍函数的定义和声明">
 <meta name="keywords" content="c++,c++ 学习笔记">
 <meta property="og:type" content="article">
-<meta property="og:title" content="c++ primer 第二章学习笔记">
-<meta property="og:url" content="http://yoursite.com/2019/05/20/c-primer-第二章学习笔记/index.html">
+<meta property="og:title" content="c++ primer 第三章学习笔记">
+<meta property="og:url" content="http://yoursite.com/2019/12/08/c++-primer-第六章学习笔记/index.html">
 <meta property="og:site_name" content="疯癫">
-<meta property="og:description" content="本章主要讲述了c++变量声明,以及各种修饰符的作用和技巧">
+<meta property="og:description" content="本章主要介绍函数的定义和声明">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2019-05-21T15:27:38.219Z">
+<meta property="og:updated_time" content="2019-12-10T00:21:03.690Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="c++ primer 第二章学习笔记">
-<meta name="twitter:description" content="本章主要讲述了c++变量声明,以及各种修饰符的作用和技巧">
+<meta name="twitter:title" content="c++ primer 第三章学习笔记">
+<meta name="twitter:description" content="本章主要介绍函数的定义和声明">
 
 
 
@@ -126,7 +126,7 @@
 
   
   
-  <link rel="canonical" href="http://yoursite.com/2019/05/20/c-primer-第二章学习笔记/">
+  <link rel="canonical" href="http://yoursite.com/2019/12/08/c++-primer-第六章学习笔记/">
 
 
 
@@ -136,7 +136,7 @@
   };
 </script>
 
-  <title>c++ primer 第二章学习笔记 | 疯癫</title>
+  <title>c++ primer 第三章学习笔记 | 疯癫</title>
   
 
 
@@ -173,7 +173,7 @@
   .use-motion .logo-line-before i { left: initial; }
   .use-motion .logo-line-after i { right: initial; }
   </style>
-</noscript>
+</noscript><!-- hexo-inject:begin --><!-- hexo-inject:end -->
 
 </head>
 
@@ -184,7 +184,7 @@
     
   
 
-  <div class="container sidebar-position-left page-post-detail">
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><div class="container sidebar-position-left page-post-detail">
     <div class="headband"></div>
 
     <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
@@ -385,7 +385,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/05/20/c-primer-第二章学习笔记/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/12/08/c++-primer-第六章学习笔记/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Yw">
@@ -402,7 +402,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">c++ primer 第二章学习笔记
+          <h1 class="post-title" itemprop="name headline">c++ primer 第三章学习笔记
 
               
             
@@ -428,7 +428,7 @@
                 
               
 
-              <time title="创建时间：2019-05-20 08:29:33" itemprop="dateCreated datePublished" datetime="2019-05-20T08:29:33+08:00">2019-05-20</time>
+              <time title="创建时间：2019-12-08 20:23:28" itemprop="dateCreated datePublished" datetime="2019-12-08T20:23:28+08:00">2019-12-08</time>
             
 
             
@@ -445,7 +445,7 @@
                 
                   <span class="post-meta-item-text">更新于</span>
                 
-                <time title="修改时间：2019-05-21 23:27:38" itemprop="dateModified" datetime="2019-05-21T23:27:38+08:00">2019-05-21</time>
+                <time title="修改时间：2019-12-10 08:21:03" itemprop="dateModified" datetime="2019-12-10T08:21:03+08:00">2019-12-10</time>
               
             
           </span>
@@ -498,7 +498,7 @@
                 
                   <span class="post-meta-item-text">本文字数：</span>
                 
-                <span title="本文字数">1.2k</span>
+                <span title="本文字数">729</span>
               
 
               
@@ -512,7 +512,7 @@
                 
                   <span class="post-meta-item-text">阅读时长 &asymp;</span>
                 
-                <span title="阅读时长">2 分钟</span>
+                <span title="阅读时长">1 分钟</span>
               
             </div>
           
@@ -532,37 +532,35 @@
       
 
       
-        <center><b>本章主要讲述了c++变量声明,以及各种修饰符的作用和技巧</b></center>
-
-<a id="more"></a>
-<h6 id="初始化指变量在创建时给它赋值。"><a href="#初始化指变量在创建时给它赋值。" class="headerlink" title="初始化指变量在创建时给它赋值。"></a>初始化指变量在创建时给它赋值。</h6><h6 id="赋值是将当前对象的值擦除掉-而以一个新值来代替"><a href="#赋值是将当前对象的值擦除掉-而以一个新值来代替" class="headerlink" title="赋值是将当前对象的值擦除掉,而以一个新值来代替."></a>赋值是将当前对象的值擦除掉,而以一个新值来代替.</h6><h3 id="声明和定义的关系"><a href="#声明和定义的关系" class="headerlink" title="声明和定义的关系"></a>声明和定义的关系</h3><p><strong>声明: 使得名字被程序所知道,一个文件如果想使用别处定义的名字则必须包含那个对那个名字的声明。</strong></p>
-<p><strong>定义: 负责创建和名字关联的实体</strong></p>
-<p><br><br>声明一个变量而非定义它,就在变量名前添加关键字extern,而且不要显示化的初始化变量。</p>
-<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">extern</span> <span class="keyword">int</span> i;                    <span class="comment">// 声明但没定义</span></span><br><span class="line"><span class="keyword">int</span> j;                           <span class="comment">//声明并定义</span></span><br><span class="line"><span class="keyword">extern</span> <span class="keyword">double</span> pi = <span class="number">3.1416</span>;      <span class="comment">// 定义</span></span><br></pre></td></tr></table></figure>
+        <p><center><b> 本章主要介绍函数的定义和声明</b> </center><br><a id="more"></a></p>
+<h3 id="函数"><a href="#函数" class="headerlink" title="函数"></a>函数</h3><p>函数的基础就不多说了。</p>
 <p><br></p>
+<p><strong>函数的调用完成两项工作:</strong></p>
 <ul>
-<li>变量只能被定义一次,但是可以被多次声明。  </li>
+<li>实参初始化函数对应的形参</li>
+<li>将控制权转移给被调用函数</li>
 </ul>
-<p><br><br><br></p>
-<p><strong>引用必须初始化</strong></p>
-<p> void* 可以存放任意对象的地址</p>
-<h3 id="const-限定符"><a href="#const-限定符" class="headerlink" title="const 限定符"></a>const 限定符</h3><h6 id="const对象必须初始化"><a href="#const对象必须初始化" class="headerlink" title="const对象必须初始化"></a>const对象必须初始化</h6><p>指向常量的指针和应用都是自以为是,就是不能通过本身去改变指向对象的值。</p>
-<h6 id="const-指针"><a href="#const-指针" class="headerlink" title="const 指针"></a>const 指针</h6><blockquote>
-<p>int *const ptr = &var;</p>
+<h3 id="参数传递"><a href="#参数传递" class="headerlink" title="参数传递"></a>参数传递</h3><p>在c++中，多使用引用代替指针。</p>
+<h4 id="const形参和实参"><a href="#const形参和实参" class="headerlink" title="const形参和实参"></a>const形参和实参</h4><blockquote>
+<p>const对 <strong>形参和实参</strong> 的作用和对<strong>变量</strong>的引用是一致的。</p>
 </blockquote>
-<p>常量指针必须初始化。</p>
-<p>常量指针能不能通过指针去修改所指向对象的值,却决于指向对象的类型。</p>
-<p><strong>顶层const : 表示本身是一个常量</strong></p>
-<p><strong>底层const : 表示指向的对象是一个常量</strong></p>
-<h3 id="constexpr和常量表达式"><a href="#constexpr和常量表达式" class="headerlink" title="constexpr和常量表达式"></a>constexpr和常量表达式</h3><h6 id="常量表达式是指不会改变并且在编译过程就能得到计算结果的表达式。"><a href="#常量表达式是指不会改变并且在编译过程就能得到计算结果的表达式。" class="headerlink" title="常量表达式是指不会改变并且在编译过程就能得到计算结果的表达式。"></a>常量表达式是指不会改变并且在编译过程就能得到计算结果的表达式。</h6><p>for example<br><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> <span class="keyword">int</span> buf_size = <span class="number">20</span>;        <span class="comment">// 常量表达式</span></span><br><span class="line"><span class="keyword">const</span> <span class="keyword">int</span> limit = buf_size + <span class="number">1</span>  <span class="comment">// 常量表达式</span></span><br><span class="line"><span class="keyword">int</span> size = <span class="number">10</span>;                  <span class="comment">// 不是常量表达式</span></span><br></pre></td></tr></table></figure></p>
-<h6 id="constexpr-由编译器来验证变量的值是否为常量表达式。"><a href="#constexpr-由编译器来验证变量的值是否为常量表达式。" class="headerlink" title="constexpr : 由编译器来验证变量的值是否为常量表达式。"></a>constexpr : 由编译器来验证变量的值是否为常量表达式。</h6><p>声明为constexpr变量一定是一个常量,而且必须用常量表达式初始化。</p>
-<blockquote>
-<p>constexpr 指针初始值一定要是nullptr 或 0</p>
-</blockquote>
-<h3 id="auto"><a href="#auto" class="headerlink" title="auto"></a>auto</h3><p>auto 一般会忽略掉顶层const，保留底层const。<br><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">int</span> i = <span class="number">0</span>;</span><br><span class="line"><span class="keyword">const</span> <span class="keyword">int</span> ci = i, &amp;cr = ci;</span><br><span class="line"><span class="keyword">auto</span> b = ci;    <span class="comment">// b是一个整数 const特性被忽略掉</span></span><br><span class="line"><span class="keyword">auto</span> a = cr;    <span class="comment">// c是一个整数</span></span><br><span class="line"><span class="keyword">auto</span> d = &amp;i;    <span class="comment">// d是一个整形指针</span></span><br><span class="line"><span class="keyword">auto</span> e = &amp;ci;   <span class="comment">// e是一个指向常量整数的指针 底层const</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> <span class="keyword">auto</span> f = ci; <span class="comment">// 这个时候f才有顶层const特性。</span></span><br></pre></td></tr></table></figure></p>
-<h3 id="decltype"><a href="#decltype" class="headerlink" title="decltype"></a>decltype</h3><ul>
-<li>declttype(( variable ))结果永远是引用</li>
-<li>decltype( variable ) 只有variable本身是引用才是引用。</li>
+<h4 id="数组形参"><a href="#数组形参" class="headerlink" title="数组形参"></a>数组形参</h4><p>在cpp中，数组的两个特殊性质</p>
+<ul>
+<li>不能copy，所以数组不能以值传递的方式使用数组参数。</li>
+<li>不能用一个数组对另外一个数组进行初始化，也不能直接赋值</li>
+<li>传递数组通常转换为<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="comment">// 以下三种语法是等价的。</span></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">function</span><span class="params">(<span class="keyword">int</span> *)</span></span>;</span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">function</span><span class="params">(<span class="keyword">int</span> [])</span></span>;</span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">function</span><span class="params">(<span class="keyword">int</span> [<span class="number">10</span>])</span></span>;</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<h5 id="管理指针形参的三种方式"><a href="#管理指针形参的三种方式" class="headerlink" title="管理指针形参的三种方式"></a>管理指针形参的三种方式</h5><ul>
+<li><p>使用标记，如C风格字符串</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">print</span><span class="params">(<span class="keyword">const</span> <span class="keyword">char</span> *cp)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="keyword">if</span> (cp)</span><br><span class="line">		<span class="keyword">while</span> (*cp)</span><br><span class="line">			<span class="built_in">cout</span> &lt;&lt; *cp++ &lt;&lt; <span class="string">" "</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>使用标准库规范</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">print</span><span class="params">(<span class="keyword">const</span> <span class="keyword">char</span>* begin, <span class="keyword">const</span> <span class="keyword">char</span>* end)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="keyword">while</span> (begin != end)</span><br><span class="line">	&#123;</span><br><span class="line">		<span class="built_in">cout</span> &lt;&lt; *begin++ &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>显示的传递一个代表数组大小的形参</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">print</span><span class="params">(<span class="keyword">const</span> <span class="keyword">int</span> ia[]， <span class="keyword">size_t</span> size)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">  <span class="keyword">for</span>(<span class="keyword">size_t</span> i = <span class="number">0</span>; i != size; ++i)</span><br><span class="line">  &#123;</span><br><span class="line">    <span class="built_in">cout</span> &lt;&lt; ia[i] &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
 </ul>
 
       
@@ -604,14 +602,18 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
+              <a href="/2019/05/20/c++-primer-第三章学习笔记/" rel="next" title="c++ primer 第三章学习笔记">
+                <i class="fa fa-chevron-left"></i> c++ primer 第三章学习笔记
+              </a>
+            
           </div>
 
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
             
-              <a href="/2019/05/20/c-primer-第三章学习笔记/" rel="prev" title="c++ primer 第三章学习笔记">
-                c++ primer 第三章学习笔记 <i class="fa fa-chevron-right"></i>
+              <a href="/2019/12/08/c++-primer-const对指针和引用的限定/" rel="prev" title="const对指针和引用的限定">
+                const对指针和引用的限定 <i class="fa fa-chevron-right"></i>
               </a>
             
           </div>
@@ -683,7 +685,7 @@
                 
                   <a href="/archives/">
                 
-                    <span class="site-state-item-count">5</span>
+                    <span class="site-state-item-count">7</span>
                     <span class="site-state-item-name">日志</span>
                   </a>
                 </div>
@@ -702,7 +704,11 @@
                     
                       
                     
-                    <span class="site-state-item-count">1</span>
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">3</span>
                     <span class="site-state-item-name">分类</span>
                   </a>
                 </div>
@@ -723,7 +729,11 @@
                     
                       
                     
-                    <span class="site-state-item-count">2</span>
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">4</span>
                     <span class="site-state-item-name">标签</span>
                   </a>
                 </div>
@@ -761,7 +771,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-6"><a class="nav-link" href="#初始化指变量在创建时给它赋值。"><span class="nav-number">1.</span> <span class="nav-text">初始化指变量在创建时给它赋值。</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#赋值是将当前对象的值擦除掉-而以一个新值来代替"><span class="nav-number">2.</span> <span class="nav-text">赋值是将当前对象的值擦除掉,而以一个新值来代替.</span></a></li></ol><li class="nav-item nav-level-3"><a class="nav-link" href="#声明和定义的关系"><span class="nav-number"></span> <span class="nav-text">声明和定义的关系</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#const-限定符"><span class="nav-number"></span> <span class="nav-text">const 限定符</span></a><ol class="nav-child"><li class="nav-item nav-level-6"><a class="nav-link" href="#const对象必须初始化"><span class="nav-number">1.</span> <span class="nav-text">const对象必须初始化</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#const-指针"><span class="nav-number">2.</span> <span class="nav-text">const 指针</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#constexpr和常量表达式"><span class="nav-number"></span> <span class="nav-text">constexpr和常量表达式</span></a><ol class="nav-child"><li class="nav-item nav-level-6"><a class="nav-link" href="#常量表达式是指不会改变并且在编译过程就能得到计算结果的表达式。"><span class="nav-number">1.</span> <span class="nav-text">常量表达式是指不会改变并且在编译过程就能得到计算结果的表达式。</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#constexpr-由编译器来验证变量的值是否为常量表达式。"><span class="nav-number">2.</span> <span class="nav-text">constexpr : 由编译器来验证变量的值是否为常量表达式。</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#auto"><span class="nav-number"></span> <span class="nav-text">auto</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#decltype"><span class="nav-number"></span> <span class="nav-text">decltype</span></a></li></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#函数"><span class="nav-number">1.</span> <span class="nav-text">函数</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#参数传递"><span class="nav-number">2.</span> <span class="nav-text">参数传递</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#const形参和实参"><span class="nav-number">2.1.</span> <span class="nav-text">const形参和实参</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#数组形参"><span class="nav-number">2.2.</span> <span class="nav-text">数组形参</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#管理指针形参的三种方式"><span class="nav-number">2.2.1.</span> <span class="nav-text">管理指针形参的三种方式</span></a></li></ol></li></ol></li></ol></div>
             
 
           </div>
@@ -796,7 +806,7 @@
     
       <span class="post-meta-item-text">站点总字数：</span>
     
-    <span title="站点总字数">6k</span>
+    <span title="站点总字数">13k</span>
   
 
   
@@ -807,7 +817,7 @@
     
       <span class="post-meta-item-text">站点阅读时长 &asymp;</span>
     
-    <span title="站点阅读时长">11 分钟</span>
+    <span title="站点阅读时长">22 分钟</span>
   
 </div>
 
@@ -1294,6 +1304,13 @@
   
 
   
+  
+
+  
+  
+
+  
+
 
   
 
@@ -1345,7 +1362,24 @@
       }, 300);
     }).append(e);
   })
+</script><!-- hexo-inject:begin --><!-- Begin: Injected MathJax -->
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({"tex2jax":{"inlineMath":[["$","$"],["\\(","\\)"]],"skipTags":["script","noscript","style","textarea","pre","code"],"processEscapes":true},"TeX":{"equationNumbers":{"autoNumber":"AMS"}}});
 </script>
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for(i=0; i < all.length; i += 1) {
+      all[i].SourceElement().parentNode.className += ' has-jax';
+    }
+  });
+</script>
+
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js">
+</script>
+<!-- End: Injected MathJax -->
+<!-- hexo-inject:end -->
 
 
   
