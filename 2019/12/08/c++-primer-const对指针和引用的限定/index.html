@@ -20,7 +20,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
 <meta name="theme-color" content="#222">
-
+<link rel="stylesheet" href="/css/highlight/styles/solarized-light.css">
 
 
 
@@ -535,33 +535,52 @@
 
       
         <p><center> <b>本文讲述const和指针，引用之间微妙的关系</b> </center><br><a id="more"></a></p>
-<h3 id="const与引用"><a href="#const与引用" class="headerlink" title="const与引用"></a>const与引用</h3><h4 id="const的引用（reference-to-const"><a href="#const的引用（reference-to-const" class="headerlink" title="const的引用（reference to const)"></a>const的引用（reference to const)</h4><p>简称为常量引用，<strong>引用的对象时常量还是非常量可以决定其所参与的操作，但是不会影响引用和对象的绑定关系。</strong><br><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> <span class="keyword">int</span> ci = <span class="number">1024</span>;</span><br><span class="line"><span class="keyword">const</span> <span class="keyword">int</span> &amp;r1 = ci;     <span class="comment">// 引用及其对应的对象都是常量</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">r1 = <span class="number">42</span>;</span><br><span class="line"><span class="keyword">int</span> &amp;r2 = ci; <span class="comment">// error, 使用一个非常量引用指向一个常量。</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">int</span> i = <span class="number">42</span>;</span><br><span class="line"><span class="keyword">const</span> <span class="keyword">int</span> &amp;r4 = r3; <span class="comment">// 常量引用可以指向一个非常量，但是不允许通过r4对r3进行修改。</span></span><br></pre></td></tr></table></figure></p>
+<h3 id="const与引用"><a href="#const与引用" class="headerlink" title="const与引用"></a>const与引用</h3><h4 id="const的引用（reference-to-const"><a href="#const的引用（reference-to-const" class="headerlink" title="const的引用（reference to const)"></a>const的引用（reference to const)</h4><p>简称为常量引用，<strong>引用的对象时常量还是非常量可以决定其所参与的操作，但是不会影响引用和对象的绑定关系。</strong></p>
+<pre><code class="lang-cpp">const int ci = 1024;
+const int &amp;r1 = ci;     // 引用及其对应的对象都是常量
+
+
+r1 = 42;
+int &amp;r2 = ci; // error, 使用一个非常量引用指向一个常量。
+
+int i = 42;
+const int &amp;r4 = r3; // 常量引用可以指向一个非常量，但是不允许通过r4对r3进行修改。
+</code></pre>
 <h3 id="const与指针"><a href="#const与指针" class="headerlink" title="const与指针"></a>const与指针</h3><h4 id="指向常量的指针-pointer-to-const"><a href="#指向常量的指针-pointer-to-const" class="headerlink" title="指向常量的指针(pointer to const)"></a>指向常量的指针(pointer to const)</h4><blockquote>
 <p>指向常量的指针没有规定其所指的对象必须是一个常量,指向常量的指针是指不能通过指针来改变所指的变量的值。。</p>
 </blockquote>
-<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> <span class="keyword">double</span> pi1 = <span class="number">3.14</span>;</span><br><span class="line"><span class="keyword">double</span> pi2 = <span class="number">3.14</span>;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 下面两条赋值语句都是合法的。</span></span><br><span class="line"><span class="keyword">const</span> <span class="keyword">double</span> *cptr1 = &amp;pi1;</span><br><span class="line"><span class="keyword">const</span> <span class="keyword">double</span> *cptr2 = &amp;pi2;</span><br></pre></td></tr></table></figure>
+<pre><code class="lang-cpp">const double pi1 = 3.14;
+double pi2 = 3.14;
+
+// 下面两条赋值语句都是合法的。
+const double *cptr1 = &amp;pi1;
+const double *cptr2 = &amp;pi2;
+</code></pre>
 <p><br></p>
 <h4 id="常量指针-const-pointer"><a href="#常量指针-const-pointer" class="headerlink" title="常量指针(const pointer)"></a>常量指针(const pointer)</h4><blockquote>
 <p>常量指针必须初始化，一旦初始化完成，那么它的值将不会在变化。</p>
 </blockquote>
 <ul>
-<li><strong>const poiter 不变的是指针本身的值而不是所指向的那个值，所以const pointer可以通过指针修改所指对象的值。</strong><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">int</span> errNum = <span class="number">0</span>;</span><br><span class="line"><span class="keyword">int</span> *<span class="keyword">const</span> curErr = &amp;errNum;</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> <span class="keyword">double</span> pi = <span class="number">3.14</span>;</span><br><span class="line"><span class="comment">// 将*放在const可以说明指针是一个常量</span></span><br><span class="line"><span class="keyword">const</span> <span class="keyword">double</span>* <span class="keyword">const</span> pip = &amp;pi; <span class="comment">// pip是一个指向常量对象的常量指针。</span></span><br></pre></td></tr></table></figure>
-</li>
+<li><strong>const poiter 不变的是指针本身的值而不是所指向的那个值，所以const pointer可以通过指针修改所指对象的值。</strong><br>```cpp<br>int errNum = 0;<br>int *const curErr = &errNum;</li>
 </ul>
-<h3 id="const-介绍"><a href="#const-介绍" class="headerlink" title="const 介绍"></a>const 介绍</h3><ul>
-<li>顶层 const 代表对象本身是个常量。</li>
-<li>底层 const 代表指针所指的对象是一个常量。</li>
-<li>指针既可以是顶层const，也可以是底层const</li>
-</ul>
-<pre><code class="lang-cpp">  int i = 0;
+<p>const double pi = 3.14;<br>// 将<em>放在const可以说明指针是一个常量<br>const double</em> const pip = &pi; // pip是一个指向常量对象的常量指针。</p>
+<pre><code>
+### const 介绍
+
+- 顶层 const 代表对象本身是个常量。
+- 底层 const 代表指针所指的对象是一个常量。
+- 指针既可以是顶层const，也可以是底层const
+
+
+  ```cpp
+  int i = 0;
   int *const p1 = &amp;i;           //  const pointer -- 这是顶层const 
   const int ci = 42;            // const var -- 这是顶层const
   const int *p2 = &amp;ci;          // pointer to const -- 这是底层const
   const int *const p3 = p2;     // 右边是顶层const， 左边是底层const
 
   const int &amp;r = ci;            // 用于声明引用的const 都是底层const
-</code></pre>
-<p>如果进行copy时，顶层const的不受影响，但是底层const受限制。</p>
+</code></pre><p>如果进行copy时，顶层const的不受影响，但是底层const受限制。</p>
 <ul>
 <li>进行copy的对象，拷入和拷出必须具有相同的底层const资格，或者两个对象的数据类型必须能够转换。<strong>一般来说，非常量可以转换成常量，但是反之不行。</strong></li>
 </ul>
@@ -689,7 +708,7 @@
                 
                   <a href="/archives/">
                 
-                    <span class="site-state-item-count">7</span>
+                    <span class="site-state-item-count">8</span>
                     <span class="site-state-item-name">日志</span>
                   </a>
                 </div>
@@ -775,7 +794,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#const与引用"><span class="nav-text">const与引用</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#const的引用（reference-to-const"><span class="nav-text">const的引用（reference to const)</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#const与指针"><span class="nav-text">const与指针</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#指向常量的指针-pointer-to-const"><span class="nav-text">指向常量的指针(pointer to const)</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#常量指针-const-pointer"><span class="nav-text">常量指针(const pointer)</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#const-介绍"><span class="nav-text">const 介绍</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#const与引用"><span class="nav-text">const与引用</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#const的引用（reference-to-const"><span class="nav-text">const的引用（reference to const)</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#const与指针"><span class="nav-text">const与指针</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#指向常量的指针-pointer-to-const"><span class="nav-text">指向常量的指针(pointer to const)</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#常量指针-const-pointer"><span class="nav-text">常量指针(const pointer)</span></a></li></ol></li></ol></div>
             
 
           </div>
@@ -796,7 +815,9 @@
 
     <footer id="footer" class="footer">
       <div class="footer-inner">
-        <div class="copyright">&copy; <span itemprop="copyrightYear">2019</span>
+        <script src="/js/highlight.pack.js"></script>
+<script>hljs.initHighlightingOnLoad();</script>
+<div class="copyright">&copy; <span itemprop="copyrightYear">2020</span>
   <span class="with-love" id="animate">
     <i class="fa fa-user"></i>
   </span>
@@ -810,7 +831,7 @@
     
       <span class="post-meta-item-text">站点总字数：</span>
     
-    <span title="站点总字数">16k</span>
+    <span title="站点总字数">18k</span>
   
 
   
@@ -821,7 +842,7 @@
     
       <span class="post-meta-item-text">站点阅读时长 &asymp;</span>
     
-    <span title="站点阅读时长">27 分钟</span>
+    <span title="站点阅读时长">30 分钟</span>
   
 </div>
 

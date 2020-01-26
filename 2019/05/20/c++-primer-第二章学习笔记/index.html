@@ -20,7 +20,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
 <meta name="theme-color" content="#222">
-
+<link rel="stylesheet" href="/css/highlight/styles/solarized-light.css">
 
 
 
@@ -117,10 +117,13 @@
 <meta property="og:site_name" content="疯癫">
 <meta property="og:description" content="本章主要讲述了c++变量声明,以及各种修饰符的作用和技巧">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2019-12-20T08:17:12.861Z">
+<meta property="og:image" content="https://cdn.mathpix.com/snip/images/MI-2K7rAaDg2cTqzcTM8gdkXaj5RNfZ-3v6VxH66hZU.original.fullsize.png">
+<meta property="og:image" content="https://cdn.mathpix.com/snip/images/lSfilGRj7na2imGs4iAxUIA7l4ZFRl5gJkwJ5erRBJ4.original.fullsize.png">
+<meta property="og:updated_time" content="2020-01-26T04:09:15.858Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="c++ primer 第二章学习笔记">
 <meta name="twitter:description" content="本章主要讲述了c++变量声明,以及各种修饰符的作用和技巧">
+<meta name="twitter:image" content="https://cdn.mathpix.com/snip/images/MI-2K7rAaDg2cTqzcTM8gdkXaj5RNfZ-3v6VxH66hZU.original.fullsize.png">
 
 
 
@@ -447,7 +450,7 @@
                 
                   <span class="post-meta-item-text">更新于</span>
                 
-                <time title="修改时间：2019-12-20 16:17:12" itemprop="dateModified" datetime="2019-12-20T16:17:12+08:00">2019-12-20</time>
+                <time title="修改时间：2020-01-26 12:09:15" itemprop="dateModified" datetime="2020-01-26T12:09:15+08:00">2020-01-26</time>
               
             
           </span>
@@ -500,7 +503,7 @@
                 
                   <span class="post-meta-item-text">本文字数：</span>
                 
-                <span title="本文字数">1.1k</span>
+                <span title="本文字数">2.5k</span>
               
 
               
@@ -514,7 +517,7 @@
                 
                   <span class="post-meta-item-text">阅读时长 &asymp;</span>
                 
-                <span title="阅读时长">2 分钟</span>
+                <span title="阅读时长">4 分钟</span>
               
             </div>
           
@@ -535,27 +538,78 @@
 
       
         <p><center><b>本章主要讲述了c++变量声明,以及各种修饰符的作用和技巧</b></center><br><a id="more"></a></p>
-<h6 id="初始化指变量在创建时给它赋值。"><a href="#初始化指变量在创建时给它赋值。" class="headerlink" title="初始化指变量在创建时给它赋值。"></a>初始化指变量在创建时给它赋值。</h6><h6 id="赋值是将当前对象的值擦除掉-而以一个新值来代替"><a href="#赋值是将当前对象的值擦除掉-而以一个新值来代替" class="headerlink" title="赋值是将当前对象的值擦除掉,而以一个新值来代替."></a>赋值是将当前对象的值擦除掉,而以一个新值来代替.</h6><h3 id="声明和定义的关系"><a href="#声明和定义的关系" class="headerlink" title="声明和定义的关系"></a>声明和定义的关系</h3><p><strong>声明: 使得名字被程序所知道,一个文件如果想使用别处定义的名字则必须包含那个对那个名字的声明。</strong></p>
-<p><strong>定义: 负责创建和名字关联的实体</strong><br>声明一个变量而非定义它,就在变量名前添加关键字extern,而且不要显示化的初始化变量。</p>
-<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">extern</span> <span class="keyword">int</span> i;                    <span class="comment">// 声明但没定义</span></span><br><span class="line"><span class="keyword">int</span> j;                           <span class="comment">//声明并定义</span></span><br><span class="line"><span class="keyword">extern</span> <span class="keyword">double</span> pi = <span class="number">3.1416</span>;      <span class="comment">// 定义</span></span><br></pre></td></tr></table></figure>
-<ul>
-<li>变量只能被定义一次,但是可以被多次声明。  </li>
-</ul>
+<p>[toc]</p>
+<h2 id="0x00-变量初始化和赋值"><a href="#0x00-变量初始化和赋值" class="headerlink" title="0x00. 变量初始化和赋值"></a>0x00. 变量初始化和赋值</h2><p><strong>初始化指变量在创建时给它赋予一个初始值，赋值是将当前对象的值擦除掉,而以一个新值来代替.  </strong></p>
+<h3 id="0-1-列表初始化"><a href="#0-1-列表初始化" class="headerlink" title="0.1 列表初始化"></a>0.1 列表初始化</h3><p>下面四条语句都可以定义int类型的units_sold的变量并初始化为0.</p>
+<pre><code class="lang-c++">int units_sold = 0;
+int units_sold = {0};
+int units_sold{0};
+int units_sold(0);
+</code></pre>
+<pre><code class="lang-c++">long double ld = 3.1415926536;
+int a(ld), b = {ld};   // 错误： 转换未执行，因为存在丢失信息的危险。
+int c(ld), d = ld;        // 正确：转换执行，且确实丢失了部分值。
+</code></pre>
+<h3 id="0-2-默认初始化"><a href="#0-2-默认初始化" class="headerlink" title="0.2 默认初始化"></a>0.2 默认初始化</h3><p>如果定义变量时没有指定初值，则变量被默认初始化( default initialized), 此时变量被赋予了“默认值”。<strong>默认值到底是什么由变量类型决定，同时定义变量的位置也会对此有影响</strong>。</p>
+<p>如果是内置类型的变量未被显式初始化，它的值由定义的位置决定。定义于任何函数体之外的变量被初始化为0。一种例外情况是，定义在函数体内部的内置类型变量将不被初始化(uninitialized)。一个未被初始化的内置类型变量的值是未定义的，如果试图拷贝或以其他形式访问此类值将引发错误。</p>
+<p>每个类各自决定其初始化对象的方式。而且，是否允许不经初始化就定义对象也由类自己决定。如果类允许这种行为，它将决定对象的初始值到底是什么。</p>
+<h2 id="0x01-声明和定义"><a href="#0x01-声明和定义" class="headerlink" title="0x01. 声明和定义"></a>0x01. 声明和定义</h2><p><strong>声明: 使得名字被程序所知道,一个文件如果想使用别处定义的名字则必须包含那个对那个名字的声明。</strong></p>
+<p><strong>定义: 负责创建和名字关联的实体</strong></p>
+<p>声明一个变量而非定义它,就在变量名前添加关键字extern,而且不要显示化的初始化变量。</p>
+<pre><code class="lang-c++">extern int i;                    // 声明但没定义
+int j;                           //声明并定义
+extern double pi = 3.1416;      // 定义
+</code></pre>
+<p><strong>变量只能被定义一次,但是可以被多次声明。</strong>  </p>
 <p><strong>引用必须初始化</strong></p>
 <p> void* 可以存放任意对象的地址</p>
-<h3 id="const-限定符"><a href="#const-限定符" class="headerlink" title="const 限定符"></a>const 限定符</h3><h6 id="const对象必须初始化"><a href="#const对象必须初始化" class="headerlink" title="const对象必须初始化"></a>const对象必须初始化</h6><p>指向常量的指针和应用都是自以为是,就是不能通过本身去改变指向对象的值。</p>
-<h6 id="const-指针"><a href="#const-指针" class="headerlink" title="const 指针"></a>const 指针</h6><p><strong>int *const ptr = &var;</strong></p>
+<h2 id="0x02-字面值常量"><a href="#0x02-字面值常量" class="headerlink" title="0x02. 字面值常量"></a>0x02. 字面值常量</h2><h3 id="2-1-字面值介绍"><a href="#2-1-字面值介绍" class="headerlink" title="2.1 字面值介绍"></a>2.1 字面值介绍</h3><p>一个形如42的值被称为字面值常量。字面值是指只能通过它的值来称呼它，没有别名。</p>
+<p>类似的字符字面值和字符串字面值，‘a’, “hello world!”</p>
+<h3 id="2-2-指定字面值的类型"><a href="#2-2-指定字面值的类型" class="headerlink" title="2.2 指定字面值的类型"></a>2.2 指定字面值的类型</h3><pre><code class="lang-c++">    auto char_1 = L&#39;a&#39;;
+    auto string_1 = u8&quot;hi!&quot;;
+    auto ulonglong_1 = 42ULL;
+    auto float_1 = 1E-3F;
+    auto ldouble_1 = 3.14159L;
+</code></pre>
+<p><img src="https://cdn.mathpix.com/snip/images/MI-2K7rAaDg2cTqzcTM8gdkXaj5RNfZ-3v6VxH66hZU.original.fullsize.png"></p>
+<p>布尔类型的字面值是true 和 false. 而指针类型的字面值是<strong>nullptr</strong></p>
+<h3 id="2-3-练习"><a href="#2-3-练习" class="headerlink" title="2.3 练习"></a>2.3 练习</h3><p><img src="https://cdn.mathpix.com/snip/images/lSfilGRj7na2imGs4iAxUIA7l4ZFRl5gJkwJ5erRBJ4.original.fullsize.png" alt></p>
+<h4 id="2-3-1"><a href="#2-3-1" class="headerlink" title="2.3.1"></a>2.3.1</h4><p>(a)组的数据类型分别是 char, wchar_t,  const char<em>, const wchar_t </em>。</p>
+<p>(b)组的数据类型分别是 int, unsigned int, long, unsigned long, 八进制的10, 十六进制的12。</p>
+<p>(c)组的数据类型:第一个却决于你所声明变量的类型，若是依靠编译器自动推导,类型是double.</p>
+<p>​    后面两个分别为float, long double.</p>
+<p>(d) 组的数据类型:int, unsigned int , 第三个为float或double，double。</p>
+<h4 id="2-3-2"><a href="#2-3-2" class="headerlink" title="2.3.2"></a>2.3.2</h4><p>有区别，上面一组定义的字面值为十进制，下面一组定义的字面值为八进制。</p>
+<h4 id="2-3-3"><a href="#2-3-3" class="headerlink" title="2.3.3"></a>2.3.3</h4><p>1024F 存在语法错误，编译不通过。</p>
+<p>\145 值为’e’,  \012值为 ‘\n’</p>
+<p>3.14e1L为long double.</p>
+<h2 id="0x03-const限定符"><a href="#0x03-const限定符" class="headerlink" title="0x03. const限定符"></a>0x03. const限定符</h2><p>const对象必须初始化</p>
+<p>指向常量的指针和应用都是自以为是,就是不能通过本身去改变指向对象的值。</p>
+<h3 id="3-1-const-指针"><a href="#3-1-const-指针" class="headerlink" title="3.1 const 指针"></a>3.1 const 指针</h3><p><strong>int *const ptr = &var;</strong></p>
 <p>常量指针必须初始化。</p>
 <p>常量指针能不能通过指针去修改所指向对象的值,却决于指向对象的类型。</p>
 <p><strong>顶层const : 表示本身是一个常量</strong></p>
 <p><strong>底层const : 表示指向的对象是一个常量</strong></p>
-<h3 id="constexpr和常量表达式"><a href="#constexpr和常量表达式" class="headerlink" title="constexpr和常量表达式"></a>constexpr和常量表达式</h3><h6 id="常量表达式是指不会改变并且在编译过程就能得到计算结果的表达式。"><a href="#常量表达式是指不会改变并且在编译过程就能得到计算结果的表达式。" class="headerlink" title="常量表达式是指不会改变并且在编译过程就能得到计算结果的表达式。"></a>常量表达式是指不会改变并且在编译过程就能得到计算结果的表达式。</h6><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> <span class="keyword">int</span> buf_size = <span class="number">20</span>;        <span class="comment">// 常量表达式</span></span><br><span class="line"><span class="keyword">const</span> <span class="keyword">int</span> limit = buf_size + <span class="number">1</span>  <span class="comment">// 常量表达式</span></span><br><span class="line"><span class="keyword">int</span> size = <span class="number">10</span>;                  <span class="comment">// 不是常量表达式</span></span><br></pre></td></tr></table></figure>
-<h6 id="constexpr-由编译器来验证变量的值是否为常量表达式。"><a href="#constexpr-由编译器来验证变量的值是否为常量表达式。" class="headerlink" title="constexpr : 由编译器来验证变量的值是否为常量表达式。"></a>constexpr : 由编译器来验证变量的值是否为常量表达式。</h6><p>声明为constexpr变量一定是一个常量,而且必须用常量表达式初始化。</p>
-<p>constexpr 指针初始值一定要是nullptr 或 0</p>
-<h3 id="auto"><a href="#auto" class="headerlink" title="auto"></a>auto</h3><p>auto 一般会忽略掉顶层const，保留底层const。</p>
-<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">int</span> i = <span class="number">0</span>;</span><br><span class="line"><span class="keyword">const</span> <span class="keyword">int</span> ci = i, &amp;cr = ci;</span><br><span class="line"><span class="keyword">auto</span> b = ci;    <span class="comment">// b是一个整数 const特性被忽略掉</span></span><br><span class="line"><span class="keyword">auto</span> a = cr;    <span class="comment">// c是一个整数</span></span><br><span class="line"><span class="keyword">auto</span> d = &amp;i;    <span class="comment">// d是一个整形指针</span></span><br><span class="line"><span class="keyword">auto</span> e = &amp;ci;   <span class="comment">// e是一个指向常量整数的指针 底层const</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> <span class="keyword">auto</span> f = ci; <span class="comment">// 这个时候f才有顶层const特性。</span></span><br></pre></td></tr></table></figure>
-<h3 id="decltype"><a href="#decltype" class="headerlink" title="decltype"></a>decltype</h3><ul>
-<li>declttype(( variable ))结果永远是引用</li>
+<h2 id="0x04-constexpr"><a href="#0x04-constexpr" class="headerlink" title="0x04. constexpr"></a>0x04. constexpr</h2><p><strong>常量表达式是指不会改变并且在编译过程就能得到计算结果的表达式。</strong></p>
+<pre><code class="lang-c++">const int buf_size = 20;        // 常量表达式
+const int limit = buf_size + 1  // 常量表达式
+int size = 10;                  // 不是常量表达式
+</code></pre>
+<p><strong>constexpr : 由编译器来验证变量的值是否为常量表达式。</strong></p>
+<p>声明为constexpr变量一定是一个常量,而且必须用常量表达式初始化, constexpr 指针初始值一定要是nullptr 或 0</p>
+<h2 id="0x05-auto"><a href="#0x05-auto" class="headerlink" title="0x05. auto"></a>0x05. auto</h2><p>auto 一般会忽略掉顶层const，保留底层const。</p>
+<pre><code class="lang-c++">int i = 0;
+const int ci = i, &amp;cr = ci;
+auto b = ci;    // b是一个整数 const特性被忽略掉
+auto a = cr;    // c是一个整数
+auto d = &amp;i;    // d是一个整形指针
+auto e = &amp;ci;   // e是一个指向常量整数的指针 底层const
+
+
+const auto f = ci; // 这个时候f才有顶层const特性。
+</code></pre>
+<h2 id="0x06-decltype"><a href="#0x06-decltype" class="headerlink" title="0x06. decltype"></a>0x06. decltype</h2><ul>
+<li>decltype(( variable ))结果永远是引用</li>
 <li>decltype( variable ) 只有variable本身是引用才是引用。</li>
 </ul>
 
@@ -677,7 +731,7 @@
                 
                   <a href="/archives/">
                 
-                    <span class="site-state-item-count">7</span>
+                    <span class="site-state-item-count">8</span>
                     <span class="site-state-item-name">日志</span>
                   </a>
                 </div>
@@ -763,7 +817,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-6"><a class="nav-link" href="#初始化指变量在创建时给它赋值。"><span class="nav-text">初始化指变量在创建时给它赋值。</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#赋值是将当前对象的值擦除掉-而以一个新值来代替"><span class="nav-text">赋值是将当前对象的值擦除掉,而以一个新值来代替.</span></a></li></ol><li class="nav-item nav-level-3"><a class="nav-link" href="#声明和定义的关系"><span class="nav-text">声明和定义的关系</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#const-限定符"><span class="nav-text">const 限定符</span></a><ol class="nav-child"><li class="nav-item nav-level-6"><a class="nav-link" href="#const对象必须初始化"><span class="nav-text">const对象必须初始化</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#const-指针"><span class="nav-text">const 指针</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#constexpr和常量表达式"><span class="nav-text">constexpr和常量表达式</span></a><ol class="nav-child"><li class="nav-item nav-level-6"><a class="nav-link" href="#常量表达式是指不会改变并且在编译过程就能得到计算结果的表达式。"><span class="nav-text">常量表达式是指不会改变并且在编译过程就能得到计算结果的表达式。</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#constexpr-由编译器来验证变量的值是否为常量表达式。"><span class="nav-text">constexpr : 由编译器来验证变量的值是否为常量表达式。</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#auto"><span class="nav-text">auto</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#decltype"><span class="nav-text">decltype</span></a></li></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#0x00-变量初始化和赋值"><span class="nav-text">0x00. 变量初始化和赋值</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#0-1-列表初始化"><span class="nav-text">0.1 列表初始化</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#0-2-默认初始化"><span class="nav-text">0.2 默认初始化</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#0x01-声明和定义"><span class="nav-text">0x01. 声明和定义</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#0x02-字面值常量"><span class="nav-text">0x02. 字面值常量</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#2-1-字面值介绍"><span class="nav-text">2.1 字面值介绍</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-2-指定字面值的类型"><span class="nav-text">2.2 指定字面值的类型</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-3-练习"><span class="nav-text">2.3 练习</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#2-3-1"><span class="nav-text">2.3.1</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-3-2"><span class="nav-text">2.3.2</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-3-3"><span class="nav-text">2.3.3</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#0x03-const限定符"><span class="nav-text">0x03. const限定符</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#3-1-const-指针"><span class="nav-text">3.1 const 指针</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#0x04-constexpr"><span class="nav-text">0x04. constexpr</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#0x05-auto"><span class="nav-text">0x05. auto</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#0x06-decltype"><span class="nav-text">0x06. decltype</span></a></li></ol></div>
             
 
           </div>
@@ -784,7 +838,9 @@
 
     <footer id="footer" class="footer">
       <div class="footer-inner">
-        <div class="copyright">&copy; <span itemprop="copyrightYear">2019</span>
+        <script src="/js/highlight.pack.js"></script>
+<script>hljs.initHighlightingOnLoad();</script>
+<div class="copyright">&copy; <span itemprop="copyrightYear">2020</span>
   <span class="with-love" id="animate">
     <i class="fa fa-user"></i>
   </span>
@@ -798,7 +854,7 @@
     
       <span class="post-meta-item-text">站点总字数：</span>
     
-    <span title="站点总字数">16k</span>
+    <span title="站点总字数">18k</span>
   
 
   
@@ -809,7 +865,7 @@
     
       <span class="post-meta-item-text">站点阅读时长 &asymp;</span>
     
-    <span title="站点阅读时长">27 分钟</span>
+    <span title="站点阅读时长">30 分钟</span>
   
 </div>
 

@@ -20,7 +20,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
 <meta name="theme-color" content="#222">
-
+<link rel="stylesheet" href="/css/highlight/styles/solarized-light.css">
 
 
 
@@ -500,7 +500,7 @@
                 
                   <span class="post-meta-item-text">本文字数：</span>
                 
-                <span title="本文字数">729</span>
+                <span title="本文字数">748</span>
               
 
               
@@ -550,18 +550,40 @@
 <ul>
 <li>不能copy，所以数组不能以值传递的方式使用数组参数。</li>
 <li>不能用一个数组对另外一个数组进行初始化，也不能直接赋值</li>
-<li>传递数组通常转换为<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="comment">// 以下三种语法是等价的。</span></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">function</span><span class="params">(<span class="keyword">int</span> *)</span></span>;</span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">function</span><span class="params">(<span class="keyword">int</span> [])</span></span>;</span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">function</span><span class="params">(<span class="keyword">int</span> [<span class="number">10</span>])</span></span>;</span><br></pre></td></tr></table></figure>
-</li>
+<li>传递数组通常转换为<br>```cpp</li>
 </ul>
-<h5 id="管理指针形参的三种方式"><a href="#管理指针形参的三种方式" class="headerlink" title="管理指针形参的三种方式"></a>管理指针形参的三种方式</h5><ul>
-<li><p>使用标记，如C风格字符串</p>
-<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">print</span><span class="params">(<span class="keyword">const</span> <span class="keyword">char</span> *cp)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="keyword">if</span> (cp)</span><br><span class="line">		<span class="keyword">while</span> (*cp)</span><br><span class="line">			<span class="built_in">cout</span> &lt;&lt; *cp++ &lt;&lt; <span class="string">" "</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-</li>
+<p>// 以下三种语法是等价的。<br>void function(int *);<br>void function(int []);<br>void function(int [10]);</p>
+<pre><code>
+
+##### 管理指针形参的三种方式
+- 使用标记，如C风格字符串
+```cpp
+void print(const char *cp)
+{
+    if (cp)
+        while (*cp)
+            cout &lt;&lt; *cp++ &lt;&lt; &quot; &quot;;
+}
+</code></pre><ul>
 <li><p>使用标准库规范</p>
-<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">print</span><span class="params">(<span class="keyword">const</span> <span class="keyword">char</span>* begin, <span class="keyword">const</span> <span class="keyword">char</span>* end)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="keyword">while</span> (begin != end)</span><br><span class="line">	&#123;</span><br><span class="line">		<span class="built_in">cout</span> &lt;&lt; *begin++ &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<pre><code class="lang-c++">void print(const char* begin, const char* end)
+{
+  while (begin != end)
+  {
+      cout &lt;&lt; *begin++ &lt;&lt; endl;
+  }
+}
+</code></pre>
 </li>
 <li><p>显示的传递一个代表数组大小的形参</p>
-<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">print</span><span class="params">(<span class="keyword">const</span> <span class="keyword">int</span> ia[]， <span class="keyword">size_t</span> size)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">  <span class="keyword">for</span>(<span class="keyword">size_t</span> i = <span class="number">0</span>; i != size; ++i)</span><br><span class="line">  &#123;</span><br><span class="line">    <span class="built_in">cout</span> &lt;&lt; ia[i] &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<pre><code class="lang-cpp">void print(const int ia[]， size_t size)
+{
+for(size_t i = 0; i != size; ++i)
+{
+  cout &lt;&lt; ia[i] &lt;&lt; endl;
+}
+}
+</code></pre>
 </li>
 </ul>
 
@@ -687,7 +709,7 @@
                 
                   <a href="/archives/">
                 
-                    <span class="site-state-item-count">7</span>
+                    <span class="site-state-item-count">8</span>
                     <span class="site-state-item-name">日志</span>
                   </a>
                 </div>
@@ -773,7 +795,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#函数"><span class="nav-text">函数</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#参数传递"><span class="nav-text">参数传递</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#const形参和实参"><span class="nav-text">const形参和实参</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#数组形参"><span class="nav-text">数组形参</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#管理指针形参的三种方式"><span class="nav-text">管理指针形参的三种方式</span></a></li></ol></li></ol></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#函数"><span class="nav-text">函数</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#参数传递"><span class="nav-text">参数传递</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#const形参和实参"><span class="nav-text">const形参和实参</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#数组形参"><span class="nav-text">数组形参</span></a></li></ol></li></ol></div>
             
 
           </div>
@@ -794,7 +816,9 @@
 
     <footer id="footer" class="footer">
       <div class="footer-inner">
-        <div class="copyright">&copy; <span itemprop="copyrightYear">2019</span>
+        <script src="/js/highlight.pack.js"></script>
+<script>hljs.initHighlightingOnLoad();</script>
+<div class="copyright">&copy; <span itemprop="copyrightYear">2020</span>
   <span class="with-love" id="animate">
     <i class="fa fa-user"></i>
   </span>
@@ -808,7 +832,7 @@
     
       <span class="post-meta-item-text">站点总字数：</span>
     
-    <span title="站点总字数">16k</span>
+    <span title="站点总字数">18k</span>
   
 
   
@@ -819,7 +843,7 @@
     
       <span class="post-meta-item-text">站点阅读时长 &asymp;</span>
     
-    <span title="站点阅读时长">27 分钟</span>
+    <span title="站点阅读时长">30 分钟</span>
   
 </div>
 

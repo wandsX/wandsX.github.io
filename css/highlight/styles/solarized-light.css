@@ -8,7 +8,7 @@ Orginal Style from ethanschoonover.com/solarized (c) Jeremy Hull <sourdrums@gmai
   display: block;
   overflow-x: auto;
   padding: 0.5em;
-  background: #fdf6e3;
+  background: #f7f7f7;
   color: #657b83;
 }
 
@@ -21,7 +21,7 @@ Orginal Style from ethanschoonover.com/solarized (c) Jeremy Hull <sourdrums@gmai
 .hljs-keyword,
 .hljs-selector-tag,
 .hljs-addition {
-  color: #859900;
+  color: #f78c56;
 }
 
 /* Solarized Cyan */
@@ -31,7 +31,7 @@ Orginal Style from ethanschoonover.com/solarized (c) Jeremy Hull <sourdrums@gmai
 .hljs-literal,
 .hljs-doctag,
 .hljs-regexp {
-  color: #2aa198;
+  color: #c3188d;
 }
 
 /* Solarized Blue */

@@ -20,7 +20,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
 <meta name="theme-color" content="#222">
-
+<link rel="stylesheet" href="/css/highlight/styles/solarized-light.css">
 
 
 
@@ -500,7 +500,7 @@
                 
                   <span class="post-meta-item-text">本文字数：</span>
                 
-                <span title="本文字数">6.6k</span>
+                <span title="本文字数">6.5k</span>
               
 
               
@@ -537,24 +537,106 @@
         <p><center><b>这篇文章学习一下c#的泛型</b> </center><br><a id="more"></a></p>
 <h2 id="基本概念"><a href="#基本概念" class="headerlink" title="基本概念"></a>基本概念</h2><p>泛型分为两种形式：<strong>泛型类型</strong>（接口，委托，结构，类）和 <strong>泛型方法</strong>，两者都是表示API的基本方法。</p>
 <p>我们看下面的两个语句：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">Dictonary&lt;TKey, TValue&gt; // 未绑定泛型</span><br><span class="line">	</span><br><span class="line">Dictonary&lt;string, int&gt;  // 已构造类型</span><br></pre></td></tr></table></figure>
+<pre><code class="lang-c#">Dictonary&lt;TKey, TValue&gt; // 未绑定泛型
+
+Dictonary&lt;string, int&gt;  // 已构造类型
+</code></pre>
 <p>类型参数是<strong>TKey, TValue</strong>，而类型实参是<strong>string, int</strong>。</p>
 <p>类型参数“接收信息”，类型实参提供信息。</p>
 <p>如果没有为泛型类型参数提供类型实参，那么这就是一个未绑定泛型类型。如果制定了类型实参，该类型就是一个已构造类型。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">public class Dictionary&lt;TKey, TValue&gt;					// 声明泛型类型</span><br><span class="line">       : IEnumerable&lt;KeyValuePair&lt;TKey, TValue&gt;&gt;		// 实现泛型接口</span><br><span class="line">   &#123;</span><br><span class="line">       public Dictionary() &#123; &#125;							// 无参构造函数</span><br><span class="line"></span><br><span class="line">       public void Add(TKey key, TValue value)			// 类型参数声明方法</span><br><span class="line">       &#123;</span><br><span class="line"></span><br><span class="line">       &#125;</span><br><span class="line"></span><br><span class="line">   &#125;			// list&lt;T&gt; 读作list of T</span><br></pre></td></tr></table></figure>
+<pre><code class="lang-c#"> public class Dictionary&lt;TKey, TValue&gt;                    // 声明泛型类型
+        : IEnumerable&lt;KeyValuePair&lt;TKey, TValue&gt;&gt;        // 实现泛型接口
+    {
+        public Dictionary() { }                            // 无参构造函数
+
+        public void Add(TKey key, TValue value)            // 类型参数声明方法
+        {
+
+        }
+
+    }            // list&lt;T&gt; 读作list of T
+</code></pre>
 <ul>
 <li>泛型可以重载，只需要改变一下类型参数的数量。</li>
 </ul>
 <h2 id="泛型方法"><a href="#泛型方法" class="headerlink" title="泛型方法"></a>泛型方法</h2><p>概念属于比较简单，我们通过之下的例子来说明</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line">class Program</span><br><span class="line">    &#123;</span><br><span class="line">        static double TakeSquareRoot(int x)</span><br><span class="line">        &#123;</span><br><span class="line">            return Math.Sqrt(x);</span><br><span class="line">        &#125;</span><br><span class="line">        static void Main(string[] args)</span><br><span class="line">        &#123;</span><br><span class="line">            </span><br><span class="line">            List&lt;int&gt; interges = new List&lt;int&gt;();</span><br><span class="line">            interges.Add(1);</span><br><span class="line">            interges.Add(3);</span><br><span class="line">            interges.Add(4);</span><br><span class="line">            interges.Add(5);</span><br><span class="line">			</span><br><span class="line">            // &lt;int double&gt; 代表转换</span><br><span class="line">            Converter&lt;int, double&gt; converter = TakeSquareRoot;   // 创建委托实例</span><br><span class="line"></span><br><span class="line">            List&lt;double&gt; doubles;</span><br><span class="line"></span><br><span class="line">            doubles = interges.ConvertAll&lt;double&gt;(converter);	// 调用泛型方法</span><br><span class="line"></span><br><span class="line">            foreach(double d in doubles)</span><br><span class="line">            &#123;</span><br><span class="line">                Console.WriteLine(d);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<pre><code class="lang-c#">class Program
+    {
+        static double TakeSquareRoot(int x)
+        {
+            return Math.Sqrt(x);
+        }
+        static void Main(string[] args)
+        {
+
+            List&lt;int&gt; interges = new List&lt;int&gt;();
+            interges.Add(1);
+            interges.Add(3);
+            interges.Add(4);
+            interges.Add(5);
+
+            // &lt;int double&gt; 代表转换
+            Converter&lt;int, double&gt; converter = TakeSquareRoot;   // 创建委托实例
+
+            List&lt;double&gt; doubles;
+
+            doubles = interges.ConvertAll&lt;double&gt;(converter);    // 调用泛型方法
+
+            foreach(double d in doubles)
+            {
+                Console.WriteLine(d);
+            }
+        }
+}
+</code></pre>
 <p>非泛型同样可以使用泛型方法</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">class Program</span><br><span class="line">    &#123;</span><br><span class="line">        static List&lt;T&gt; MakeList&lt;T&gt; (T first, T second)</span><br><span class="line">        &#123;</span><br><span class="line">            List &lt;T&gt; list = new List&lt;T&gt;();</span><br><span class="line">            list.Add(first);</span><br><span class="line">            list.Add(second);</span><br><span class="line">            </span><br><span class="line">            return list;</span><br><span class="line">        &#125;</span><br><span class="line">        static void Main(string[] args)</span><br><span class="line">        &#123;</span><br><span class="line">            List&lt;string&gt; list = MakeList&lt;string&gt;(&quot;line1&quot;, &quot;line2&quot;);</span><br><span class="line">            foreach(string x in list)</span><br><span class="line">            &#123;</span><br><span class="line">                Console.WriteLine(x);</span><br><span class="line">            &#125;</span><br><span class="line"></span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+<pre><code class="lang-c#">class Program
+    {
+        static List&lt;T&gt; MakeList&lt;T&gt; (T first, T second)
+        {
+            List &lt;T&gt; list = new List&lt;T&gt;();
+            list.Add(first);
+            list.Add(second);
+
+            return list;
+        }
+        static void Main(string[] args)
+        {
+            List&lt;string&gt; list = MakeList&lt;string&gt;(&quot;line1&quot;, &quot;line2&quot;);
+            foreach(string x in list)
+            {
+                Console.WriteLine(x);
+            }
+
+        }
+
+    }
+</code></pre>
 <h2 id="泛型的类型约束"><a href="#泛型的类型约束" class="headerlink" title="泛型的类型约束"></a>泛型的类型约束</h2><p>​    类型约束是为了只有特定的类型调用，相当于制定了规则，从而判断哪些是泛型类型或泛型方法能接受的有效类型实参。</p>
 <h3 id="约束类型"><a href="#约束类型" class="headerlink" title="约束类型"></a>约束类型</h3><h5 id="引用类型约束"><a href="#引用类型约束" class="headerlink" title="引用类型约束"></a>引用类型约束</h5><p>用于确保使用的类型是引用类型。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">struct RefSample&lt;T&gt; where T : class</span><br><span class="line"></span><br><span class="line">    // 有效</span><br><span class="line">    RefSample&lt;string&gt;</span><br><span class="line">    RefSample&lt;int[]&gt;</span><br><span class="line">    RefSample&lt;IDisposable&gt;</span><br><span class="line">    </span><br><span class="line">    // ..无效</span><br><span class="line">    RefSample&lt;Guid&gt;</span><br><span class="line">    RefSample&lt;int&gt;</span><br></pre></td></tr></table></figure>
+<pre><code class="lang-c#">struct RefSample&lt;T&gt; where T : class
+
+    // 有效
+    RefSample&lt;string&gt;
+    RefSample&lt;int[]&gt;
+    RefSample&lt;IDisposable&gt;
+
+    // ..无效
+    RefSample&lt;Guid&gt;
+    RefSample&lt;int&gt;
+</code></pre>
 <p>RefSample 仍然是值类型，以强调被约束的类型参数和类型本身的差异。</p>
 <h5 id="值类型约束"><a href="#值类型约束" class="headerlink" title="值类型约束"></a>值类型约束</h5><p>确保使用的类型实参是值类型。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">class ValSample&lt;T&gt; where T : struct</span><br><span class="line">    </span><br><span class="line">    // ..有效</span><br><span class="line">    ValSample&lt;int&gt;</span><br><span class="line">    ValSample&lt;FileMode&gt;</span><br><span class="line">    </span><br><span class="line">    // ..无效</span><br><span class="line">    ValSample&lt;object&gt;</span><br><span class="line">    ValSample&lt;StringBuilder&gt;</span><br></pre></td></tr></table></figure>
+<pre><code class="lang-c#">class ValSample&lt;T&gt; where T : struct
+
+    // ..有效
+    ValSample&lt;int&gt;
+    ValSample&lt;FileMode&gt;
+
+    // ..无效
+    ValSample&lt;object&gt;
+    ValSample&lt;StringBuilder&gt;
+</code></pre>
 <p>ValSample类型本身是一个引用类型，虽然T被约束成值类型。</p>
 <h5 id="构造函数类型约束"><a href="#构造函数类型约束" class="headerlink" title="构造函数类型约束"></a>构造函数类型约束</h5><p>​    此约束表示成T：new T ( ), 必须是所有类型参数的最后一个约束，它检查和类型实参是否有一个可用于创建类型实例的无参构造函数。</p>
 <p>适用于：</p>
@@ -567,7 +649,30 @@
 </li>
 </ul>
 <h5 id="转换类型约束"><a href="#转换类型约束" class="headerlink" title="转换类型约束"></a>转换类型约束</h5><p>​    允许你指定另一个类型，类型实参必须可以通过一致性，引用或装箱转换隐式地转换为该类型。你还可以规定一个类型实参必须可以转换为另一个类型实参，这成为<strong>类型参数约束</strong>。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line">class Sample&lt;T&gt; where T : Stream </span><br><span class="line">    Sample&lt;Stream&gt; // 一致性转换</span><br><span class="line">    Sample&lt;string&gt; // 无效</span><br><span class="line">    </span><br><span class="line">struct Sample&lt;T&gt; where T : IDispossable</span><br><span class="line">    Sample&lt;SqlConnection&gt;	// 引用转换</span><br><span class="line">    Sample&lt;StringBuilder&gt;	// ..无效</span><br><span class="line"></span><br><span class="line">class Sample&lt;T&gt; where T : IComparable&lt;T&gt;</span><br><span class="line">   	Sample&lt;int&gt; //装箱转换</span><br><span class="line">    Sample&lt;FileInfo&gt; // 无效</span><br><span class="line">    </span><br><span class="line">class Sample&lt;T, U&gt; where T : U</span><br><span class="line">    Sample&lt;Stream, IDisposable&gt;	 // 引用转换</span><br><span class="line">    Sample&lt;string, Idisposable&gt;		// 无效</span><br><span class="line"></span><br><span class="line">// 可以指定多个接口，但只能指定一个类。</span><br><span class="line">class Sample&lt;T&gt; where T : Stream,</span><br><span class="line">						  IEnumerable&lt;string&gt;,</span><br><span class="line">						  IComparable&lt;int&gt;</span><br><span class="line"></span><br><span class="line">// ..error            </span><br><span class="line">class Sample&lt;T&gt; where T : Stream, ArrayList,IComparable&lt;int&gt;</span><br></pre></td></tr></table></figure>
+<pre><code class="lang-c#">class Sample&lt;T&gt; where T : Stream 
+    Sample&lt;Stream&gt; // 一致性转换
+    Sample&lt;string&gt; // 无效
+
+struct Sample&lt;T&gt; where T : IDispossable
+    Sample&lt;SqlConnection&gt;    // 引用转换
+    Sample&lt;StringBuilder&gt;    // ..无效
+
+class Sample&lt;T&gt; where T : IComparable&lt;T&gt;
+       Sample&lt;int&gt; //装箱转换
+    Sample&lt;FileInfo&gt; // 无效
+
+class Sample&lt;T, U&gt; where T : U
+    Sample&lt;Stream, IDisposable&gt;     // 引用转换
+    Sample&lt;string, Idisposable&gt;        // 无效
+
+// 可以指定多个接口，但只能指定一个类。
+class Sample&lt;T&gt; where T : Stream,
+                          IEnumerable&lt;string&gt;,
+                          IComparable&lt;int&gt;
+
+// ..error            
+class Sample&lt;T&gt; where T : Stream, ArrayList,IComparable&lt;int&gt;
+</code></pre>
 <p>还有一系列限制：指定的类不可以是结构，密封类（比如string) 或者一下任何“特殊”类型。</p>
 <ul>
 <li><p>System.Object</p>
@@ -586,8 +691,40 @@
 </ul>
 <p>但是每一个值类型都有一个无参构造函数，所以假如已经有一个值类型约束，就不允许再指定一个构造函数约束。（如果T被约束成一个值类型，仍然可以在方法内部使用 new T() ）.</p>
 <p>其次，如果存在多个转换类型约束，并且其中一个为类，那么它应该出现在接口的前面，而且我们不能多次指定同一个接口。不同的类型参数可以有不同的约束，它们分别由一个单独的where引入。 说这么多不如看看下面的例子</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">/* 有效 */</span><br><span class="line"></span><br><span class="line">// 值约束，转换类型约束，构造函数类型约束</span><br><span class="line">class Sample&lt;T&gt;:where T : class, IDisposable, new()&#123;...&#125;</span><br><span class="line">    </span><br><span class="line">// 引用约束，转换类型约束</span><br><span class="line">class Sample&lt;T&gt; : where T : struct, IDisposable&#123;...&#125;</span><br><span class="line">    </span><br><span class="line">// 前面的一句T是值类型约束，后面的U是引用约束加上T的转换类型约束</span><br><span class="line">class Sample&lt;T, U&gt; : where T : class where U: struct, T&#123;...&#125;</span><br><span class="line">    </span><br><span class="line">// 前面T的是转换类型约束，后面的U是转换类型约束， 类写在前面</span><br><span class="line">class Sample&lt;T, U&gt; : where T : Stream where U : IDisposable&#123;...&#125;</span><br></pre></td></tr></table></figure>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">/* 无效 */</span><br><span class="line"></span><br><span class="line">// 引用类型和值类型约束一起</span><br><span class="line">class Sample&lt;T&gt;where T : class, struct&#123;...&#125;</span><br><span class="line"></span><br><span class="line">// 值类型约束要在其他类型约束前面，指定类约束就不能指定值类型约束和引用类型约束</span><br><span class="line">class Sample&lt;T&gt; where T : Stream, class&#123;...&#125;</span><br><span class="line"></span><br><span class="line">// new() 必须是最后一个约束</span><br><span class="line">class Sample&lt;T&gt; where T : new(), Stream&#123;...&#125;</span><br><span class="line"></span><br><span class="line">// 类约束要在接口约束之前</span><br><span class="line">class Sample&lt;T&gt; where T : IDisposable, Stream&#123;...&#125;</span><br><span class="line"></span><br><span class="line">// 多次指定同一个接口</span><br><span class="line">class Sample&lt;T&gt; where T :  XmlReader, IComparable, IComparable&#123;...&#125;</span><br><span class="line"></span><br><span class="line">// 因为T具有引用类型约束，不能作为U的约束</span><br><span class="line">class Sample&lt;T, U&gt; where T : struct where U   class, T &#123;...&#125;</span><br></pre></td></tr></table></figure>
+<pre><code class="lang-c#">/* 有效 */
+
+// 值约束，转换类型约束，构造函数类型约束
+class Sample&lt;T&gt;:where T : class, IDisposable, new(){...}
+
+// 引用约束，转换类型约束
+class Sample&lt;T&gt; : where T : struct, IDisposable{...}
+
+// 前面的一句T是值类型约束，后面的U是引用约束加上T的转换类型约束
+class Sample&lt;T, U&gt; : where T : class where U: struct, T{...}
+
+// 前面T的是转换类型约束，后面的U是转换类型约束， 类写在前面
+class Sample&lt;T, U&gt; : where T : Stream where U : IDisposable{...}
+</code></pre>
+<pre><code class="lang-c#">/* 无效 */
+
+// 引用类型和值类型约束一起
+class Sample&lt;T&gt;where T : class, struct{...}
+
+// 值类型约束要在其他类型约束前面，指定类约束就不能指定值类型约束和引用类型约束
+class Sample&lt;T&gt; where T : Stream, class{...}
+
+// new() 必须是最后一个约束
+class Sample&lt;T&gt; where T : new(), Stream{...}
+
+// 类约束要在接口约束之前
+class Sample&lt;T&gt; where T : IDisposable, Stream{...}
+
+// 多次指定同一个接口
+class Sample&lt;T&gt; where T :  XmlReader, IComparable, IComparable{...}
+
+// 因为T具有引用类型约束，不能作为U的约束
+class Sample&lt;T, U&gt; where T : struct where U   class, T {...}
+</code></pre>
 <p>如果我们从规范中对约束进行分类，将其划分为<strong>主要约束，次要约束，构造函数约束。</strong></p>
 <ul>
 <li>主要约束：引用类型约束，值类型约束，使用类的转换类型约束</li>
@@ -596,7 +733,25 @@
 <p>因此我们可以从规范上得知：三种约束都是可选的，但是主要约束只能有一个，次要约束只能有一个。 如果是值类型约束，就不能使用构造函数约束了，因为值类型默认都带有一个无参构造函数。</p>
 <h2 id="实现泛型"><a href="#实现泛型" class="headerlink" title="实现泛型"></a>实现泛型</h2><h4 id="默认值表达式"><a href="#默认值表达式" class="headerlink" title="默认值表达式"></a>默认值表达式</h4><p>有些情况虽然一般会被视为错误，但并不是十分严重的问题，也不应该视为异常。例如用户在键入的时候，由于输入一些非法的字符，程序假如能尝试解析一下文本，不必处理错误和捕捉异常，那么在容易出错的地方，可以提升性能。</p>
 <p>在c#中，可以采取默认值表达式来解决这个问题。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">static int CompareToDefault&lt;T&gt;(T value) where T : IComparable&lt;T&gt;</span><br><span class="line">        &#123;</span><br><span class="line">    		// CompareTo对于所有的引用类型的值都大于null,所以大于1.</span><br><span class="line">            return value.CompareTo(default(T));</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">        static void Main(string[] args)</span><br><span class="line">        &#123;</span><br><span class="line">            Console.WriteLine(CompareToDefault(&quot;x&quot;));</span><br><span class="line">            Console.WriteLine(CompareToDefault(10));</span><br><span class="line">            Console.WriteLine(CompareToDefault(0));</span><br><span class="line">            Console.WriteLine(CompareToDefault(-10));</span><br><span class="line">            Console.WriteLine(CompareToDefault(DateTime.MinValue));</span><br><span class="line"></span><br><span class="line">        &#125;</span><br></pre></td></tr></table></figure>
+<pre><code class="lang-c#">static int CompareToDefault&lt;T&gt;(T value) where T : IComparable&lt;T&gt;
+        {
+            // CompareTo对于所有的引用类型的值都大于null,所以大于1.
+            return value.CompareTo(default(T));
+        }
+
+
+
+
+        static void Main(string[] args)
+        {
+            Console.WriteLine(CompareToDefault(&quot;x&quot;));
+            Console.WriteLine(CompareToDefault(10));
+            Console.WriteLine(CompareToDefault(0));
+            Console.WriteLine(CompareToDefault(-10));
+            Console.WriteLine(CompareToDefault(DateTime.MinValue));
+
+        }
+</code></pre>
 <h4 id="直接比较"><a href="#直接比较" class="headerlink" title="直接比较"></a>直接比较</h4><ul>
 <li><p>如果一个类型参数是未约束的，那么只能在将该类型的值与null比较时才能使用<strong>== 和 ！= </strong>操作符，不能直接的比较</p>
 </li>
@@ -613,9 +768,27 @@
 <li><p>如果它只是一个引用类型，那么执行只是简单的引用比较。</p>
 </li>
 <li><p>如果它被进一步约束成继承自某个重载了== 和 ！= 操作符的特定类型，就会使用重载的操作符。但要注意，假如调用者指定的类型实参恰巧也进行了重载，那么这个重载操作符是不会使用的。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">static bool  AreReferencesEqual&lt;T&gt;(T first, T second) where T : class</span><br><span class="line">        &#123;</span><br><span class="line">            return first == second;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">        static void Main(string[] args)</span><br><span class="line">        &#123;</span><br><span class="line">            string name = &quot;jon&quot;;</span><br><span class="line">            string intro1 = &quot;My name is &quot; + name;</span><br><span class="line">            string intro2 = &quot;My name is &quot; + name;</span><br><span class="line"></span><br><span class="line">            Console.WriteLine(intro1 == intro2);</span><br><span class="line">            Console.WriteLine(AreReferencesEqual(intro1, intro2));</span><br><span class="line"> </span><br><span class="line">        &#125;</span><br><span class="line">&gt;&gt; true</span><br><span class="line">&gt;&gt; false</span><br></pre></td></tr></table></figure>
-</li>
+<p>```c#<br>static bool  AreReferencesEqual<t>(T first, T second) where T : class</t></p>
+<pre><code>    {
+        return first == second;
+    }
+</code></pre></li>
 </ul>
+<pre><code>      static void Main(string[] args)
+      {
+          string name = &quot;jon&quot;;
+          string intro1 = &quot;My name is &quot; + name;
+          string intro2 = &quot;My name is &quot; + name;
+
+          Console.WriteLine(intro1 == intro2);
+          Console.WriteLine(AreReferencesEqual(intro1, intro2));
+
+      }
+</code></pre><blockquote>
+<blockquote>
+<p>true<br>false<br>  ```</p>
+</blockquote>
+</blockquote>
 
       
     </div>
@@ -737,7 +910,7 @@
                 
                   <a href="/archives/">
                 
-                    <span class="site-state-item-count">7</span>
+                    <span class="site-state-item-count">8</span>
                     <span class="site-state-item-name">日志</span>
                   </a>
                 </div>
@@ -844,7 +1017,9 @@
 
     <footer id="footer" class="footer">
       <div class="footer-inner">
-        <div class="copyright">&copy; <span itemprop="copyrightYear">2019</span>
+        <script src="/js/highlight.pack.js"></script>
+<script>hljs.initHighlightingOnLoad();</script>
+<div class="copyright">&copy; <span itemprop="copyrightYear">2020</span>
   <span class="with-love" id="animate">
     <i class="fa fa-user"></i>
   </span>
@@ -858,7 +1033,7 @@
     
       <span class="post-meta-item-text">站点总字数：</span>
     
-    <span title="站点总字数">16k</span>
+    <span title="站点总字数">18k</span>
   
 
   
@@ -869,7 +1044,7 @@
     
       <span class="post-meta-item-text">站点阅读时长 &asymp;</span>
     
-    <span title="站点阅读时长">27 分钟</span>
+    <span title="站点阅读时长">30 分钟</span>
   
 </div>
 

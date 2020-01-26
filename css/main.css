@@ -1775,7 +1775,7 @@ pre .javascript .function {
   width: 4px;
   height: 4px;
   border-radius: 50%;
-  background: #85ff39;
+  background: #505267;
 }
 .feed-link,
 .chat {
@@ -3016,4 +3016,19 @@ ul.breadcrumb li+li:last-child {
 .post-body h4,
 .post-body h5 {
   color: #2ea9df;
+}
+pre code {
+  white-space: pre; /* this code line alone can make code block to slide in Chrome */
+  overflow-wrap: break-word;
+  word-wrap: break-word; /* add this line to make code block to slide in Safari */
+}
+code,
+kbd,
+pre,
+samp {
+  font-family: Consolas, Menlo; /*设置代码字体*/
+  font-size: 1em;
+}
+pre {
+  background: #f7f7f7;
 }
