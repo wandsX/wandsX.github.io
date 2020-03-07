@@ -122,7 +122,8 @@
 <meta property="og:image" content="https://cdn.mathpix.com/snip/images/7ysUDJtcvu3EfNBTD59Dyz52LN3kFuPYa80xjNd0teo.original.fullsize.png">
 <meta property="og:image" content="https://cdn.mathpix.com/snip/images/C5myQv2_1A50RkbvoRKauTQDn6-mZdIo-DF0dPWR-bI.original.fullsize.png">
 <meta property="og:image" content="https://cdn.mathpix.com/snip/images/FG2pazGL_8m4c6efRsU8qZJJbMWB6uqIcKJGrkuW2k0.original.fullsize.png">
-<meta property="og:updated_time" content="2020-02-05T04:10:06.210Z">
+<meta property="og:image" content="https://cdn.mathpix.com/snip/images/QUp7uLPrwBsM4F_gJuESdQiJfxS209iB2k3QdWWy6Sk.original.fullsize.png">
+<meta property="og:updated_time" content="2020-02-29T09:37:22.524Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="c++ primer 第二章学习笔记">
 <meta name="twitter:description" content="本章主要讲述了c++变量声明,以及各种修饰符的作用和技巧">
@@ -453,7 +454,7 @@
                 
                   <span class="post-meta-item-text">更新于</span>
                 
-                <time title="修改时间：2020-02-05 12:10:06" itemprop="dateModified" datetime="2020-02-05T12:10:06+08:00">2020-02-05</time>
+                <time title="修改时间：2020-02-29 17:37:22" itemprop="dateModified" datetime="2020-02-29T17:37:22+08:00">2020-02-29</time>
               
             
           </span>
@@ -506,7 +507,7 @@
                 
                   <span class="post-meta-item-text">本文字数：</span>
                 
-                <span title="本文字数">13k</span>
+                <span title="本文字数">15k</span>
               
 
               
@@ -520,7 +521,7 @@
                 
                   <span class="post-meta-item-text">阅读时长 &asymp;</span>
                 
-                <span title="阅读时长">22 分钟</span>
+                <span title="阅读时长">25 分钟</span>
               
             </div>
           
@@ -541,7 +542,6 @@
 
       
         <p><center><b>本章主要讲述了c++变量声明,以及各种修饰符的作用和技巧</b></center><br><a id="more"></a></p>
-<p>[toc]</p>
 <h2 id="0x00-变量初始化和赋值"><a href="#0x00-变量初始化和赋值" class="headerlink" title="0x00. 变量初始化和赋值"></a>0x00. 变量初始化和赋值</h2><p><strong>初始化指变量在创建时给它赋予一个初始值，赋值是将当前对象的值擦除掉,而以一个新值来代替.  </strong></p>
 <pre><code class="lang-c++">int var1 = 1;  // 这是初始化。
 
@@ -915,7 +915,7 @@ auto sz = 0, pi = 3.14; // error, sz和pi的类型不一致.
 <pre><code class="lang-c++">int i = 0, &amp;r = i;
 auto a = r;        // 采用引用r初始化a,实质上是采用i的值取初始化a
 </code></pre>
-<p>其次,auto 一般会忽略掉顶层const，保留底层const。</p>
+<p>其次,auto <strong>一般忽略掉顶层const，保留底层const</strong>。</p>
 <pre><code class="lang-c++">int i = 0;
 const int ci = i, &amp;cr = ci;    // cr是一个指向整数常量的引用,是底层const, ci是整数常量,是顶层const
 auto b = ci;    // b是一个整数 ci顶层const特性被忽略掉
@@ -926,7 +926,50 @@ auto e = &amp;ci;   // e是一个指向常量整数的指针,对常量对象取�
 <p>如果你希望推断出的auto类型是一个顶层const,需要明确指出:</p>
 <pre><code class="lang-c++">const auto f = ci; // 这个时候f才有顶层const特性, f是const int
 </code></pre>
-<h2 id="0x0-decltype"><a href="#0x0-decltype" class="headerlink" title="0x0. decltype"></a>0x0. decltype</h2><ul>
+<p>还可以将引用的类型设置为 <strong>auto</strong>,此时原来的初始化规则仍然适用:</p>
+<pre><code class="lang-c++">auto &amp;g = ci;    // ci是整数常量(顶层const),g是一个整型常量引用(底层const)
+auto &amp;h = 42;    // 错误,非常量引用不能绑定字面值
+const auto &amp;j = 42;    // 可以为常量引用绑定字面值.
+</code></pre>
+<p>要在一条语句中定义多个变量,切记，<strong>符号&amp;和*只从属于某个声明符，而非基本数据类型的一部分</strong>，因此初始值必须是同一种类型： </p>
+<pre><code class="lang-c++">auto k = ci, &amp;l = i;     //k是整数，l是整型引用(底层const)
+auto &amp;m = ci, *p = &amp;ci;    //m是对整型常量的引用(底层const)，p是指向整型常量的指针(底层const)
+
+// error, i的类型是int, 而&amp;ci的类型是const int
+auto &amp;n = i, *p2 = &amp;ci;        // n是整型引用, p2是指向整型常量的指针(忽略了顶层const).
+</code></pre>
+<h3 id="7-3-练习"><a href="#7-3-练习" class="headerlink" title="7.3 练习"></a>7.3 练习</h3><p><img src="https://cdn.mathpix.com/snip/images/QUp7uLPrwBsM4F_gJuESdQiJfxS209iB2k3QdWWy6Sk.original.fullsize.png"></p>
+<pre><code>题33:
+    a=42; // a 是 int,合法
+    b=42; // b 是一个 int,(ci的顶层const在拷贝时被忽略掉了)
+    c=42; // c 也是一个int
+    d=42; // d 是一个 int *,所以语句非法
+    e=42; // e 是一个 const int *, 所以语句非法
+    g=42; // g 是一个 const int 的引用，引用都是底层const，所以不能被赋值
+题35:
+    j是int, k是const int &amp;, p是const int *, j2是const int, k2是const int &amp;
+</code></pre><h2 id="0x08-decltype类型指示符"><a href="#0x08-decltype类型指示符" class="headerlink" title="0x08. decltype类型指示符"></a>0x08. decltype类型指示符</h2><h3 id="8-1-相关概念"><a href="#8-1-相关概念" class="headerlink" title="8.1 相关概念"></a>8.1 相关概念</h3><p>有时会遇到这种情况：希望从表达式的类型推断出要定义的变量的类型，但是不想用该表达式的值初始化变量。为了满是这一要求，C++目新标准引入了第二种类型说明符<strong>decltype</strong>,它的作用是选择并返回操作数的数据类型。在此过程中，编译器分析表达式并得到它的类型，却不实际计算表达式的值：</p>
+<pre><code class="lang-c++">decltype(function()) sum = x;
+</code></pre>
+<p><strong>编译器并不实际调用函数,而是使用当调用发生时f的返回值类型作为sum的类型</strong>。换句话说，编译器为sum指定的类型是什么呢？就是假如f被调用的话将会返回的那个类型。<br>decLtype处理顶层const和引用的方式与auto有些许不同。如果decltype使用的表达式是一个变量，则decltype返回该变量的类型（包括顶层const和引用在内）：</p>
+<pre><code class="lang-c++">const int ci = 0, &amp;cj = ci;
+decltype(ci) x = 0;    //x类型是const int 
+decltype(cj) y = x; // y类型是const int &amp;, y绑定到变量x.
+decltype(cj) z;        // 错误, z是const int &amp;, 必须初始化.
+</code></pre>
+<h3 id="8-2-decltype和引用"><a href="#8-2-decltype和引用" class="headerlink" title="8.2 decltype和引用"></a>8.2 decltype和引用</h3><p>如果decltype使用的表达式不是一个变量，则decltype返回表达式结果对应的类型。有些表达式将向decltype返回一个引用类型。一般来说当这种情况发生时，意咪着该表达式的结果对象能作为一条赋值语句的左值：</p>
+<pre><code class="lang-c++">//decltype的结果可以是引用类型
+int i = 42, *p = &amp;i, &amp;r = i;
+decltype(r + 0) b;        // 正确，加法的结果是int,因此b是一个(未初始化的)int.
+decltype(*p) c;            // 正确，c是int&amp;,必须初始化。
+</code></pre>
+<p>​        因为r是一个引用，因此<strong>decltype（r）</strong>的结果是引用类型。如果想让结果类型是r所指的类型，可以把r作为表达式的一部分，如<strong>r+0</strong>，显然这个表达式的结果将是一个具体值而非一个引用。</p>
+<p>另一方面，<strong>如果表达式的内容是解引用操作，则decltype将得到引用类型，正如我们所熟悉的那样，解引用指针可以得到指针所指的对象</strong>，而且还能给这个对象赋值，因此，<strong>decltype(*p)</strong>的结果类型就是int&amp;，而非int*.</p>
+<p>decltype和auto的另一处重要区别是，<strong>decltype的结果类型与表达式形式密切相关</strong>。有一种情况需要特别注意：对于decltype所用的表达式来说，如果变量名加上了一对括号，则得到的类型与小加括号时会有不同。如果decltype使用的是一个不加括号的变量。则得到的结果就是该变量的类型：如果给变量加上了一层或多层括号，编译器就会把它当成是一个表达式。变量是一种可以作为赋值语句左值的特殊表达式，所以这样的decltype就会得到引用类型。</p>
+<pre><code class="lang-c++">decltype((i)) d;     // 错误，d是int&amp;,必须初始化。
+decltype(i) e;        // 正确，e是一个未初始化的int.
+</code></pre>
+<ul>
 <li>decltype(( variable ))结果永远是引用</li>
 <li>decltype( variable ) 只有variable本身是引用才是引用。</li>
 </ul>
@@ -1049,7 +1092,7 @@ auto e = &amp;ci;   // e是一个指向常量整数的指针,对常量对象取�
                 
                   <a href="/archives/">
                 
-                    <span class="site-state-item-count">8</span>
+                    <span class="site-state-item-count">13</span>
                     <span class="site-state-item-name">日志</span>
                   </a>
                 </div>
@@ -1135,7 +1178,7 @@ auto e = &amp;ci;   // e是一个指向常量整数的指针,对常量对象取�
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#0x00-变量初始化和赋值"><span class="nav-text">0x00. 变量初始化和赋值</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#0-1-列表初始化"><span class="nav-text">0.1 列表初始化</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#0-2-默认初始化"><span class="nav-text">0.2 默认初始化</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#0x01-声明和定义"><span class="nav-text">0x01. 声明和定义</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#0x02-字面值常量"><span class="nav-text">0x02. 字面值常量</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#2-1-字面值介绍"><span class="nav-text">2.1 字面值介绍</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-2-指定字面值的类型"><span class="nav-text">2.2 指定字面值的类型</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-3-练习"><span class="nav-text">2.3 练习</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#2-3-1"><span class="nav-text">2.3.1</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-3-2"><span class="nav-text">2.3.2</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-3-3"><span class="nav-text">2.3.3</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#0x03-复合类型"><span class="nav-text">0x03. 复合类型</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#3-1-引用"><span class="nav-text">3.1 引用</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#3-1-1-引用必须初始化"><span class="nav-text">3.1.1 引用必须初始化</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#3-1-2-引用即别名"><span class="nav-text">3.1.2 引用即别名</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#3-1-3-引用可以怎样被定义"><span class="nav-text">3.1.3 引用可以怎样被定义</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#3-1-4-练习"><span class="nav-text">3.1.4 练习</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#3-1-4-1"><span class="nav-text">3.1.4.1</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#3-1-4-2"><span class="nav-text">3.1.4.2</span></a></li></ol></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-2-指针"><span class="nav-text">3.2 指针</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#3-2-1-获取对象的值"><span class="nav-text">3.2.1 获取对象的值</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#3-2-2-指针值约定"><span class="nav-text">3.2.2 指针值约定</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#3-2-3-void-指针"><span class="nav-text">3.2.3 void* 指针</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#3-2-4-练习"><span class="nav-text">3.2.4 练习</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-3-指针和引用的区别"><span class="nav-text">3.3 指针和引用的区别</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-4-复合类型的声明"><span class="nav-text">3.4 复合类型的声明</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#3-4-1-指向指针的指针"><span class="nav-text">3.4.1 指向指针的指针</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#3-4-2-指向指针的引用"><span class="nav-text">3.4.2 指向指针的引用.</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#3-4-3-练习"><span class="nav-text">3.4.3 练习</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#3-4-3-1-说明下列变量的类型和值"><span class="nav-text">3.4.3.1 说明下列变量的类型和值.</span></a></li></ol></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#0x04-const限定符"><span class="nav-text">0x04. const限定符</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#4-0-相关概念"><span class="nav-text">4.0 相关概念</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#4-0-1-顶层const-底层const"><span class="nav-text">4.0.1 顶层const, 底层const</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#4-0-2-类型转换"><span class="nav-text">4.0.2 类型转换</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#4-0-3-练习"><span class="nav-text">4.0.3 练习</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-1-const-和-指针"><span class="nav-text">4.1 const 和 指针</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#4-1-1-指向常量的指针"><span class="nav-text">4.1.1 指向常量的指针</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#4-1-2-常量指针"><span class="nav-text">4.1.2 常量指针</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#4-1-3-练习"><span class="nav-text">4.1.3 练习</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-2-const引用"><span class="nav-text">4.2 const引用</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#4-2-1-初始化和对const的引用"><span class="nav-text">4.2.1 初始化和对const的引用</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#4-2-2-对const引用可能引用一个并非const对象"><span class="nav-text">4.2.2 对const引用可能引用一个并非const对象</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#0x05-constexpr和常量表达式"><span class="nav-text">0x05. constexpr和常量表达式</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#5-1-常量表达式"><span class="nav-text">5.1 常量表达式</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#5-2-constexpr变量"><span class="nav-text">5.2 constexpr变量</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#5-3-字面值类型"><span class="nav-text">5.3 字面值类型</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#5-4-指针和constexpr"><span class="nav-text">5.4 指针和constexpr</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#0x06-类型别名"><span class="nav-text">0x06 类型别名</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#6-1-相关使用"><span class="nav-text">6.1 相关使用</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#6-2-指针，常量和类型别名"><span class="nav-text">6.2 指针，常量和类型别名</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#0x07-auto"><span class="nav-text">0x07. auto</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#7-1-相关概念"><span class="nav-text">7.1 相关概念</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#7-2-复合类型-常量和auto"><span class="nav-text">7.2 复合类型,常量和auto</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#0x0-decltype"><span class="nav-text">0x0. decltype</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#0x00-变量初始化和赋值"><span class="nav-text">0x00. 变量初始化和赋值</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#0-1-列表初始化"><span class="nav-text">0.1 列表初始化</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#0-2-默认初始化"><span class="nav-text">0.2 默认初始化</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#0x01-声明和定义"><span class="nav-text">0x01. 声明和定义</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#0x02-字面值常量"><span class="nav-text">0x02. 字面值常量</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#2-1-字面值介绍"><span class="nav-text">2.1 字面值介绍</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-2-指定字面值的类型"><span class="nav-text">2.2 指定字面值的类型</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-3-练习"><span class="nav-text">2.3 练习</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#2-3-1"><span class="nav-text">2.3.1</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-3-2"><span class="nav-text">2.3.2</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-3-3"><span class="nav-text">2.3.3</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#0x03-复合类型"><span class="nav-text">0x03. 复合类型</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#3-1-引用"><span class="nav-text">3.1 引用</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#3-1-1-引用必须初始化"><span class="nav-text">3.1.1 引用必须初始化</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#3-1-2-引用即别名"><span class="nav-text">3.1.2 引用即别名</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#3-1-3-引用可以怎样被定义"><span class="nav-text">3.1.3 引用可以怎样被定义</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#3-1-4-练习"><span class="nav-text">3.1.4 练习</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#3-1-4-1"><span class="nav-text">3.1.4.1</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#3-1-4-2"><span class="nav-text">3.1.4.2</span></a></li></ol></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-2-指针"><span class="nav-text">3.2 指针</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#3-2-1-获取对象的值"><span class="nav-text">3.2.1 获取对象的值</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#3-2-2-指针值约定"><span class="nav-text">3.2.2 指针值约定</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#3-2-3-void-指针"><span class="nav-text">3.2.3 void* 指针</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#3-2-4-练习"><span class="nav-text">3.2.4 练习</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-3-指针和引用的区别"><span class="nav-text">3.3 指针和引用的区别</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-4-复合类型的声明"><span class="nav-text">3.4 复合类型的声明</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#3-4-1-指向指针的指针"><span class="nav-text">3.4.1 指向指针的指针</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#3-4-2-指向指针的引用"><span class="nav-text">3.4.2 指向指针的引用.</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#3-4-3-练习"><span class="nav-text">3.4.3 练习</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#3-4-3-1-说明下列变量的类型和值"><span class="nav-text">3.4.3.1 说明下列变量的类型和值.</span></a></li></ol></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#0x04-const限定符"><span class="nav-text">0x04. const限定符</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#4-0-相关概念"><span class="nav-text">4.0 相关概念</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#4-0-1-顶层const-底层const"><span class="nav-text">4.0.1 顶层const, 底层const</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#4-0-2-类型转换"><span class="nav-text">4.0.2 类型转换</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#4-0-3-练习"><span class="nav-text">4.0.3 练习</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-1-const-和-指针"><span class="nav-text">4.1 const 和 指针</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#4-1-1-指向常量的指针"><span class="nav-text">4.1.1 指向常量的指针</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#4-1-2-常量指针"><span class="nav-text">4.1.2 常量指针</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#4-1-3-练习"><span class="nav-text">4.1.3 练习</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-2-const引用"><span class="nav-text">4.2 const引用</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#4-2-1-初始化和对const的引用"><span class="nav-text">4.2.1 初始化和对const的引用</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#4-2-2-对const引用可能引用一个并非const对象"><span class="nav-text">4.2.2 对const引用可能引用一个并非const对象</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#0x05-constexpr和常量表达式"><span class="nav-text">0x05. constexpr和常量表达式</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#5-1-常量表达式"><span class="nav-text">5.1 常量表达式</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#5-2-constexpr变量"><span class="nav-text">5.2 constexpr变量</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#5-3-字面值类型"><span class="nav-text">5.3 字面值类型</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#5-4-指针和constexpr"><span class="nav-text">5.4 指针和constexpr</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#0x06-类型别名"><span class="nav-text">0x06 类型别名</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#6-1-相关使用"><span class="nav-text">6.1 相关使用</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#6-2-指针，常量和类型别名"><span class="nav-text">6.2 指针，常量和类型别名</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#0x07-auto"><span class="nav-text">0x07. auto</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#7-1-相关概念"><span class="nav-text">7.1 相关概念</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#7-2-复合类型-常量和auto"><span class="nav-text">7.2 复合类型,常量和auto</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#7-3-练习"><span class="nav-text">7.3 练习</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#0x08-decltype类型指示符"><span class="nav-text">0x08. decltype类型指示符</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#8-1-相关概念"><span class="nav-text">8.1 相关概念</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#8-2-decltype和引用"><span class="nav-text">8.2 decltype和引用</span></a></li></ol></li></ol></div>
             
 
           </div>
@@ -1172,7 +1215,7 @@ auto e = &amp;ci;   // e是一个指向常量整数的指针,对常量对象取�
     
       <span class="post-meta-item-text">站点总字数：</span>
     
-    <span title="站点总字数">28k</span>
+    <span title="站点总字数">43k</span>
   
 
   
@@ -1183,7 +1226,7 @@ auto e = &amp;ci;   // e是一个指向常量整数的指针,对常量对象取�
     
       <span class="post-meta-item-text">站点阅读时长 &asymp;</span>
     
-    <span title="站点阅读时长">47 分钟</span>
+    <span title="站点阅读时长">1:12</span>
   
 </div>
 

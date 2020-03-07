@@ -117,7 +117,7 @@
 <meta property="og:site_name" content="疯癫">
 <meta property="og:description" content="本文初识标准库和迭代器,以及using在 c++11中新用处。">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2019-12-20T07:59:16.865Z">
+<meta property="og:updated_time" content="2020-03-03T03:46:37.766Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="c++ primer 第三章学习笔记">
 <meta name="twitter:description" content="本文初识标准库和迭代器,以及using在 c++11中新用处。">
@@ -447,7 +447,7 @@
                 
                   <span class="post-meta-item-text">更新于</span>
                 
-                <time title="修改时间：2019-12-20 15:59:16" itemprop="dateModified" datetime="2019-12-20T15:59:16+08:00">2019-12-20</time>
+                <time title="修改时间：2020-03-03 11:46:37" itemprop="dateModified" datetime="2020-03-03T11:46:37+08:00">2020-03-03</time>
               
             
           </span>
@@ -500,7 +500,7 @@
                 
                   <span class="post-meta-item-text">本文字数：</span>
                 
-                <span title="本文字数">1.6k</span>
+                <span title="本文字数">9.2k</span>
               
 
               
@@ -514,7 +514,7 @@
                 
                   <span class="post-meta-item-text">阅读时长 &asymp;</span>
                 
-                <span title="阅读时长">3 分钟</span>
+                <span title="阅读时长">15 分钟</span>
               
             </div>
           
@@ -535,8 +535,8 @@
 
       
         <p><center><b>本文初识标准库和迭代器,以及using在 c++11中新用处。</b></center><br><a id="more"></a></p>
-<h3 id="3-1-using-声明"><a href="#3-1-using-声明" class="headerlink" title="3.1 using 声明"></a>3.1 using 声明</h3><p>头文件不应该使用using 声明,因为头文件的内容会拷贝到所有引用它的文件中。这样容易产生名字冲突。</p>
-<h3 id="3-2-string"><a href="#3-2-string" class="headerlink" title="3.2 string"></a>3.2 string</h3><h4 id="初始化"><a href="#初始化" class="headerlink" title="初始化"></a>初始化</h4><pre><code class="lang-c++">string s1;          // 默认初始化 空串
+<h2 id="0x00-命名空间的using-声明"><a href="#0x00-命名空间的using-声明" class="headerlink" title="0x00. 命名空间的using 声明"></a>0x00. 命名空间的using 声明</h2><p>头文件不应该使用using 声明,因为头文件的内容会拷贝到所有引用它的文件中。这样容易产生名字冲突。</p>
+<h2 id="0x01-标准库类型string"><a href="#0x01-标准库类型string" class="headerlink" title="0x01. 标准库类型string"></a>0x01. 标准库类型string</h2><h3 id="1-1-初始化"><a href="#1-1-初始化" class="headerlink" title="1.1 初始化"></a>1.1 初始化</h3><pre><code class="lang-c++">string s1;          // 默认初始化 空串
 
 string s2(s1);      // s2是s1的副本。
 
@@ -546,34 +546,222 @@ string s3(&quot;value&quot;); // 等价写法 string s3 = &quot;value&quot;;
 
 string s4(n, &#39;c&#39;);  // s4为连续n个字符c组成的字符串。
 </code></pre>
-<p>如果使用等号初始化一个变量的时候, 实际上执行的是拷贝初始化。<br>反之则是直接初始化。</p>
-<h4 id="读写string-对象"><a href="#读写string-对象" class="headerlink" title="读写string 对象"></a>读写string 对象</h4><pre><code class="lang-c++">int main()
+<h3 id="1-2-直接初始化和拷贝初始化"><a href="#1-2-直接初始化和拷贝初始化" class="headerlink" title="1.2 直接初始化和拷贝初始化"></a>1.2 直接初始化和拷贝初始化</h3><p>如果使用等号初始化一个变量的时候, 实际上执行的是拷贝初始化，反之则是直接初始化。</p>
+<p>当初始值只有一个时，使用直接初始化或靠被初始化都行。</p>
+<pre><code class="lang-c++">string s5 = &quot;hiya&quot;;    //拷贝初始化。
+string s6(&quot;jojo&quot;);    // 直接初始化。
+string s7(10, &#39;c&#39;);    // 直接初始化，s7的内容是cccccccccc
+</code></pre>
+<p>对于多个值进行初始化的时候，用拷贝初始化的方式来处理也不是不可以,不过需要显式地的创建一个(临时)对象用于拷贝：</p>
+<pre><code class="lang-c++">string s8 = string(10, &#39;c&#39;);
+
+// 上面这条语句等价于下面的
+string temp(10, &#39;c&#39;);
+string s8 = temp;
+</code></pre>
+<h3 id="1-3-读写string-对象"><a href="#1-3-读写string-对象" class="headerlink" title="1.3 读写string 对象"></a>1.3 读写string 对象</h3><pre><code class="lang-c++">int main()
 {
     string str;
     cin &gt;&gt; str;
-
     cout &lt;&lt; str &lt;&lt; endl;
 
     return 0;
 }
 </code></pre>
-<p><strong>string对象回自动忽略开头的空白(空格符, 换行符, 制表符等)并从第一个真正的字符开始读起,直到遇到下一个空白开始。</strong></p>
-<p>getline读取一整行，直到遇到换行符，所读的内容存入string对象中。换行符也被读进来了,但是被丢弃了,并没有存储到string对象中</p>
-<p>size()函数的返回值是string::size_type类型,这是一个与机器无关的无符号整数类型。</p>
-<p>所以当出现string.size()就不要使用int了。</p>
-<h4 id="string的比较"><a href="#string的比较" class="headerlink" title="string的比较"></a>string的比较</h4><p>关系运算符 &lt; &lt;= &gt; &gt;=都遵循以下的字典顺序</p>
+<p>上面的程序定义了一个名为str的空string,然后将标准输入的内容读取到s中。在执行读取的操作时，<strong>string对象回自动忽略开头的空白(空格符, 换行符, 制表符等)并从第一个真正的字符开始读起,直到遇到下一个空白开始。</strong></p>
+<h4 id="1-3-1-读取未知数量的string对象"><a href="#1-3-1-读取未知数量的string对象" class="headerlink" title="1.3.1 读取未知数量的string对象"></a>1.3.1 读取未知数量的string对象</h4><pre><code class="lang-c++">int main()
+{
+    string word;
+    while(cin &gt;&gt; word)
+    {
+        cout &lt;&lt; word &lt;&lt; endl;
+    }
+    return 0;
+}
+</code></pre>
+<p>一旦遇到文件结束符或非法输入也就结束了。</p>
+<h4 id="1-3-2-getline"><a href="#1-3-2-getline" class="headerlink" title="1.3.2 getline()"></a>1.3.2 getline()</h4><p>getline读取一整行，直到遇到换行符，所读的内容存入string对象中。换行符也被读进来了,但是被丢弃了,并没有存储到string对象中</p>
+<h3 id="1-4-empty-和size"><a href="#1-4-empty-和size" class="headerlink" title="1.4 empty()和size()"></a>1.4 empty()和size()</h3><p>empty函数根据string对象是否为空返回一个对应的布尔值。</p>
+<p>size()函数的返回值是string::size_type类型,这是一个与机器无关的无符号整数类型。所以当出现string.size()就不要使用int了。</p>
+<h3 id="1-5-string的比较"><a href="#1-5-string的比较" class="headerlink" title="1.5 string的比较"></a>1.5 string的比较</h3><p>关系运算符 <strong>&lt;， &lt;= ，&gt;， &gt;=</strong>都遵循以下的字典顺序：</p>
 <ol>
-<li>如果两个string对象的长度不同,而且较短string对象的每个字符都与较长string对象对应位置上的字符相同,就说较短的小于较长的。</li>
-<li>如果两个string对象在某些对应位置上不一致,则string对象比较的结果实际上是第一对相异字符比较的结果。</li>
+<li><strong>如果两个string对象的长度不同,而且较短string对象的每个字符都与较长string对象对应位置上的字符相同,就说较短的string对象小于较长的string对象。</strong></li>
+<li><strong>如果两个string对象在某些对应位置上不一致,则string对象比较的结果实际上是第一对相异字符比较的结果。</strong></li>
 </ol>
-<h3 id="3-3-vector"><a href="#3-3-vector" class="headerlink" title="3.3 vector"></a>3.3 vector</h3><p>实例化:编译器根据模板创建类和函数的过程。</p>
-<h4 id="初始化-1"><a href="#初始化-1" class="headerlink" title="初始化"></a>初始化</h4><pre><code class="lang-c++">vector(T) v1;   // v1是一个空vector,执行T类型的默认初始化。
+<h3 id="1-6-字面值和string对象相加"><a href="#1-6-字面值和string对象相加" class="headerlink" title="1.6 字面值和string对象相加"></a>1.6 字面值和string对象相加</h3><pre><code class="lang-c++">string s1 = &quot;hello&quot;, s2 = &quot;world&quot;；
 
-vector(T) v2(v1);   // v2中包含了v1所有元素的副本。
+string s3 = s1 + &quot;,&quot; + s2 + &#39;\n\;
+</code></pre>
+<p>当我们把string对象和字符字面值及字符串字面值混在一条语句使用时，必须确保每个加法运算符(+)的两侧运算对象至少有一个是string：</p>
+<h3 id="1-7-练习1"><a href="#1-7-练习1" class="headerlink" title="1.7 练习1"></a>1.7 练习1</h3><h4 id="1-7-1-编写一段程序从标准输入中一次读入一行，然后修改该程序使其一次读入一个词。"><a href="#1-7-1-编写一段程序从标准输入中一次读入一行，然后修改该程序使其一次读入一个词。" class="headerlink" title="1.7.1 编写一段程序从标准输入中一次读入一行，然后修改该程序使其一次读入一个词。"></a>1.7.1 编写一段程序从标准输入中一次读入一行，然后修改该程序使其一次读入一个词。</h4><pre><code class="lang-c++">// 读入一整行
+void lineOfstr(string &amp;str)
+{
+    while (getline(cin, str))
+    {
+        cout &lt;&lt; str &lt;&lt; endl;
+    }
+}
 
-vector(T) v2 = v1;   //等价于v2(v1)。
+// 读入一个词
+void wordOfstr(string &amp;str)
+{
+    while (cin &gt;&gt; str)
+    {
+        cout &lt;&lt; str &lt;&lt; endl;
+    }
+}
 
-vector(T) v3(n, nval); // v3包含了n个重复的元素,每个元素的值都是val。
+int main()
+{
+    string str;
+//    lineOfstr(str);
+    wordOfstr(str);
+
+    return 0;
+}
+</code></pre>
+<h4 id="1-7-2-请说明string类的输入运算符和getline函数分别是如何处理空白字符的。"><a href="#1-7-2-请说明string类的输入运算符和getline函数分别是如何处理空白字符的。" class="headerlink" title="1.7.2 请说明string类的输入运算符和getline函数分别是如何处理空白字符的。"></a>1.7.2 请说明string类的输入运算符和getline函数分别是如何处理空白字符的。</h4><pre><code>cin &gt;&gt; s 的读取，string对象会忽略开头的空白并从第一个真正的字符开始，直到遇见下一空白为止。
+
+getline(cin, s) 的读取，string对象会从输入流中读取字符，直到遇见换行符为止。
+</code></pre><h4 id="1-7-3-编写一段程序读取两个字符串，比较其是否相等并输出结果。如果不相等，输出比较大的那个字符串。改写上述程序，比较输入的两个字符串是否等长，如果不等长，输出长度较大的那个字符串。"><a href="#1-7-3-编写一段程序读取两个字符串，比较其是否相等并输出结果。如果不相等，输出比较大的那个字符串。改写上述程序，比较输入的两个字符串是否等长，如果不等长，输出长度较大的那个字符串。" class="headerlink" title="1.7.3 编写一段程序读取两个字符串，比较其是否相等并输出结果。如果不相等，输出比较大的那个字符串。改写上述程序，比较输入的两个字符串是否等长，如果不等长，输出长度较大的那个字符串。"></a>1.7.3 编写一段程序读取两个字符串，比较其是否相等并输出结果。如果不相等，输出比较大的那个字符串。改写上述程序，比较输入的两个字符串是否等长，如果不等长，输出长度较大的那个字符串。</h4><pre><code class="lang-c++">
+void compareStrOne(const string &amp;str1, const string &amp;str2)
+{
+    if (str1 == str2)
+    {
+        cout &lt;&lt; &quot;The two strings are equals.\n&quot;;
+    }
+    else
+    {
+        cout &lt;&lt; &quot;The larger string is &quot; &lt;&lt; ((str1 &gt; str2) ? str1 : str2) &lt;&lt; &quot;.\n&quot;;
+    }
+}
+
+void compareStrTwo(const string &amp;str1, const string &amp;str2)
+{
+    if (str1.length() == str2.length())
+    {
+        cout &lt;&lt; &quot;The two strings are equal length.&quot;;
+    }
+    else
+    {
+        cout &lt;&lt; &quot;The longer string is &quot; &lt;&lt; ((str1.size() &gt; str2.size()) ? str1 : str2) &lt;&lt; &quot;.\n&quot;;
+    }
+
+}
+
+int main()
+{
+    string str1;
+    string str2;
+    while(cin &gt;&gt; str1 &gt;&gt; str2)
+    {
+        compareStrOne(str1, str2);
+        compareStrTwo(str1, str2);
+    }
+
+    return 0;
+}
+</code></pre>
+<h3 id="1-8-处理string对象中的字符"><a href="#1-8-处理string对象中的字符" class="headerlink" title="1.8 处理string对象中的字符"></a>1.8 处理string对象中的字符</h3><h4 id="1-8-1-处理每个字符-gt-使用基于范围的for语句"><a href="#1-8-1-处理每个字符-gt-使用基于范围的for语句" class="headerlink" title="1.8.1 处理每个字符-&gt;使用基于范围的for语句"></a>1.8.1 处理每个字符-&gt;使用基于范围的for语句</h4><pre><code class="lang-c++">string str(&quot;some string&quot;);
+for(auto c : str)
+    cout &lt;&lt; c &lt;&lt; endl;
+</code></pre>
+<h4 id="1-8-2-使用范围for语句改变字符串中的字符"><a href="#1-8-2-使用范围for语句改变字符串中的字符" class="headerlink" title="1.8.2 使用范围for语句改变字符串中的字符"></a>1.8.2 使用范围for语句改变字符串中的字符</h4><pre><code class="lang-c++">string s(&quot;Hello World!!!&quot;);
+
+for(auto &amp;c : s)
+    c = toupper(c);
+
+cout &lt;&lt; s &lt;&lt; endl;        // HELLO WORLD!!!
+</code></pre>
+<h4 id="1-8-3-只处理一部分字符"><a href="#1-8-3-只处理一部分字符" class="headerlink" title="1.8.3 只处理一部分字符"></a>1.8.3 只处理一部分字符</h4><ul>
+<li><p>使用下标运算符</p>
+<pre><code class="lang-c++">string s(&quot;some string&quot;);
+
+if(!s.empty())
+    cout &lt;&lt; s[0] &lt;&lt; endl;
+    s[0] =     toupper(s[0]);        // 为s的第一个字符赋一个新值
+</code></pre>
+<pre><code class="lang-c++">// 依次处理s中的字符，直至我们处理完全的全部字符或遇到一个空白
+for(decltype(s.size()) index = 0;
+    index != s.size() &amp;&amp; !isspace(s[index]);
+    index++)
+{
+    s[index] = toupper(s[index]);
+}
+</code></pre>
+</li>
+</ul>
+<ul>
+<li>使用迭代器</li>
+</ul>
+<h4 id="1-8-4-使用下标执行随机访问"><a href="#1-8-4-使用下标执行随机访问" class="headerlink" title="1.8.4 使用下标执行随机访问"></a>1.8.4 使用下标执行随机访问</h4><h3 id="1-9-练习2"><a href="#1-9-练习2" class="headerlink" title="1.9 练习2"></a>1.9 练习2</h3><h4 id="1-9-1-编写一段程序，使用范围for语句将字符串内所有字符串用X代替"><a href="#1-9-1-编写一段程序，使用范围for语句将字符串内所有字符串用X代替" class="headerlink" title="1.9.1 编写一段程序，使用范围for语句将字符串内所有字符串用X代替"></a>1.9.1 编写一段程序，使用范围for语句将字符串内所有字符串用X代替</h4><pre><code class="lang-c++">string str = &quot;some string&quot;;
+
+for (auto &amp;c : str)
+    if(!isspace(c))
+           c = &#39;X&#39;;
+</code></pre>
+<h4 id="1-9-2-就上一题完成的程序而言，如果将循环控制变量的类型设为char将发生什么？先估计一下结果，然后就实际编程进行验证"><a href="#1-9-2-就上一题完成的程序而言，如果将循环控制变量的类型设为char将发生什么？先估计一下结果，然后就实际编程进行验证" class="headerlink" title="1.9.2 就上一题完成的程序而言，如果将循环控制变量的类型设为char将发生什么？先估计一下结果，然后就实际编程进行验证"></a>1.9.2 就上一题完成的程序而言，如果将循环控制变量的类型设为char将发生什么？先估计一下结果，然后就实际编程进行验证</h4><pre><code class="lang-c++">不会修改原字符串，因为c在迭代时是str每个字符的复制。
+</code></pre>
+<h4 id="1-9-3-分别用while循环和传统for循环重写第一题的程序，你觉得哪种形式更好呢？为什么"><a href="#1-9-3-分别用while循环和传统for循环重写第一题的程序，你觉得哪种形式更好呢？为什么" class="headerlink" title="1.9.3 分别用while循环和传统for循环重写第一题的程序，你觉得哪种形式更好呢？为什么?"></a>1.9.3 分别用while循环和传统for循环重写第一题的程序，你觉得哪种形式更好呢？为什么?</h4><pre><code class="lang-c++">string str = &quot;some string&quot;;
+
+// while循环
+decltype(str.size()) index = 0;
+while(index != str.size())
+{
+    if (!isspace(str[index]))
+        str[index] = &#39;X&#39;;
+
+    index++;
+}
+
+// 传统for循环
+for (decltype(str.size()) index = 0;
+     index != str.size() ; index++)
+{
+    if(isspace(str[index]))
+        continue;
+    str[index] = &#39;X&#39;;
+}
+</code></pre>
+<p>我觉得各有优点，while循环判断条件更见简洁，传统for循环更倾向于将所有条件书写完再执行代码块，更容易理清楚思路。</p>
+<h4 id="1-9-4-下面的程序有何作业，它合法吗？如果不合法，为什么？"><a href="#1-9-4-下面的程序有何作业，它合法吗？如果不合法，为什么？" class="headerlink" title="1.9.4 下面的程序有何作业，它合法吗？如果不合法，为什么？"></a>1.9.4 下面的程序有何作业，它合法吗？如果不合法，为什么？</h4><pre><code class="lang-c++">string s;
+cout &lt;&lt; s[0] &lt;&lt; endl;
+</code></pre>
+<p>上面是不合法的，因为s是一个空字符串，没有存放任何实质性的内容，但是开辟了一块内存空间，所以不可以通过下标来访问。</p>
+<p>但是我试了许多种类的编译器，是可以编译成功的。</p>
+<h4 id="1-9-5-编写一段程序，读入一个包含标点符号的字符串，将标点符号去除后输出字符串剩余的部份。"><a href="#1-9-5-编写一段程序，读入一个包含标点符号的字符串，将标点符号去除后输出字符串剩余的部份。" class="headerlink" title="1.9.5 编写一段程序，读入一个包含标点符号的字符串，将标点符号去除后输出字符串剩余的部份。"></a>1.9.5 编写一段程序，读入一个包含标点符号的字符串，将标点符号去除后输出字符串剩余的部份。</h4><pre><code class="lang-c++">int main()
+{
+    string str = &quot;some,string&quot;;
+    string newStr;
+    for(auto &amp;c : str)
+    {
+        if(ispunct(c))
+            continue;
+
+        newStr += c;
+    }
+
+    cout &lt;&lt; newStr &lt;&lt; endl;
+
+    return 0;
+}
+</code></pre>
+<h4 id="1-9-6-下面的范围for语句合法吗？如果合法，c的类型是什么？"><a href="#1-9-6-下面的范围for语句合法吗？如果合法，c的类型是什么？" class="headerlink" title="1.9.6 下面的范围for语句合法吗？如果合法，c的类型是什么？"></a>1.9.6 下面的范围for语句合法吗？如果合法，c的类型是什么？</h4><pre><code class="lang-c++">const string s = &quot;Keep out!&quot;;
+for(auto &amp;c : s)
+{
+    /*...*/
+}
+// s是一个常量字符串对象，不允许修改。
+// auto会忽略掉顶层const,保留底层const,所以c是底层const，也就是常量引用。
+</code></pre>
+<h2 id="0x02-vector"><a href="#0x02-vector" class="headerlink" title="0x02. vector"></a>0x02. vector</h2><p><strong>实例化:编译器根据模板创建类和函数的过程。</strong></p>
+<h3 id="2-1-定义和初始化"><a href="#2-1-定义和初始化" class="headerlink" title="2.1 定义和初始化"></a>2.1 定义和初始化</h3><pre><code class="lang-c++">vector(T) v1;           // v1是一个空vector,执行T类型的默认初始化。
+
+vector(T) v2(v1);       // v2中包含了v1所有元素的副本。
+
+vector(T) v2 = v1;       //等价于v2(v1)。
+
+vector(T) v3(n, nval);     // v3包含了n个重复的元素,每个元素的值都是val。
 
 vector(T) V4(n);        // n个执行了T类型的值初始化的对象。
 
@@ -583,17 +771,199 @@ vector(T) v5{a, b, c ...} // v5包含了初始值个数的元素。
 
 vector(T) v5 = {a, b, c ...} // 等价于v5{a, b, c ...}
 </code></pre>
-<h4 id="添加元素"><a href="#添加元素" class="headerlink" title="添加元素"></a>添加元素</h4><p><strong>push_back()添加到vector的尾端。</strong></p>
+<h3 id="2-2-练习1"><a href="#2-2-练习1" class="headerlink" title="2.2 练习1"></a>2.2 练习1</h3><h4 id="2-2-1-下面vector对象的定义有什么不正确的吗？如果有，请指出。对于正确的，描述其执行结果。对于不正确的，说明其错误的原因"><a href="#2-2-1-下面vector对象的定义有什么不正确的吗？如果有，请指出。对于正确的，描述其执行结果。对于不正确的，说明其错误的原因" class="headerlink" title="2.2.1 下面vector对象的定义有什么不正确的吗？如果有，请指出。对于正确的，描述其执行结果。对于不正确的，说明其错误的原因"></a>2.2.1 下面vector对象的定义有什么不正确的吗？如果有，请指出。对于正确的，描述其执行结果。对于不正确的，说明其错误的原因</h4><pre><code>(a) vector&lt;vector&lt;int&gt;&gt; ivec; // 正确，空vector。
+(b)    vector&lt;string&gt; svec = ivec;    //错误，不能用不同类型初始化。
+(c) vector&lt;string&gt; svec(10, &quot;null&quot;); //正确。
+</code></pre><h4 id="2-2-2-下列vector对象各包含多少个元素，这些元素的值分别是什么？"><a href="#2-2-2-下列vector对象各包含多少个元素，这些元素的值分别是什么？" class="headerlink" title="2.2.2 下列vector对象各包含多少个元素，这些元素的值分别是什么？"></a>2.2.2 下列vector对象各包含多少个元素，这些元素的值分别是什么？</h4><pre><code class="lang-c++">(a)vector&lt;int&gt; v1;     // 0个，空。        (b)vector&lt;int&gt; v2(10);    // 10个，0
+(C)vector&lt;int&gt; v3(10, 42); //10个42      (c)vector&lt;int&gt; v4(10);  // 10个，0
+...
+...
+</code></pre>
+<h3 id="2-3-添加元素"><a href="#2-3-添加元素" class="headerlink" title="2.3 添加元素"></a>2.3 添加元素</h3><p><strong>push_back()负责将一个元素添加到vector的尾端。</strong></p>
 <p>c++ 更习惯于先创建空的vector对象,在运行的时候动态添加元素。</p>
+<pre><code class="lang-c++">vector&lt;int&gt; v2;
+
+for(int i = 0; i != 100; ++i)
+    v2.push_back(i);
+</code></pre>
 <p>vector不能使用下标运算符去添加元素,但是可以用于访问已经存在的元素。</p>
-<h3 id="迭代器"><a href="#迭代器" class="headerlink" title="迭代器"></a>迭代器</h3><p>怎样称为一个有效的迭代器呢？</p>
+<h3 id="2-4-练习2"><a href="#2-4-练习2" class="headerlink" title="2.4 练习2"></a>2.4 练习2</h3><h4 id="2-4-1-编写一段程序，用cin读入一段整数并把它们存入一个vector对象"><a href="#2-4-1-编写一段程序，用cin读入一段整数并把它们存入一个vector对象" class="headerlink" title="2.4.1 编写一段程序，用cin读入一段整数并把它们存入一个vector对象"></a>2.4.1 编写一段程序，用cin读入一段整数并把它们存入一个vector对象</h4><pre><code class="lang-c++">vector&lt;int&gt; v1;
+int intBuffer;
+while (cin &gt;&gt; intBuffer)
+{
+    v1.push_back(intBuffer);
+}
+</code></pre>
+<h4 id="2-4-2-改写上题的程序，不过这次读入的是字符串"><a href="#2-4-2-改写上题的程序，不过这次读入的是字符串" class="headerlink" title="2.4.2 改写上题的程序，不过这次读入的是字符串"></a>2.4.2 改写上题的程序，不过这次读入的是字符串</h4><p>略</p>
+<h3 id="2-5-其他vector操作"><a href="#2-5-其他vector操作" class="headerlink" title="2.5 其他vector操作"></a>2.5 其他vector操作</h3><div class="table-container">
+<table>
+<thead>
+<tr>
+<th style="text-align:center"><strong>v.empty()</strong></th>
+<th><strong>如果v不含有任何元素，返回真，否则返回假</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center"><strong>v.size()</strong></td>
+<td><strong>返回v中元素的个数</strong></td>
+</tr>
+<tr>
+<td style="text-align:center"><strong>v[n]</strong></td>
+<td><strong>返回v中第n个元素位置的引用</strong></td>
+</tr>
+<tr>
+<td style="text-align:center"><strong>v1 = v2</strong></td>
+<td><strong>用v2中的元素拷贝替换v1中的元素</strong></td>
+</tr>
+<tr>
+<td style="text-align:center"><strong>v1 = {a, b, c, …..}</strong></td>
+<td><strong>用列表中的元素拷贝替换v1中的元素</strong></td>
+</tr>
+<tr>
+<td style="text-align:center"><strong>v1 == v2</strong></td>
+<td><strong>v1和v2相等当且仅当它们的元素数量相同且对应的元素值相同</strong></td>
+</tr>
+<tr>
+<td style="text-align:center"><strong>v1 != v2</strong></td>
+<td></td>
+</tr>
+<tr>
+<td style="text-align:center"><strong>&lt;, &lt;=，&gt;=, &gt;</strong></td>
+<td><strong>以字典顺序比较</strong></td>
+</tr>
+</tbody>
+</table>
+</div>
+<p><strong>vector对象的下标运算符可用于访问已经存在的元素，而不能用于添加元素。</strong></p>
+<h3 id="2-6-练习3"><a href="#2-6-练习3" class="headerlink" title="2.6 练习3"></a>2.6 练习3</h3><h4 id="2-6-1-从cin读入一组词并把它们存入一个vector对象，然后设法把所有词改写为大写形式，输出改变后的结果，每个词占一行。"><a href="#2-6-1-从cin读入一组词并把它们存入一个vector对象，然后设法把所有词改写为大写形式，输出改变后的结果，每个词占一行。" class="headerlink" title="2.6.1 从cin读入一组词并把它们存入一个vector对象，然后设法把所有词改写为大写形式，输出改变后的结果，每个词占一行。"></a>2.6.1 从cin读入一组词并把它们存入一个vector对象，然后设法把所有词改写为大写形式，输出改变后的结果，每个词占一行。</h4><pre><code class="lang-c++">void upperStr(string &amp;str)
+{
+    /*
+        you can use transform function. this is a standard libnary function.
+    */
+    for (decltype(str.size()) index = 0; index &lt; str.size(); index++)
+    {
+        str[index] = toupper(str[index]);
+    }
+}
+int main()
+{
+    string word;
+    vector&lt;string&gt; strVector;
+    while (cin &gt;&gt; word)
+    {
+        upperStr(word);
+        strVector.push_back(word);
+
+        if(cin.get() == &#39;\n&#39;)
+            break;
+    }
+
+    for (auto &amp;c : strVector)
+    {
+        cout &lt;&lt; c &lt;&lt; endl;
+    }
+
+    return 0;
+}
+</code></pre>
+<h4 id="2-6-2-如果想定义一个含有10个元素的vector对象，所有元素值都是42，请列举出三种不同的实现方法，哪种方法更好呢？为什么？"><a href="#2-6-2-如果想定义一个含有10个元素的vector对象，所有元素值都是42，请列举出三种不同的实现方法，哪种方法更好呢？为什么？" class="headerlink" title="2.6.2 如果想定义一个含有10个元素的vector对象，所有元素值都是42，请列举出三种不同的实现方法，哪种方法更好呢？为什么？"></a>2.6.2 如果想定义一个含有10个元素的vector对象，所有元素值都是42，请列举出三种不同的实现方法，哪种方法更好呢？为什么？</h4><pre><code class="lang-c++">vector&lt;int&gt; v1(10, 42);
+
+vector&lt;int&gt; v2  = {
+    42, 42, 42, 42, 42, 42, 42, 42, 42, 42
+};
+
+vector&lt;int&gt; v3;
+for (int i = 0; i &lt; 10; i++)
+{
+    v3.push_back(42);
+}
+</code></pre>
+<h4 id="2-6-3-读入一组整数并把它们存入一个vector对象，将每对相邻整数的和输出出来。改写你的程序，这次要求先输出第一个和最后一个元素的和，接着输出第2个和倒数第二2个元素的和，以此类推。"><a href="#2-6-3-读入一组整数并把它们存入一个vector对象，将每对相邻整数的和输出出来。改写你的程序，这次要求先输出第一个和最后一个元素的和，接着输出第2个和倒数第二2个元素的和，以此类推。" class="headerlink" title="2.6.3 读入一组整数并把它们存入一个vector对象，将每对相邻整数的和输出出来。改写你的程序，这次要求先输出第一个和最后一个元素的和，接着输出第2个和倒数第二2个元素的和，以此类推。"></a>2.6.3 读入一组整数并把它们存入一个vector对象，将每对相邻整数的和输出出来。改写你的程序，这次要求先输出第一个和最后一个元素的和，接着输出第2个和倒数第二2个元素的和，以此类推。</h4><pre><code class="lang-c++">void outputOne(const vector&lt;int&gt; &amp;v1)
+{
+    for (decltype(v1.size()) index = 0; index &lt; v1.size() - 1; index++)
+    {
+        cout &lt;&lt; v1[index] + v1[index + 1] &lt;&lt; endl;
+    }
+}
+
+void outputTwo(const vector&lt;int&gt; &amp;v2)
+{
+    auto length = v2.size();
+    for (decltype(v2.size()) index = 0; index &lt; length / 2; index++)
+    {
+        auto result = v2[index] + v2[length - index - 1];
+        cout &lt;&lt; result &lt;&lt; endl;
+    }
+}
+
+int main()
+{
+    vector&lt;int&gt; vInt;
+    int intBuffer;
+    while (cin &gt;&gt; intBuffer)
+    {
+        vInt.push_back(intBuffer);
+        if (cin.get() == &#39;\n&#39;)
+        {
+            break;
+        }
+    }
+
+    outputOne(vInt);        
+    cout &lt;&lt; &quot;**********************&quot; &lt;&lt; endl;
+    outputTwo(vInt);
+
+    return 0;
+}
+</code></pre>
+<h3 id="2-7-迭代器"><a href="#2-7-迭代器" class="headerlink" title="2.7 迭代器"></a>2.7 迭代器</h3><h4 id="2-7-1-使用迭代器"><a href="#2-7-1-使用迭代器" class="headerlink" title="2.7.1 使用迭代器"></a>2.7.1 使用迭代器</h4><pre><code class="lang-c++">/* 怎样获取迭代器？
+    使用begin()和end().
+    end成员负责返回指向容器尾元素的下一个元素的迭代器，也就是说，该迭代器指示的是容器的一个本不存在的“尾后”元素。
+    这样的迭代器没什么实际含义，仅仅是个标记而已，表示我们已经处理完容器中所有元素。
+    end() 返回的迭代器并不实际指示某个元素,所以不能对其进行递增或解引用的操作.
+*/
+auto b = v.begin();
+auto e = v.end();
+</code></pre>
+<p>怎样称为一个有效的迭代器呢？</p>
 <ul>
-<li>或者指向某个元素,或者指向容器中尾元素的下一个位置</li>
+<li><strong>或者指向某个元素,或者指向容器中尾元素的下一个位置</strong></li>
 </ul>
-<p>怎样获取迭代器？</p>
-<p>begin() 和 end()  ：end()获取的是一个尾后迭代器,指向尾部元素的下一个位置,仅仅是一个标记而已。  end() 返回的迭代器并不实际指示某个元素,所以不能对其进行递增或解引用的操作</p>
-<p><strong>但凡是使用了迭代器的循环体,都不要向使用迭代器所属的容器添加元素。因为会使迭代器失效。</strong></p>
-<h4 id="迭代器运算"><a href="#迭代器运算" class="headerlink" title="迭代器运算"></a>迭代器运算</h4><p>所有标准库容器都有支持递增运算的迭代器。</p>
+<p><strong>其次，但凡是使用了迭代器的循环体,都不要向使用迭代器所属的容器添加元素。因为会使迭代器失效。</strong></p>
+<h4 id="2-7-2-迭代器运算符"><a href="#2-7-2-迭代器运算符" class="headerlink" title="2.7.2 迭代器运算符"></a>2.7.2 迭代器运算符</h4><div class="table-container">
+<table>
+<thead>
+<tr>
+<th style="text-align:center"><em>ite<em>*r</em></em></th>
+<th><strong>返回迭代器iter所选元素的引用</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center"><strong>iter-&gt;mem</strong></td>
+<td><strong>解引用iter并获取该元素名为mem的成员，等价于(*iter).mem</strong></td>
+</tr>
+<tr>
+<td style="text-align:center"><strong>++iter</strong></td>
+<td><strong>令iter指向容器中下一个元素</strong></td>
+</tr>
+<tr>
+<td style="text-align:center"><strong>—iter</strong></td>
+<td><strong>令iter指向容器中上一个元素</strong></td>
+</tr>
+<tr>
+<td style="text-align:center"><strong>iter1 == iter2</strong></td>
+<td><strong>判断两个迭代器是否相等(不相等)，如果两个迭代器指示的是同一个元素或者是同一个容器的尾后迭代器，则相等。反之，不想等。</strong></td>
+</tr>
+<tr>
+<td style="text-align:center"><strong>iter1 != iter2</strong></td>
+<td>同上</td>
+</tr>
+</tbody>
+</table>
+</div>
+<h4 id="2-7-3-迭代器运算"><a href="#2-7-3-迭代器运算" class="headerlink" title="2.7.3 迭代器运算"></a>2.7.3 迭代器运算</h4><p>所有标准库容器都有支持递增运算的迭代器。</p>
 <p>string和vector迭代器支持更多运算。</p>
 
       
@@ -718,7 +1088,7 @@ vector(T) v5 = {a, b, c ...} // 等价于v5{a, b, c ...}
                 
                   <a href="/archives/">
                 
-                    <span class="site-state-item-count">8</span>
+                    <span class="site-state-item-count">13</span>
                     <span class="site-state-item-name">日志</span>
                   </a>
                 </div>
@@ -804,7 +1174,7 @@ vector(T) v5 = {a, b, c ...} // 等价于v5{a, b, c ...}
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#3-1-using-声明"><span class="nav-text">3.1 using 声明</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-2-string"><span class="nav-text">3.2 string</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#初始化"><span class="nav-text">初始化</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#读写string-对象"><span class="nav-text">读写string 对象</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#string的比较"><span class="nav-text">string的比较</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-3-vector"><span class="nav-text">3.3 vector</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#初始化-1"><span class="nav-text">初始化</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#添加元素"><span class="nav-text">添加元素</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#迭代器"><span class="nav-text">迭代器</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#迭代器运算"><span class="nav-text">迭代器运算</span></a></li></ol></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#0x00-命名空间的using-声明"><span class="nav-text">0x00. 命名空间的using 声明</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#0x01-标准库类型string"><span class="nav-text">0x01. 标准库类型string</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-1-初始化"><span class="nav-text">1.1 初始化</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1-2-直接初始化和拷贝初始化"><span class="nav-text">1.2 直接初始化和拷贝初始化</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1-3-读写string-对象"><span class="nav-text">1.3 读写string 对象</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#1-3-1-读取未知数量的string对象"><span class="nav-text">1.3.1 读取未知数量的string对象</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#1-3-2-getline"><span class="nav-text">1.3.2 getline()</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1-4-empty-和size"><span class="nav-text">1.4 empty()和size()</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1-5-string的比较"><span class="nav-text">1.5 string的比较</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1-6-字面值和string对象相加"><span class="nav-text">1.6 字面值和string对象相加</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1-7-练习1"><span class="nav-text">1.7 练习1</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#1-7-1-编写一段程序从标准输入中一次读入一行，然后修改该程序使其一次读入一个词。"><span class="nav-text">1.7.1 编写一段程序从标准输入中一次读入一行，然后修改该程序使其一次读入一个词。</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#1-7-2-请说明string类的输入运算符和getline函数分别是如何处理空白字符的。"><span class="nav-text">1.7.2 请说明string类的输入运算符和getline函数分别是如何处理空白字符的。</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#1-7-3-编写一段程序读取两个字符串，比较其是否相等并输出结果。如果不相等，输出比较大的那个字符串。改写上述程序，比较输入的两个字符串是否等长，如果不等长，输出长度较大的那个字符串。"><span class="nav-text">1.7.3 编写一段程序读取两个字符串，比较其是否相等并输出结果。如果不相等，输出比较大的那个字符串。改写上述程序，比较输入的两个字符串是否等长，如果不等长，输出长度较大的那个字符串。</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1-8-处理string对象中的字符"><span class="nav-text">1.8 处理string对象中的字符</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#1-8-1-处理每个字符-gt-使用基于范围的for语句"><span class="nav-text">1.8.1 处理每个字符-&gt;使用基于范围的for语句</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#1-8-2-使用范围for语句改变字符串中的字符"><span class="nav-text">1.8.2 使用范围for语句改变字符串中的字符</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#1-8-3-只处理一部分字符"><span class="nav-text">1.8.3 只处理一部分字符</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#1-8-4-使用下标执行随机访问"><span class="nav-text">1.8.4 使用下标执行随机访问</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1-9-练习2"><span class="nav-text">1.9 练习2</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#1-9-1-编写一段程序，使用范围for语句将字符串内所有字符串用X代替"><span class="nav-text">1.9.1 编写一段程序，使用范围for语句将字符串内所有字符串用X代替</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#1-9-2-就上一题完成的程序而言，如果将循环控制变量的类型设为char将发生什么？先估计一下结果，然后就实际编程进行验证"><span class="nav-text">1.9.2 就上一题完成的程序而言，如果将循环控制变量的类型设为char将发生什么？先估计一下结果，然后就实际编程进行验证</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#1-9-3-分别用while循环和传统for循环重写第一题的程序，你觉得哪种形式更好呢？为什么"><span class="nav-text">1.9.3 分别用while循环和传统for循环重写第一题的程序，你觉得哪种形式更好呢？为什么?</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#1-9-4-下面的程序有何作业，它合法吗？如果不合法，为什么？"><span class="nav-text">1.9.4 下面的程序有何作业，它合法吗？如果不合法，为什么？</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#1-9-5-编写一段程序，读入一个包含标点符号的字符串，将标点符号去除后输出字符串剩余的部份。"><span class="nav-text">1.9.5 编写一段程序，读入一个包含标点符号的字符串，将标点符号去除后输出字符串剩余的部份。</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#1-9-6-下面的范围for语句合法吗？如果合法，c的类型是什么？"><span class="nav-text">1.9.6 下面的范围for语句合法吗？如果合法，c的类型是什么？</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#0x02-vector"><span class="nav-text">0x02. vector</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#2-1-定义和初始化"><span class="nav-text">2.1 定义和初始化</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-2-练习1"><span class="nav-text">2.2 练习1</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#2-2-1-下面vector对象的定义有什么不正确的吗？如果有，请指出。对于正确的，描述其执行结果。对于不正确的，说明其错误的原因"><span class="nav-text">2.2.1 下面vector对象的定义有什么不正确的吗？如果有，请指出。对于正确的，描述其执行结果。对于不正确的，说明其错误的原因</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-2-2-下列vector对象各包含多少个元素，这些元素的值分别是什么？"><span class="nav-text">2.2.2 下列vector对象各包含多少个元素，这些元素的值分别是什么？</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-3-添加元素"><span class="nav-text">2.3 添加元素</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-4-练习2"><span class="nav-text">2.4 练习2</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#2-4-1-编写一段程序，用cin读入一段整数并把它们存入一个vector对象"><span class="nav-text">2.4.1 编写一段程序，用cin读入一段整数并把它们存入一个vector对象</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-4-2-改写上题的程序，不过这次读入的是字符串"><span class="nav-text">2.4.2 改写上题的程序，不过这次读入的是字符串</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-5-其他vector操作"><span class="nav-text">2.5 其他vector操作</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-6-练习3"><span class="nav-text">2.6 练习3</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#2-6-1-从cin读入一组词并把它们存入一个vector对象，然后设法把所有词改写为大写形式，输出改变后的结果，每个词占一行。"><span class="nav-text">2.6.1 从cin读入一组词并把它们存入一个vector对象，然后设法把所有词改写为大写形式，输出改变后的结果，每个词占一行。</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-6-2-如果想定义一个含有10个元素的vector对象，所有元素值都是42，请列举出三种不同的实现方法，哪种方法更好呢？为什么？"><span class="nav-text">2.6.2 如果想定义一个含有10个元素的vector对象，所有元素值都是42，请列举出三种不同的实现方法，哪种方法更好呢？为什么？</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-6-3-读入一组整数并把它们存入一个vector对象，将每对相邻整数的和输出出来。改写你的程序，这次要求先输出第一个和最后一个元素的和，接着输出第2个和倒数第二2个元素的和，以此类推。"><span class="nav-text">2.6.3 读入一组整数并把它们存入一个vector对象，将每对相邻整数的和输出出来。改写你的程序，这次要求先输出第一个和最后一个元素的和，接着输出第2个和倒数第二2个元素的和，以此类推。</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-7-迭代器"><span class="nav-text">2.7 迭代器</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#2-7-1-使用迭代器"><span class="nav-text">2.7.1 使用迭代器</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-7-2-迭代器运算符"><span class="nav-text">2.7.2 迭代器运算符</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-7-3-迭代器运算"><span class="nav-text">2.7.3 迭代器运算</span></a></li></ol></li></ol></li></ol></div>
             
 
           </div>
@@ -841,7 +1211,7 @@ vector(T) v5 = {a, b, c ...} // 等价于v5{a, b, c ...}
     
       <span class="post-meta-item-text">站点总字数：</span>
     
-    <span title="站点总字数">28k</span>
+    <span title="站点总字数">43k</span>
   
 
   
@@ -852,7 +1222,7 @@ vector(T) v5 = {a, b, c ...} // 等价于v5{a, b, c ...}
     
       <span class="post-meta-item-text">站点阅读时长 &asymp;</span>
     
-    <span title="站点阅读时长">47 分钟</span>
+    <span title="站点阅读时长">1:12</span>
   
 </div>
 
