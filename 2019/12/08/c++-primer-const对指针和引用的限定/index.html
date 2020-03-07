@@ -117,7 +117,7 @@
 <meta property="og:site_name" content="疯癫">
 <meta property="og:description" content="本文讲述const和指针，引用之间微妙的关系">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2019-12-09T06:17:04.441Z">
+<meta property="og:updated_time" content="2020-03-07T09:22:15.156Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="const对指针和引用的限定">
 <meta name="twitter:description" content="本文讲述const和指针，引用之间微妙的关系">
@@ -447,7 +447,7 @@
                 
                   <span class="post-meta-item-text">更新于</span>
                 
-                <time title="修改时间：2019-12-09 14:17:04" itemprop="dateModified" datetime="2019-12-09T14:17:04+08:00">2019-12-09</time>
+                <time title="修改时间：2020-03-07 17:22:15" itemprop="dateModified" datetime="2020-03-07T17:22:15+08:00">2020-03-07</time>
               
             
           </span>
@@ -500,7 +500,7 @@
                 
                   <span class="post-meta-item-text">本文字数：</span>
                 
-                <span title="本文字数">1.3k</span>
+                <span title="本文字数">1.4k</span>
               
 
               
@@ -535,7 +535,7 @@
 
       
         <p><center> <b>本文讲述const和指针，引用之间微妙的关系</b> </center><br><a id="more"></a></p>
-<h3 id="const与引用"><a href="#const与引用" class="headerlink" title="const与引用"></a>const与引用</h3><h4 id="const的引用（reference-to-const"><a href="#const的引用（reference-to-const" class="headerlink" title="const的引用（reference to const)"></a>const的引用（reference to const)</h4><p>简称为常量引用，<strong>引用的对象时常量还是非常量可以决定其所参与的操作，但是不会影响引用和对象的绑定关系。</strong></p>
+<h2 id="0x01-const与引用"><a href="#0x01-const与引用" class="headerlink" title="0x01 const与引用"></a>0x01 const与引用</h2><h3 id="1-1-const的引用（reference-to-const"><a href="#1-1-const的引用（reference-to-const" class="headerlink" title="1.1 const的引用（reference to const)"></a>1.1 const的引用（reference to const)</h3><p>简称为常量引用，<strong>引用的对象时常量还是非常量可以决定其所参与的操作，但是不会影响引用和对象的绑定关系。</strong></p>
 <pre><code class="lang-cpp">const int ci = 1024;
 const int &amp;r1 = ci;     // 引用及其对应的对象都是常量
 
@@ -546,7 +546,7 @@ int &amp;r2 = ci; // error, 使用一个非常量引用指向一个常量。
 int i = 42;
 const int &amp;r4 = r3; // 常量引用可以指向一个非常量，但是不允许通过r4对r3进行修改。
 </code></pre>
-<h3 id="const与指针"><a href="#const与指针" class="headerlink" title="const与指针"></a>const与指针</h3><h4 id="指向常量的指针-pointer-to-const"><a href="#指向常量的指针-pointer-to-const" class="headerlink" title="指向常量的指针(pointer to const)"></a>指向常量的指针(pointer to const)</h4><blockquote>
+<h2 id="0x02-const与指针"><a href="#0x02-const与指针" class="headerlink" title="0x02 const与指针"></a>0x02 const与指针</h2><h3 id="2-1-指向常量的指针-pointer-to-const"><a href="#2-1-指向常量的指针-pointer-to-const" class="headerlink" title="2.1 指向常量的指针(pointer to const)"></a>2.1 指向常量的指针(pointer to const)</h3><blockquote>
 <p>指向常量的指针没有规定其所指的对象必须是一个常量,指向常量的指针是指不能通过指针来改变所指的变量的值。。</p>
 </blockquote>
 <pre><code class="lang-cpp">const double pi1 = 3.14;
@@ -557,30 +557,31 @@ const double *cptr1 = &amp;pi1;
 const double *cptr2 = &amp;pi2;
 </code></pre>
 <p><br></p>
-<h4 id="常量指针-const-pointer"><a href="#常量指针-const-pointer" class="headerlink" title="常量指针(const pointer)"></a>常量指针(const pointer)</h4><blockquote>
+<h3 id="2-2-常量指针-const-pointer"><a href="#2-2-常量指针-const-pointer" class="headerlink" title="2.2 常量指针(const pointer)"></a>2.2 常量指针(const pointer)</h3><blockquote>
 <p>常量指针必须初始化，一旦初始化完成，那么它的值将不会在变化。</p>
 </blockquote>
-<ul>
-<li><strong>const poiter 不变的是指针本身的值而不是所指向的那个值，所以const pointer可以通过指针修改所指对象的值。</strong><br>```cpp<br>int errNum = 0;<br>int *const curErr = &errNum;</li>
+<p> <strong>const poiter 不变的是指针本身的值而不是所指向的那个值，所以const pointer可以通过指针修改所指对象的值。</strong><br>-</p>
+<pre><code class="lang-cpp">int errNum = 0;
+int *const curErr = &amp;errNum;
+
+const double pi = 3.14;
+// 将*放在const可以说明指针是一个常量
+const double* const pip = &amp;pi; // pip是一个指向常量对象的常量指针。
+</code></pre>
+<h2 id="0x03-const-介绍"><a href="#0x03-const-介绍" class="headerlink" title="0x03 const 介绍"></a>0x03 const 介绍</h2><ul>
+<li>顶层 const 代表对象本身是个常量。</li>
+<li>底层 const 代表指针所指的对象是一个常量。</li>
+<li>指针既可以是顶层const，也可以是底层const</li>
 </ul>
-<p>const double pi = 3.14;<br>// 将<em>放在const可以说明指针是一个常量<br>const double</em> const pip = &pi; // pip是一个指向常量对象的常量指针。</p>
-<pre><code>
-### const 介绍
-
-- 顶层 const 代表对象本身是个常量。
-- 底层 const 代表指针所指的对象是一个常量。
-- 指针既可以是顶层const，也可以是底层const
-
-
-  ```cpp
-  int i = 0;
+<pre><code class="lang-cpp">  int i = 0;
   int *const p1 = &amp;i;           //  const pointer -- 这是顶层const 
   const int ci = 42;            // const var -- 这是顶层const
   const int *p2 = &amp;ci;          // pointer to const -- 这是底层const
   const int *const p3 = p2;     // 右边是顶层const， 左边是底层const
 
   const int &amp;r = ci;            // 用于声明引用的const 都是底层const
-</code></pre><p>如果进行copy时，顶层const的不受影响，但是底层const受限制。</p>
+</code></pre>
+<p>如果进行copy时，顶层const的不受影响，但是底层const受限制。</p>
 <ul>
 <li>进行copy的对象，拷入和拷出必须具有相同的底层const资格，或者两个对象的数据类型必须能够转换。<strong>一般来说，非常量可以转换成常量，但是反之不行。</strong></li>
 </ul>
@@ -794,7 +795,7 @@ const double *cptr2 = &amp;pi2;
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#const与引用"><span class="nav-text">const与引用</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#const的引用（reference-to-const"><span class="nav-text">const的引用（reference to const)</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#const与指针"><span class="nav-text">const与指针</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#指向常量的指针-pointer-to-const"><span class="nav-text">指向常量的指针(pointer to const)</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#常量指针-const-pointer"><span class="nav-text">常量指针(const pointer)</span></a></li></ol></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#0x01-const与引用"><span class="nav-text">0x01 const与引用</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-1-const的引用（reference-to-const"><span class="nav-text">1.1 const的引用（reference to const)</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#0x02-const与指针"><span class="nav-text">0x02 const与指针</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#2-1-指向常量的指针-pointer-to-const"><span class="nav-text">2.1 指向常量的指针(pointer to const)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-2-常量指针-const-pointer"><span class="nav-text">2.2 常量指针(const pointer)</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#0x03-const-介绍"><span class="nav-text">0x03 const 介绍</span></a></li></ol></div>
             
 
           </div>
