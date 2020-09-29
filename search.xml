@@ -1,22 +1,22 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
-    <title>c++ primer 第十六章学习笔记</title>
+    <title>C++ Primer 第十六章学习笔记</title>
     <url>/2020/03/03/c++-primer-%E7%AC%AC%E5%8D%81%E5%85%AD%E7%AB%A0%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/</url>
     <content><![CDATA[]]></content>
   </entry>
   <entry>
-    <title>c++ primer 第十五章学习笔记</title>
+    <title>C++ Primer 第十五章学习笔记</title>
     <url>/2020/03/03/c++-primer-%E7%AC%AC%E5%8D%81%E4%BA%94%E7%AB%A0%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/</url>
     <content><![CDATA[]]></content>
   </entry>
   <entry>
-    <title>c++ primer 第十四章学习笔记</title>
+    <title>C++ Primer 第十四章学习笔记</title>
     <url>/2020/03/03/c++-primer-%E7%AC%AC%E5%8D%81%E5%9B%9B%E7%AB%A0%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/</url>
     <content><![CDATA[]]></content>
   </entry>
   <entry>
-    <title>c++ primer 第十三章学习笔记</title>
+    <title>C++ Primer 第十三章学习笔记</title>
     <url>/2020/03/03/c++-primer-%E7%AC%AC%E5%8D%81%E4%B8%89%E7%AB%A0%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/</url>
     <content><![CDATA[<p><center><b>本章主要讲述了类在控制对象拷贝，赋值，移动和销毁时做什么的相关知识</b></center><br><a id="more"></a></p>
 <h2 id="0x01-拷贝，赋值与销毁"><a href="#0x01-拷贝，赋值与销毁" class="headerlink" title="0x01 拷贝，赋值与销毁"></a>0x01 拷贝，赋值与销毁</h2><h3 id="1-1-拷贝构造函数"><a href="#1-1-拷贝构造函数" class="headerlink" title="1.1 拷贝构造函数"></a>1.1 拷贝构造函数</h3><p>定义：<strong>如果一个构造函数的第一个参数是自身类类型的引用，且任何额外参数都有默认值，那么此构造函数是拷贝构造函数。</strong></p>
@@ -278,26 +278,24 @@ HasPtr q(p);    // 现在p和q都指向无效内存！
 <p>p（以及q)指向的内存不冉有效，在hp（或ret!）销毁时它就被归还给系统了。此外，f的调用者还会使用传递给f的对象：</p>
 ]]></content>
       <categories>
-        <category>c++ primer</category>
+        <category>C++ Primer</category>
       </categories>
       <tags>
-        <tag>c++</tag>
-        <tag>c++ 学习笔记</tag>
+        <tag>C++</tag>
+        <tag>C++ 学习笔记</tag>
       </tags>
   </entry>
   <entry>
-    <title>c++ primer Template学习笔记</title>
+    <title>C++ Primer Template学习笔记</title>
     <url>/2020/03/03/c++-primer-Template%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/</url>
-    <content><![CDATA[<center><b>本章主要讲述了c++ Template的相关知识</b></center>
-
-<a id="more"></a>
+    <content><![CDATA[<p><center><b>本章主要讲述了C++ Template的相关知识</b></center><br><a id="more"></a></p>
 ]]></content>
       <categories>
-        <category>c++ primer</category>
+        <category>C++ Primer</category>
       </categories>
       <tags>
-        <tag>c++</tag>
-        <tag>c++ 学习笔记</tag>
+        <tag>C++</tag>
+        <tag>C++ 学习笔记</tag>
       </tags>
   </entry>
   <entry>
@@ -833,15 +831,15 @@ const double* const pip = &amp;pi; // pip是一个指向常量对象的常量指
 <p><br></p>
 ]]></content>
       <categories>
-        <category>c++ primer</category>
+        <category>C++ Primer</category>
       </categories>
       <tags>
-        <tag>c++</tag>
-        <tag>c++ 学习笔记</tag>
+        <tag>C++</tag>
+        <tag>C++ 学习笔记</tag>
       </tags>
   </entry>
   <entry>
-    <title>c++ primer 第六章学习笔记</title>
+    <title>C++ Primer 第六章学习笔记</title>
     <url>/2019/12/08/c++-primer-%E7%AC%AC%E5%85%AD%E7%AB%A0%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/</url>
     <content><![CDATA[<p><center><b> 本章主要介绍函数的定义和声明</b> </center><br><a id="more"></a></p>
 <h3 id="函数"><a href="#函数" class="headerlink" title="函数"></a>函数</h3><p>函数的基础就不多说了。</p>
@@ -897,15 +895,15 @@ for(size_t i = 0; i != size; ++i)
 </ul>
 ]]></content>
       <categories>
-        <category>c++ primer</category>
+        <category>C++ Primer</category>
       </categories>
       <tags>
-        <tag>c++</tag>
-        <tag>c++ 学习笔记</tag>
+        <tag>C++</tag>
+        <tag>C++ 学习笔记</tag>
       </tags>
   </entry>
   <entry>
-    <title>c++ primer 第三章学习笔记</title>
+    <title>C++ Primer 第三章学习笔记</title>
     <url>/2019/05/20/c++-primer-%E7%AC%AC%E4%B8%89%E7%AB%A0%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/</url>
     <content><![CDATA[<p><center><b>本文初识标准库和迭代器,以及using在 c++11中新用处。</b></center><br><a id="more"></a></p>
 <h2 id="0x00-命名空间的using-声明"><a href="#0x00-命名空间的using-声明" class="headerlink" title="0x00. 命名空间的using 声明"></a>0x00. 命名空间的using 声明</h2><p>头文件不应该使用using 声明,因为头文件的内容会拷贝到所有引用它的文件中。这样容易产生名字冲突。</p>
@@ -1340,15 +1338,15 @@ auto e = v.end();
 <p>string和vector迭代器支持更多运算。</p>
 ]]></content>
       <categories>
-        <category>c++ primer</category>
+        <category>C++ Primer</category>
       </categories>
       <tags>
-        <tag>c++</tag>
-        <tag>c++ 学习笔记</tag>
+        <tag>C++</tag>
+        <tag>C++ 学习笔记</tag>
       </tags>
   </entry>
   <entry>
-    <title>c++ primer 第二章学习笔记</title>
+    <title>C++ Primer 第二章学习笔记</title>
     <url>/2019/05/20/c++-primer-%E7%AC%AC%E4%BA%8C%E7%AB%A0%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/</url>
     <content><![CDATA[<p><center><b>本章主要讲述了c++变量声明,以及各种修饰符的作用和技巧</b></center><br><a id="more"></a></p>
 <h2 id="0x00-变量初始化和赋值"><a href="#0x00-变量初始化和赋值" class="headerlink" title="0x00. 变量初始化和赋值"></a>0x00. 变量初始化和赋值</h2><p><strong>初始化指变量在创建时给它赋予一个初始值，赋值是将当前对象的值擦除掉,而以一个新值来代替.  </strong></p>
@@ -1783,11 +1781,11 @@ decltype(i) e;        // 正确，e是一个未初始化的int.
 </ul>
 ]]></content>
       <categories>
-        <category>c++ primer</category>
+        <category>C++ Primer</category>
       </categories>
       <tags>
-        <tag>c++</tag>
-        <tag>c++ 学习笔记</tag>
+        <tag>C++</tag>
+        <tag>C++ 学习笔记</tag>
       </tags>
   </entry>
 </search>
