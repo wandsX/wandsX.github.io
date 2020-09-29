@@ -278,24 +278,26 @@ HasPtr q(p);    // 现在p和q都指向无效内存！
 <p>p（以及q)指向的内存不冉有效，在hp（或ret!）销毁时它就被归还给系统了。此外，f的调用者还会使用传递给f的对象：</p>
 ]]></content>
       <categories>
-        <category>C++Primer</category>
+        <category>Cpp Primer</category>
       </categories>
       <tags>
-        <tag>C++</tag>
-        <tag>C++学习笔记</tag>
+        <tag>Cpp</tag>
+        <tag>Cpp学习笔记</tag>
       </tags>
   </entry>
   <entry>
-    <title>C++ Primer Template学习笔记</title>
+    <title>Cpp Primer Template学习笔记</title>
     <url>/2020/03/03/C++-Primer-Template%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/</url>
-    <content><![CDATA[<p><center><b>本章主要讲述了C++ Template的相关知识</b></center><br><a id="more"></a></p>
+    <content><![CDATA[<center><b>本章主要讲述了C++ Template的相关知识</b></center>
+
+<a id="more"></a>
 ]]></content>
       <categories>
-        <category>C++Primer</category>
+        <category>Cpp Primer</category>
       </categories>
       <tags>
-        <tag>C++</tag>
-        <tag>C++学习笔记</tag>
+        <tag>Cpp</tag>
+        <tag>Cpp学习笔记</tag>
       </tags>
   </entry>
   <entry>
@@ -325,7 +327,7 @@ HasPtr q(p);    // 现在p和q都指向无效内存！
 <p>元组的声明和赋值的示例。</p>
 ]]></content>
       <categories>
-        <category>Csharp本质论</category>
+        <category>CSharp本质论</category>
       </categories>
       <tags>
         <tag>CSharp</tag>
@@ -829,11 +831,11 @@ const double* const pip = &amp;pi; // pip是一个指向常量对象的常量指
 <p><br></p>
 ]]></content>
       <categories>
-        <category>C++Primer</category>
+        <category>Cpp Primer</category>
       </categories>
       <tags>
-        <tag>C++</tag>
-        <tag>C++学习笔记</tag>
+        <tag>Cpp</tag>
+        <tag>Cpp学习笔记</tag>
       </tags>
   </entry>
   <entry>
@@ -1272,11 +1274,11 @@ auto e = v.end();
 <p>string和vector迭代器支持更多运算。</p>
 ]]></content>
       <categories>
-        <category>C++Primer</category>
+        <category>Cpp Primer</category>
       </categories>
       <tags>
-        <tag>C++</tag>
-        <tag>C++学习笔记</tag>
+        <tag>Cpp</tag>
+        <tag>Cpp学习笔记</tag>
       </tags>
   </entry>
   <entry>
@@ -1715,11 +1717,11 @@ decltype(i) e;        // 正确，e是一个未初始化的int.
 </ul>
 ]]></content>
       <categories>
-        <category>C++Primer</category>
+        <category>Cpp Primer</category>
       </categories>
       <tags>
-        <tag>C++</tag>
-        <tag>C++学习笔记</tag>
+        <tag>Cpp</tag>
+        <tag>Cpp学习笔记</tag>
       </tags>
   </entry>
 </search>
