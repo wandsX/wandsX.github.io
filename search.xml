@@ -299,11 +299,9 @@ HasPtr q(p);    // 现在p和q都指向无效内存！
       </tags>
   </entry>
   <entry>
-    <title>cs值类型和引用类型</title>
+    <title>CSharp值类型和引用类型</title>
     <url>/2019/12/30/CSharp%E5%80%BC%E7%B1%BB%E5%9E%8B%E5%92%8C%E5%BC%95%E7%94%A8%E7%B1%BB%E5%9E%8B/</url>
-    <content><![CDATA[<center><b>学习C#的值类型和引用类型</b></center>
-
-<a id="more"></a>
+    <content><![CDATA[<p><center><b>学习C#的值类型和引用类型</b></center><br><a id="more"></a></p>
 <h2 id="1-类型划分"><a href="#1-类型划分" class="headerlink" title="1.类型划分"></a>1.类型划分</h2><p>一个类型要么是<strong>值类型</strong>，要么是<strong>引用类型</strong>。</p>
 <p>区别在于拷贝方式：<strong>值类型的数据总是拷贝值，引用类型数据总是拷贝引用</strong></p>
 <h3 id="1-1-值类型"><a href="#1-1-值类型" class="headerlink" title="1.1 值类型"></a>1.1 值类型</h3><p>将一个值赋值给变量1，再将变量1赋值给变量2，会在变量2的位置创建值的拷贝，而不是引用变量1的位置。也就是说改变 变量1的值不会影响到变量2的值。</p>
@@ -335,7 +333,7 @@ HasPtr q(p);    // 现在p和q都指向无效内存！
       </tags>
   </entry>
   <entry>
-    <title>cs语法数据类型</title>
+    <title>CSharp语法数据类型</title>
     <url>/2019/12/20/CSharp%E8%AF%AD%E6%B3%95%E6%95%B0%E6%8D%AE%E7%B1%BB%E5%9E%8B/</url>
     <content><![CDATA[<p><center><b>学习C#数据类型</b></center><br><a id="more"></a></p>
 <h2 id="1-基本数据类型"><a href="#1-基本数据类型" class="headerlink" title="1.基本数据类型"></a>1.基本数据类型</h2><p>c#基本数据类型包括：整数类型， 浮点类型，decimal类型（特殊的浮点类型，能存储大数字而无表示错误）。</p>
@@ -479,7 +477,7 @@ bool boolean = System.Convert.ToBoolean(middleC);
       </tags>
   </entry>
   <entry>
-    <title>深入理解cs泛型</title>
+    <title>深入理解CSharp泛型</title>
     <url>/2019/12/13/%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3CSharp%E6%B3%9B%E5%9E%8B/</url>
     <content><![CDATA[<p><center><b>这篇文章学习一下c#的泛型</b> </center><br><a id="more"></a></p>
 <h2 id="基本概念"><a href="#基本概念" class="headerlink" title="基本概念"></a>基本概念</h2><p>泛型分为两种形式：<strong>泛型类型</strong>（接口，委托，结构，类）和 <strong>泛型方法</strong>，两者都是表示API的基本方法。</p>
@@ -745,7 +743,7 @@ class Sample&lt;T, U&gt; where T : struct where U   class, T {...}
       </tags>
   </entry>
   <entry>
-    <title>深入理解 c# 值类型和引用类型</title>
+    <title>深入理解CSharp值类型和引用类型</title>
     <url>/2019/12/12/%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3CSharp%E5%80%BC%E7%B1%BB%E5%9E%8B%E5%92%8C%E5%BC%95%E7%94%A8%E7%B1%BB%E5%9E%8B/</url>
     <content><![CDATA[<p><center><b>这篇文章学习一下c#的值类型和引用类型</b> </center><br><a id="more"></a></p>
 <p><br></p>
