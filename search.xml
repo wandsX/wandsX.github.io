@@ -325,11 +325,11 @@ HasPtr q(p);    // 现在p和q都指向无效内存！
 <p>元组的声明和赋值的示例。</p>
 ]]></content>
       <categories>
-        <category>c#本质论</category>
+        <category>Csharp本质论</category>
       </categories>
       <tags>
-        <tag>c#</tag>
-        <tag>c# 语法</tag>
+        <tag>CSharp</tag>
+        <tag>Csharp 语法</tag>
       </tags>
   </entry>
   <entry>
@@ -469,11 +469,11 @@ bool boolean = System.Convert.ToBoolean(middleC);
 </code></pre>
 ]]></content>
       <categories>
-        <category>c#本质论</category>
+        <category>CSharp本质论</category>
       </categories>
       <tags>
-        <tag>c#</tag>
-        <tag>c# 语法</tag>
+        <tag>CSharp</tag>
+        <tag>CSharp 语法</tag>
       </tags>
   </entry>
   <entry>
@@ -736,10 +736,10 @@ class Sample&lt;T, U&gt; where T : struct where U   class, T {...}
 </blockquote>
 ]]></content>
       <categories>
-        <category>深入理解c#</category>
+        <category>深入理解CSharp</category>
       </categories>
       <tags>
-        <tag>c#</tag>
+        <tag>CSharp</tag>
       </tags>
   </entry>
   <entry>
@@ -766,10 +766,10 @@ class Sample&lt;T, U&gt; where T : struct where U   class, T {...}
 </ul>
 ]]></content>
       <categories>
-        <category>深入理解c#</category>
+        <category>深入理解CSharp</category>
       </categories>
       <tags>
-        <tag>c#</tag>
+        <tag>CSharp</tag>
       </tags>
   </entry>
   <entry>
@@ -827,70 +827,6 @@ const double* const pip = &amp;pi; // pip是一个指向常量对象的常量指
 <li>进行copy的对象，拷入和拷出必须具有相同的底层const资格，或者两个对象的数据类型必须能够转换。<strong>一般来说，非常量可以转换成常量，但是反之不行。</strong></li>
 </ul>
 <p><br></p>
-]]></content>
-      <categories>
-        <category>C++ Primer</category>
-      </categories>
-      <tags>
-        <tag>C++</tag>
-        <tag>C++ 学习笔记</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>C++ Primer 第六章学习笔记</title>
-    <url>/2019/12/08/C++-Primer-%E7%AC%AC%E5%85%AD%E7%AB%A0%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/</url>
-    <content><![CDATA[<p><center><b> 本章主要介绍函数的定义和声明</b> </center><br><a id="more"></a></p>
-<h3 id="函数"><a href="#函数" class="headerlink" title="函数"></a>函数</h3><p>函数的基础就不多说了。</p>
-<p><br></p>
-<p><strong>函数的调用完成两项工作:</strong></p>
-<ul>
-<li>实参初始化函数对应的形参</li>
-<li>将控制权转移给被调用函数</li>
-</ul>
-<h3 id="参数传递"><a href="#参数传递" class="headerlink" title="参数传递"></a>参数传递</h3><p>在c++中，多使用引用代替指针。</p>
-<h4 id="const形参和实参"><a href="#const形参和实参" class="headerlink" title="const形参和实参"></a>const形参和实参</h4><blockquote>
-<p>const对 <strong>形参和实参</strong> 的作用和对<strong>变量</strong>的引用是一致的。</p>
-</blockquote>
-<h4 id="数组形参"><a href="#数组形参" class="headerlink" title="数组形参"></a>数组形参</h4><p>在cpp中，数组的两个特殊性质</p>
-<ul>
-<li>不能copy，所以数组不能以值传递的方式使用数组参数。</li>
-<li>不能用一个数组对另外一个数组进行初始化，也不能直接赋值</li>
-<li>传递数组通常转换为<br>```cpp</li>
-</ul>
-<p>// 以下三种语法是等价的。<br>void function(int *);<br>void function(int []);<br>void function(int [10]);</p>
-<pre><code>
-
-##### 管理指针形参的三种方式
-- 使用标记，如C风格字符串
-```cpp
-void print(const char *cp)
-{
-    if (cp)
-        while (*cp)
-            cout &lt;&lt; *cp++ &lt;&lt; &quot; &quot;;
-}
-</code></pre><ul>
-<li><p>使用标准库规范</p>
-<pre><code class="lang-c++">void print(const char* begin, const char* end)
-{
-  while (begin != end)
-  {
-      cout &lt;&lt; *begin++ &lt;&lt; endl;
-  }
-}
-</code></pre>
-</li>
-<li><p>显示的传递一个代表数组大小的形参</p>
-<pre><code class="lang-cpp">void print(const int ia[]， size_t size)
-{
-for(size_t i = 0; i != size; ++i)
-{
-  cout &lt;&lt; ia[i] &lt;&lt; endl;
-}
-}
-</code></pre>
-</li>
-</ul>
 ]]></content>
       <categories>
         <category>C++ Primer</category>
