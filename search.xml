@@ -275,9 +275,7 @@ trans = accum;            // 调用拷贝赋值运算符
 f(p);            // 当f结束时，p．ps指向的内存被释放
 HasPtr q(p);    // 现在p和q都指向无效内存！
 </code></pre>
-<p>p（以及q)指向的内存不冉有效，在hp（或ret!）销毁时它就被归还给系统了。</p>
-<p>p（以及q)指向的内存不冉有效，在hp（或ret!）销毁时它就被归还给系统了。</p>
-<p>此外，f的调用者还会使用传递给f的对象：</p>
+<p>p（以及q)指向的内存不冉有效，在hp（或ret!）销毁时它就被归还给系统了。此外，f的调用者还会使用传递给f的对象：</p>
 ]]></content>
       <categories>
         <category>c++ primer</category>
@@ -794,7 +792,7 @@ int i = 42;
 const int &amp;r4 = r3; // 常量引用可以指向一个非常量，但是不允许通过r4对r3进行修改。
 </code></pre>
 <h2 id="0x02-const与指针"><a href="#0x02-const与指针" class="headerlink" title="0x02 const与指针"></a>0x02 const与指针</h2><h3 id="2-1-指向常量的指针-pointer-to-const"><a href="#2-1-指向常量的指针-pointer-to-const" class="headerlink" title="2.1 指向常量的指针(pointer to const)"></a>2.1 指向常量的指针(pointer to const)</h3><blockquote>
-<p>指向常量的指针没有规定其所指的对象必须是一个常量,指向常量的指针是指不能通过指针来改变所指的变量的值。。</p>
+<p>指向常量的指针没有规定其所指的对象必须是一个常量,也就是说可以非常量，指向常量的指针是指不能通过指针来改变所指的变量的值。。</p>
 </blockquote>
 <pre><code class="lang-cpp">const double pi1 = 3.14;
 double pi2 = 3.14;
@@ -807,7 +805,7 @@ const double *cptr2 = &amp;pi2;
 <h3 id="2-2-常量指针-const-pointer"><a href="#2-2-常量指针-const-pointer" class="headerlink" title="2.2 常量指针(const pointer)"></a>2.2 常量指针(const pointer)</h3><blockquote>
 <p>常量指针必须初始化，一旦初始化完成，那么它的值将不会在变化。</p>
 </blockquote>
-<p> <strong>const poiter 不变的是指针本身的值而不是所指向的那个值，所以const pointer可以通过指针修改所指对象的值。</strong><br>-</p>
+<p> <strong>const pointer 不变的是指针本身的值而不是所指向的那个值，所以const pointer可以通过指针修改所指对象的值。</strong></p>
 <pre><code class="lang-cpp">int errNum = 0;
 int *const curErr = &amp;errNum;
 
@@ -1711,7 +1709,6 @@ const pstring *ps;    //ps是一个指针，它的对象是指向char的常量�
     第一条语句:pstring直接是类型别名,数据类型就是指向char的指针.
     第二条语句:const直接修饰给定类型,cstr就是指向char的常量指针.
     第三条语句:ps本质上就是一个指针,前面声明符都是它的指向的类型,代表ps指向一个指向char的常量指针.
-
 */
 </code></pre>
 <h2 id="0x07-auto"><a href="#0x07-auto" class="headerlink" title="0x07. auto"></a>0x07. auto</h2><h3 id="7-1-相关概念"><a href="#7-1-相关概念" class="headerlink" title="7.1 相关概念"></a>7.1 相关概念</h3><p> C++11新标准引入了auto类型说明符，用它就能让编译器替我们去分析表达式所属的类型。和原来那些只对应一种特定类型的说明符（比如double）不同，auto让编译器通 过初始值来推算变量的类型。显然，auto定义的变量必须有初始值： </p>

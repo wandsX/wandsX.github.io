@@ -117,7 +117,7 @@
 <meta property="og:site_name" content="疯癫">
 <meta property="og:description" content="本文讲述const和指针，引用之间微妙的关系">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2020-03-07T09:22:15.156Z">
+<meta property="og:updated_time" content="2020-09-19T15:23:41.340Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="const对指针和引用的限定">
 <meta name="twitter:description" content="本文讲述const和指针，引用之间微妙的关系">
@@ -447,7 +447,7 @@
                 
                   <span class="post-meta-item-text">更新于</span>
                 
-                <time title="修改时间：2020-03-07 17:22:15" itemprop="dateModified" datetime="2020-03-07T17:22:15+08:00">2020-03-07</time>
+                <time title="修改时间：2020-09-19 23:23:41" itemprop="dateModified" datetime="2020-09-19T23:23:41+08:00">2020-09-19</time>
               
             
           </span>
@@ -547,7 +547,7 @@ int i = 42;
 const int &amp;r4 = r3; // 常量引用可以指向一个非常量，但是不允许通过r4对r3进行修改。
 </code></pre>
 <h2 id="0x02-const与指针"><a href="#0x02-const与指针" class="headerlink" title="0x02 const与指针"></a>0x02 const与指针</h2><h3 id="2-1-指向常量的指针-pointer-to-const"><a href="#2-1-指向常量的指针-pointer-to-const" class="headerlink" title="2.1 指向常量的指针(pointer to const)"></a>2.1 指向常量的指针(pointer to const)</h3><blockquote>
-<p>指向常量的指针没有规定其所指的对象必须是一个常量,指向常量的指针是指不能通过指针来改变所指的变量的值。。</p>
+<p>指向常量的指针没有规定其所指的对象必须是一个常量,也就是说可以非常量，指向常量的指针是指不能通过指针来改变所指的变量的值。。</p>
 </blockquote>
 <pre><code class="lang-cpp">const double pi1 = 3.14;
 double pi2 = 3.14;
@@ -560,7 +560,7 @@ const double *cptr2 = &amp;pi2;
 <h3 id="2-2-常量指针-const-pointer"><a href="#2-2-常量指针-const-pointer" class="headerlink" title="2.2 常量指针(const pointer)"></a>2.2 常量指针(const pointer)</h3><blockquote>
 <p>常量指针必须初始化，一旦初始化完成，那么它的值将不会在变化。</p>
 </blockquote>
-<p> <strong>const poiter 不变的是指针本身的值而不是所指向的那个值，所以const pointer可以通过指针修改所指对象的值。</strong><br>-</p>
+<p> <strong>const pointer 不变的是指针本身的值而不是所指向的那个值，所以const pointer可以通过指针修改所指对象的值。</strong></p>
 <pre><code class="lang-cpp">int errNum = 0;
 int *const curErr = &amp;errNum;
 
