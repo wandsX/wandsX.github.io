@@ -278,11 +278,11 @@ HasPtr q(p);    // 现在p和q都指向无效内存！
 <p>p（以及q)指向的内存不冉有效，在hp（或ret!）销毁时它就被归还给系统了。此外，f的调用者还会使用传递给f的对象：</p>
 ]]></content>
       <categories>
-        <category>C++ Primer</category>
+        <category>C++Primer</category>
       </categories>
       <tags>
         <tag>C++</tag>
-        <tag>C++ 学习笔记</tag>
+        <tag>C++学习笔记</tag>
       </tags>
   </entry>
   <entry>
@@ -291,11 +291,11 @@ HasPtr q(p);    // 现在p和q都指向无效内存！
     <content><![CDATA[<p><center><b>本章主要讲述了C++ Template的相关知识</b></center><br><a id="more"></a></p>
 ]]></content>
       <categories>
-        <category>C++ Primer</category>
+        <category>C++Primer</category>
       </categories>
       <tags>
         <tag>C++</tag>
-        <tag>C++ 学习笔记</tag>
+        <tag>C++学习笔记</tag>
       </tags>
   </entry>
   <entry>
@@ -329,7 +329,7 @@ HasPtr q(p);    // 现在p和q都指向无效内存！
       </categories>
       <tags>
         <tag>CSharp</tag>
-        <tag>Csharp 语法</tag>
+        <tag>CSharp语法</tag>
       </tags>
   </entry>
   <entry>
@@ -473,7 +473,7 @@ bool boolean = System.Convert.ToBoolean(middleC);
       </categories>
       <tags>
         <tag>CSharp</tag>
-        <tag>CSharp 语法</tag>
+        <tag>CSharp语法</tag>
       </tags>
   </entry>
   <entry>
@@ -829,11 +829,11 @@ const double* const pip = &amp;pi; // pip是一个指向常量对象的常量指
 <p><br></p>
 ]]></content>
       <categories>
-        <category>C++ Primer</category>
+        <category>C++Primer</category>
       </categories>
       <tags>
         <tag>C++</tag>
-        <tag>C++ 学习笔记</tag>
+        <tag>C++学习笔记</tag>
       </tags>
   </entry>
   <entry>
@@ -1272,11 +1272,11 @@ auto e = v.end();
 <p>string和vector迭代器支持更多运算。</p>
 ]]></content>
       <categories>
-        <category>C++ Primer</category>
+        <category>C++Primer</category>
       </categories>
       <tags>
         <tag>C++</tag>
-        <tag>C++ 学习笔记</tag>
+        <tag>C++学习笔记</tag>
       </tags>
   </entry>
   <entry>
@@ -1715,11 +1715,11 @@ decltype(i) e;        // 正确，e是一个未初始化的int.
 </ul>
 ]]></content>
       <categories>
-        <category>C++ Primer</category>
+        <category>C++Primer</category>
       </categories>
       <tags>
         <tag>C++</tag>
-        <tag>C++ 学习笔记</tag>
+        <tag>C++学习笔记</tag>
       </tags>
   </entry>
 </search>
