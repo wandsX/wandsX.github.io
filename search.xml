@@ -1,6 +1,959 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title>const限定符对指针和引用的修饰</title>
+    <url>/2020/09/30/const%E9%99%90%E5%AE%9A%E7%AC%A6%E5%AF%B9%E6%8C%87%E9%92%88%E5%92%8C%E5%BC%95%E7%94%A8%E7%9A%84%E4%BF%AE%E9%A5%B0/</url>
+    <content><![CDATA[<center> <b>本文讲述const和指针，引用之间微妙的关系</b> </center>
+
+<a id="more"></a>
+<h2 id="0x01-const与引用"><a href="#0x01-const与引用" class="headerlink" title="0x01 const与引用"></a>0x01 const与引用</h2><h3 id="1-1-const的引用（reference-to-const"><a href="#1-1-const的引用（reference-to-const" class="headerlink" title="1.1 const的引用（reference to const)"></a>1.1 const的引用（reference to const)</h3><p>简称为常量引用，<strong>引用的对象时常量还是非常量可以决定其所参与的操作，但是不会影响引用和对象的绑定关系。</strong></p>
+<pre><code class="lang-cpp">const int ci = 1024;
+const int &amp;r1 = ci;     // 引用及其对应的对象都是常量
+
+
+r1 = 42;
+int &amp;r2 = ci; // error, 使用一个非常量引用指向一个常量。
+
+int i = 42;
+const int &amp;r4 = r3; // 常量引用可以指向一个非常量，但是不允许通过r4对r3进行修改。
+</code></pre>
+<h2 id="0x02-const与指针"><a href="#0x02-const与指针" class="headerlink" title="0x02 const与指针"></a>0x02 const与指针</h2><h3 id="2-1-指向常量的指针-pointer-to-const"><a href="#2-1-指向常量的指针-pointer-to-const" class="headerlink" title="2.1 指向常量的指针(pointer to const)"></a>2.1 指向常量的指针(pointer to const)</h3><blockquote>
+<p>指向常量的指针没有规定其所指的对象必须是一个常量,也就是说可以非常量，指向常量的指针是指不能通过指针来改变所指的变量的值。。</p>
+</blockquote>
+<pre><code class="lang-cpp">const double pi1 = 3.14;
+double pi2 = 3.14;
+
+// 下面两条赋值语句都是合法的。
+const double *cptr1 = &amp;pi1;
+const double *cptr2 = &amp;pi2;
+</code></pre>
+<p><br></p>
+<h3 id="2-2-常量指针-const-pointer"><a href="#2-2-常量指针-const-pointer" class="headerlink" title="2.2 常量指针(const pointer)"></a>2.2 常量指针(const pointer)</h3><blockquote>
+<p>常量指针必须初始化，一旦初始化完成，那么它的值将不会在变化。</p>
+</blockquote>
+<p> <strong>const pointer 不变的是指针本身的值而不是所指向的那个值，所以const pointer可以通过指针修改所指对象的值。</strong></p>
+<pre><code class="lang-cpp">int errNum = 0;
+int *const curErr = &amp;errNum;
+
+const double pi = 3.14;
+// 将*放在const可以说明指针是一个常量
+const double* const pip = &amp;pi; // pip是一个指向常量对象的常量指针。
+</code></pre>
+<h2 id="0x03-const-介绍"><a href="#0x03-const-介绍" class="headerlink" title="0x03 const 介绍"></a>0x03 const 介绍</h2><ul>
+<li><p>顶层 const 代表对象本身是个常量。</p>
+</li>
+<li><p>底层 const 代表指针所指的对象是一个常量。</p>
+</li>
+<li><p>指针既可以是顶层const，也可以是底层const</p>
+</li>
+</ul>
+<pre><code class="lang-cpp">  int i = 0;
+  int *const p1 = &amp;i;           //  const pointer -- 这是顶层const 
+  const int ci = 42;            // const var -- 这是顶层const
+  const int *p2 = &amp;ci;          // pointer to const -- 这是底层const
+  const int *const p3 = p2;     // 右边是顶层const， 左边是底层const
+
+  const int &amp;r = ci;            // 用于声明引用的const 都是底层const
+</code></pre>
+<p>如果进行copy时，顶层const的不受影响，但是底层const受限制。</p>
+<ul>
+<li>进行copy的对象，拷入和拷出必须具有相同的底层const资格，或者两个对象的数据类型必须能够转换。<strong>一般来说，非常量可以转换成常量，但是反之不行。</strong></li>
+</ul>
+<p><br></p>
+]]></content>
+      <categories>
+        <category>Cpp Primer</category>
+      </categories>
+      <tags>
+        <tag>Cpp</tag>
+        <tag>Cpp学习笔记</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>第十九章学习笔记</title>
+    <url>/2020/09/30/%E7%AC%AC%E5%8D%81%E4%B9%9D%E7%AB%A0%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/</url>
+    <content><![CDATA[]]></content>
+      <categories>
+        <category>Cpp Primer</category>
+      </categories>
+      <tags>
+        <tag>Cpp</tag>
+        <tag>Cpp学习笔记</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>第十八章学习笔记</title>
+    <url>/2020/09/30/%E7%AC%AC%E5%8D%81%E5%85%AB%E7%AB%A0%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/</url>
+    <content><![CDATA[]]></content>
+      <categories>
+        <category>Cpp Primer</category>
+      </categories>
+      <tags>
+        <tag>Cpp</tag>
+        <tag>Cpp学习笔记</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>第十七章学习笔记</title>
+    <url>/2020/09/30/%E7%AC%AC%E5%8D%81%E4%B8%83%E7%AB%A0%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/</url>
+    <content><![CDATA[]]></content>
+      <categories>
+        <category>Cpp Primer</category>
+      </categories>
+      <tags>
+        <tag>Cpp</tag>
+        <tag>Cpp学习笔记</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>第十六章学习笔记</title>
+    <url>/2020/09/30/%E7%AC%AC%E5%8D%81%E5%85%AD%E7%AB%A0%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/</url>
+    <content><![CDATA[]]></content>
+      <categories>
+        <category>Cpp Primer</category>
+      </categories>
+      <tags>
+        <tag>Cpp</tag>
+        <tag>Cpp学习笔记</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>第十五章学习笔记</title>
+    <url>/2020/09/30/%E7%AC%AC%E5%8D%81%E4%BA%94%E7%AB%A0%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/</url>
+    <content><![CDATA[]]></content>
+      <categories>
+        <category>Cpp Primer</category>
+      </categories>
+      <tags>
+        <tag>Cpp</tag>
+        <tag>Cpp学习笔记</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>第十四章学习笔记</title>
+    <url>/2020/09/30/%E7%AC%AC%E5%8D%81%E5%9B%9B%E7%AB%A0%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/</url>
+    <content><![CDATA[]]></content>
+      <categories>
+        <category>Cpp Primer</category>
+      </categories>
+      <tags>
+        <tag>Cpp</tag>
+        <tag>Cpp学习笔记</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>第十三章学习笔记</title>
+    <url>/2020/09/30/%E7%AC%AC%E5%8D%81%E4%B8%89%E7%AB%A0%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/</url>
+    <content><![CDATA[<center><b>本章主要讲述了类在控制对象拷贝，赋值，移动和销毁时做什么的相关知识</b></center>
+
+<a id="more"></a>
+<h2 id="0x01-拷贝，赋值与销毁"><a href="#0x01-拷贝，赋值与销毁" class="headerlink" title="0x01 拷贝，赋值与销毁"></a>0x01 拷贝，赋值与销毁</h2><h3 id="1-1-拷贝构造函数"><a href="#1-1-拷贝构造函数" class="headerlink" title="1.1 拷贝构造函数"></a>1.1 拷贝构造函数</h3><p>定义：<strong>如果一个构造函数的第一个参数是自身类类型的引用，且任何额外参数都有默认值，那么此构造函数是拷贝构造函数。</strong></p>
+<pre><code class="lang-c++">class Foo{
+    public:
+        Foo();                // 默认构造函数
+        Foo(const Foo&amp;);    // 拷贝构造函数
+}
+</code></pre>
+<p>拷贝构造函数接受的第一个参数必须是一个引用类型。拷贝构造函数在几种情况下都会被隐式的使用。因此，拷贝构造函数通常不应该是<strong>explicit</strong>的。</p>
+<h4 id="1-1-1-合成拷贝构造函数"><a href="#1-1-1-合成拷贝构造函数" class="headerlink" title="1.1.1 合成拷贝构造函数"></a>1.1.1 合成拷贝构造函数</h4><p>如果我们没有为一个类定义拷贝构造函数，编译器会为我们定义一个。与合成默认构造函数不同，即使我们定义了其他构造函数，编译器也会为我们合成一个拷贝构造函数。</p>
+<p>对某些类来说，<strong>合成拷贝构造函数</strong>用来阻止我们拷贝该类类型的对象。而在一般的情况下，合成拷贝构造函数会将其参数的成员逐个拷贝到正在创建的对象中，编译器从给定的对象中依次将每个非static成员拷贝到正在创建的对象中。</p>
+<p>每个成员的类型决定了它如何拷贝，对类类型的成员，会使用其拷贝构造函数来拷贝。<strong>内置类型成员则直接拷贝，虽然我们不能直接拷贝一个数组，但合成拷贝构造函数会逐元素地拷贝一个数组类型的成员。如果数组元素是类类型，则使用元素的拷贝构造函数来进行拷贝。</strong></p>
+<p>编译器为类合成的拷贝构造函数等价于下面：</p>
+<pre><code class="lang-c++">class Sales_data
+{
+    public:
+        Sales_data(const Sales_data &amp;);
+
+    private:
+        string bookNo;
+        int units_sold = 0;
+        double revenue = 0.0;
+};
+
+Sales_data::Sales_data(const Sales_data &amp;orig)
+        : bookNo(orig.bookNo),
+          units_sold(orig.units_sold),
+          revenue(orig.revenue)
+{
+    /*...*/
+}
+</code></pre>
+<h4 id="1-1-2-拷贝初始化"><a href="#1-1-2-拷贝初始化" class="headerlink" title="1.1.2 拷贝初始化"></a>1.1.2 拷贝初始化</h4><p><strong>当使用直接初始化时，我们实际上时要求编译器使用普通的函数匹配来选择与我们提供的参数最匹配的构造函数。当我们使用拷贝初始化时，我们要求编译器将右侧运算对象拷贝正在创建的对象中，如果需要的话还要进行类型转换。</strong></p>
+<p>拷贝初始化通常使用拷贝构造函数来完成，但是，如我们所见，如果一个类有一个移动构造函数，则拷贝初始化有时会使用移动构造函数来完成。</p>
+<p>拷贝初始化不仅在我们用=定义变量时会发生，在下列情况下也会发生：</p>
+<ul>
+<li><strong>将一个对象作为实参传递给一个非引用类型的形参</strong></li>
+<li><strong>从一个返回类型为非引用类型的函数返回一个对象</strong></li>
+<li><strong>用花括号列表初始化一个数组中的元素或一个聚合类中的成员</strong></li>
+</ul>
+<p>并且，某些类类型还会对它们所分配的对象使用拷贝初始化。例如，当我们初始化标准库容器或是调用其<strong>insert或push</strong>成员时，容器会对其元素进行拷贝初始化。与之相对，用<strong>emplace</strong>成员创建的元素进行直接初始化。</p>
+<h4 id="1-1-3-参数和返回值"><a href="#1-1-3-参数和返回值" class="headerlink" title="1.1.3 参数和返回值"></a>1.1.3 参数和返回值</h4><p>在函数调用过程中，具有非引用类型的参数要进行拷贝初始化，对形参的使用不会影响到实参。</p>
+<p>类似的，当一个函数具有非引用的返回类型时，返回值会被用来初始化调用方的结果。</p>
+<pre><code class="lang-c++">// 该函数的返回值是string，是一个非引用类型。
+// 意味着返回值会拷贝到调用点，函数返回副本或者一个未命名的临时string对象
+string make_plural(size_t ctr, const string &amp;word,
+                               const string &amp;ending)
+{
+    return (ctr &gt; 1) ? word + ending : word;
+}
+</code></pre>
+<p>拷贝构造函数被用来初始化非引用类类型参数，这一特性解释了为什么拷贝构造函数自己的参数必须是引用类型。<strong>如果参数不是引用类型，则调用永远不会成功，为了调用拷贝构造函数，我们必须拷贝它的实参，但为了拷贝实参，但为了拷贝实参，我们又需要调用拷贝构造函数，一直循环下去…</strong></p>
+<h4 id="1-1-4-拷贝初始化的限制"><a href="#1-1-4-拷贝初始化的限制" class="headerlink" title="1.1.4 拷贝初始化的限制"></a>1.1.4 拷贝初始化的限制</h4><p>如果我们使用的初始化值要求通过一个explicit的构造函数来进行类型转换，那么使用拷贝初始化还是直接初始化就不是无关紧要的了:</p>
+<pre><code class="lang-c++">vector&lt;int&gt; v1(10);            // 直接初始化，true
+vector&lt;int&gt; v2 = 10;        // 接收大小参数的构造函数是explicit的, error
+void f(vector&lt;int&gt;);        // f的参数进行拷贝初始化
+f(10);                        // 不能用一个explicit的构造函数拷贝字面值转换成一个实参，error
+f(vector&lt;int&gt;(10));            // true, 从一个int直接构造一个临时vector
+</code></pre>
+<h4 id="1-1-5-编译器可以绕过拷贝构造函数"><a href="#1-1-5-编译器可以绕过拷贝构造函数" class="headerlink" title="1.1.5 编译器可以绕过拷贝构造函数"></a>1.1.5 编译器可以绕过拷贝构造函数</h4><p>在拷贝初始化过程中，编译器可以（但不是必须）跳过拷贝/移动构造函数，直接创建对象。</p>
+<pre><code class="lang-c++">string null_book = &quot;9-999-99999-9&quot;;    //拷贝初始化 
+
+string null_booK(&quot;9-999-99999-9&quot;);    // compiler略过了拷贝构造函数
+</code></pre>
+<p>但是，即使是compiler略过了拷贝/移动构造函数，但是在这个程序点上，拷贝/移动构造函数必须是存在且可访问的。</p>
+<h4 id="1-1-6-练习"><a href="#1-1-6-练习" class="headerlink" title="1.1.6 练习"></a>1.1.6 练习</h4><h5 id="1-1-6-1-什么是拷贝构造函数？什么时候使用它？"><a href="#1-1-6-1-什么是拷贝构造函数？什么时候使用它？" class="headerlink" title="1.1.6.1 什么是拷贝构造函数？什么时候使用它？"></a>1.1.6.1 什么是拷贝构造函数？什么时候使用它？</h5><p>如果一个类的构造函数的第一个参数是自身类型的引用，且额外参数都有默认值，那么此构造函数就是拷贝构造函数。</p>
+<p>用作拷贝初始化。</p>
+<h5 id="1-1-6-2-解释下为什么下面的声明是非法的？"><a href="#1-1-6-2-解释下为什么下面的声明是非法的？" class="headerlink" title="1.1.6.2 解释下为什么下面的声明是非法的？"></a>1.1.6.2 解释下为什么下面的声明是非法的？</h5><pre><code>Sales_data::Sale_data(Sales_data rhs);
+
+// 拷贝构造函数第一个参数必须是自身类型的引用。
+</code></pre><h5 id="1-1-6-3-假定Point是一个类类型，它有一个public的拷贝构造函数，指出下面程序片段哪些地方使用了拷贝构造函数："><a href="#1-1-6-3-假定Point是一个类类型，它有一个public的拷贝构造函数，指出下面程序片段哪些地方使用了拷贝构造函数：" class="headerlink" title="1.1.6.3 假定Point是一个类类型，它有一个public的拷贝构造函数，指出下面程序片段哪些地方使用了拷贝构造函数："></a>1.1.6.3 假定Point是一个类类型，它有一个public的拷贝构造函数，指出下面程序片段哪些地方使用了拷贝构造函数：</h5><pre><code class="lang-c++">Point global;
+Point foo_bar(Point arg)     // 实参转换成形参使用，1
+{
+    Point local = arg, *heap = new Point(global);        // here，2，3
+    *heap = local;
+    Point pa[4] = { local, *heap };            // 4，5
+    return *heap;     // 这里也是拷贝构造函数，生成一个临时对象 6
+}
+
+static int count = 0;
+// 可用这个例子进行测试
+class Point
+{
+    public:
+        Point()
+        {};
+
+        Point(string name) : name(name)
+        {};
+
+        Point(const Point &amp;arg) : name(arg.name)
+        {
+            cout &lt;&lt; &quot;copy:&quot; &lt;&lt; count++ &lt;&lt; endl;
+        };
+
+    private:
+        string name;
+
+};
+
+Point global;
+
+Point foo_bar(Point arg)
+{
+    Point local = arg, *heap = new Point(global);
+    *heap = local;
+    Point pa[4] = {local, *heap};
+    return *heap;
+}
+</code></pre>
+<h5 id="1-1-6-4-给定下面的类框架，编写一个拷贝构造函数，拷贝所有成员。你的构造函数应该动态分配一个新的string，并将对象拷贝到ps指向的位置，而不是ps本身的位置。"><a href="#1-1-6-4-给定下面的类框架，编写一个拷贝构造函数，拷贝所有成员。你的构造函数应该动态分配一个新的string，并将对象拷贝到ps指向的位置，而不是ps本身的位置。" class="headerlink" title="1.1.6.4 给定下面的类框架，编写一个拷贝构造函数，拷贝所有成员。你的构造函数应该动态分配一个新的string，并将对象拷贝到ps指向的位置，而不是ps本身的位置。"></a>1.1.6.4 给定下面的类框架，编写一个拷贝构造函数，拷贝所有成员。你的构造函数应该动态分配一个新的string，并将对象拷贝到ps指向的位置，而不是ps本身的位置。</h5><pre><code class="lang-c++">class HasPtr
+{
+    public:
+        HasPtr(const std::string &amp;s = std::string()) :
+                ps(new std::string(s)), i(0)
+        {}
+
+        HasPtr(const HasPtr &amp;hasPtr) :
+                ps(new std::string(*hasPtr.ps)),
+                i(hasPtr.i)
+        {}
+}
+</code></pre>
+<h3 id="1-3-拷贝赋值运算符"><a href="#1-3-拷贝赋值运算符" class="headerlink" title="1.3 拷贝赋值运算符"></a>1.3 拷贝赋值运算符</h3><p>与类控制其对象如何初始化一样，类也可以控制其对象如何赋值：</p>
+<pre><code class="lang-c++">Sale_data trans, accum;
+trans = accum;            // 调用拷贝赋值运算符
+</code></pre>
+<p>与拷贝构造函数一样，如果类未定义自己的拷贝赋值运算符，编译器会为他合成一个。</p>
+<h4 id="1-3-1-重载赋值运算符"><a href="#1-3-1-重载赋值运算符" class="headerlink" title="1.3.1 重载赋值运算符"></a>1.3.1 重载赋值运算符</h4><p>什么是重载运算符？重载运算符本质上是函数，其名字由operator关键字后接表示要定义的运算符的符号组成，因此，赋值运算符就是一个名为<strong>operator=</strong>的函数。<strong>类似于任何其他函数． 运算符函数也有一个返回类型和一个参数列表。</strong></p>
+<p>重载运算符的参数表示运算符的运算对象。某些运算符，包括赋值运算符，必须定义为成员函数。<strong>如果一个运算符是一个成员函数，其左侧运算对象就绑定到隐式的this参数。对于一个二元运算符，例如赋值运算符，其右侧运算对象作为显式参数传递</strong>。例如：</p>
+<pre><code class="lang-c++">class Foo{
+    public:
+        Foo&amp; operator= (const Foo&amp;);
+    //...
+}
+</code></pre>
+<p>为了与内置类型的赋值保持一致，<strong>赋值运算符通常返回一个指向其左侧运算对象的引用</strong>。另外值得注意的是，标准库通常要求保存在容器中的类型要具有赋值运算符，且其返回值是侧运算对象的引用。</p>
+<h4 id="1-3-2-合成拷贝赋值运算符"><a href="#1-3-2-合成拷贝赋值运算符" class="headerlink" title="1.3.2 合成拷贝赋值运算符"></a>1.3.2 合成拷贝赋值运算符</h4><p>与处理拷贝构造函数一样，如果一个类未定义自己的拷贝赋值运算符，编译器会为它生成一个合成拷贝值运算符。类似拷贝构造函数， 对于某些类，合成拷贝赋值运算符用来禁止该类型对象的赋值。 如果拷贝赋值运算符并非出此目的，它会将右侧运算对象的每个非static成员赋予左侧运算对象的对应成员，这一工作是通过成员类型的拷贝赋值运算符来完成的。对于数组类型的成员，逐个赋值数组元素。<strong>合成拷贝赋值运算符返回一个指向其左侧运算对象的引用</strong>。</p>
+<p> 作为一个例了，下面的代码等价于Sales_data的合成拷贝赋值运算符：</p>
+<pre><code class="lang-c++">Sales_data &amp; Sales_data::operator= (const Sales_datas &amp;rhs)
+{
+    bookNo = rhs.bookNo;
+    units_sold = rhs.units_sold;
+    revenue = rhs.revenue;
+    return *this;            //返回对象的引用
+}
+</code></pre>
+<h4 id="1-3-3-练习"><a href="#1-3-3-练习" class="headerlink" title="1.3.3 练习"></a>1.3.3 练习</h4><h5 id="1-3-3-1-拷贝赋值运算符是什么？什么时候使用它？合成拷贝赋值运算符完成什么工作？什么时候会生成合成拷贝赋值运算符？"><a href="#1-3-3-1-拷贝赋值运算符是什么？什么时候使用它？合成拷贝赋值运算符完成什么工作？什么时候会生成合成拷贝赋值运算符？" class="headerlink" title="1.3.3.1  拷贝赋值运算符是什么？什么时候使用它？合成拷贝赋值运算符完成什么工作？什么时候会生成合成拷贝赋值运算符？"></a>1.3.3.1  拷贝赋值运算符是什么？什么时候使用它？合成拷贝赋值运算符完成什么工作？什么时候会生成合成拷贝赋值运算符？</h5><pre><code>- 拷贝赋值运算符是重载”=“运算符，即为一个名为operator=的函数，拷贝赋值运算符接受一个与其所在类相同类型的参数。
+- 在发生赋值操作的时候使用。
+- 合成拷贝赋值的工作：将后侧运算对象的每个非static成员赋予左侧运算对象的对应成员。
+- 当类未定义自己的拷贝赋值运算符，编译器会生成一个合成拷贝运算符。
+</code></pre><h5 id="1-3-3-2-为上面的HasPtr类编写赋值运算符。类似拷贝构造函数，你的赋值运算符应该将对象拷贝到ps指向的位置。"><a href="#1-3-3-2-为上面的HasPtr类编写赋值运算符。类似拷贝构造函数，你的赋值运算符应该将对象拷贝到ps指向的位置。" class="headerlink" title="1.3.3.2 为上面的HasPtr类编写赋值运算符。类似拷贝构造函数，你的赋值运算符应该将对象拷贝到ps指向的位置。"></a>1.3.3.2 为上面的HasPtr类编写赋值运算符。类似拷贝构造函数，你的赋值运算符应该将对象拷贝到ps指向的位置。</h5><pre><code class="lang-c++">HasPtr &amp;operator=(const HasPtr &amp;hasPtr)
+{
+    ps = new string(*hasPtr.ps);
+    i = hasPtr.i;
+}
+</code></pre>
+<h3 id="1-4-析构函数"><a href="#1-4-析构函数" class="headerlink" title="1.4 析构函数"></a>1.4 析构函数</h3><p>析构函数执行与构造函数相反的操作：构造函数初始化对象的非static数据成员， 还可能做一些其他工作；析构函数释放对象使用的资源，并销毁对象的非static数成员。析构函数是类的一个成员函数，名字由波浪号接类名构成。它没有返回值，也不接受参数：</p>
+<pre><code class="lang-c++">class Foo{
+    ~Foo()
+    {}
+};
+</code></pre>
+<h4 id="1-4-1-析构函数完成什么工作"><a href="#1-4-1-析构函数完成什么工作" class="headerlink" title="1.4.1 析构函数完成什么工作"></a>1.4.1 析构函数完成什么工作</h4><p>如同构造函数有一个初始化部分和一个函数体，析构函数也有一个函数体和一个析构部分。</p>
+<p>在一个构造函数中，成员的初始化是在函数体执行之前完成的，且按照它们在类中出现的顺序进行初始化。在一个析构函数中，首先执行函数体， 然后销毁成员。成员按初始化顺序的逆序销毁。 </p>
+<p>在对象最后一次使用之后，析构涵数的函数体可执行类设计者希望执行的任何收尾工作。通常，析构函数释放对象在生存期分配的所有资源。</p>
+<p>在一个析构函数中，不存在类似构造函数中初始化列表的东西来控制成员如何销毁， 析构部分是隐式的。成员销毁时发生什么完全依赖于成员的类型。销毁类类型的成员需要执行成员自己的析构函数。内置类型没有析构函数，因此销毁内置类型成员什么也不需要做。</p>
+<blockquote id="fn_note">
+<sup>note</sup>. 隐式销毁一个内置指针成员不会delete它所指向的对象。<a href="#reffn_note" title="Jump back to footnote [note] in the text."> &#8617;</a>
+</blockquote>
+<p>与普通指针相比，智能指针是类类型，所以具有析构函数。因此与普通指针不同，智能指针成员在析构阶段会被自动销毁。</p>
+<h4 id="1-4-2-什么时候使用析构函数？"><a href="#1-4-2-什么时候使用析构函数？" class="headerlink" title="1.4.2 什么时候使用析构函数？"></a>1.4.2 什么时候使用析构函数？</h4><ul>
+<li>无论何时一个对象被销毁，就会自动调用其析构函数：</li>
+<li>变量在离开其作用域时被销毁。 </li>
+<li>当一个对象被销毁时，其成员被销毁。</li>
+<li>容器（无论是标准厍容器还是数组）被销毁时，其元素被销毁。</li>
+<li>对于动态分配的对象，当对指向它的指针应用delete运算符时被销毁</li>
+<li>对于临时对象，当创建它的完整表达式结束时被销毁 </li>
+</ul>
+<p>由于析构函数自动运行，我们的程序可以按需要分配资源，而（通常）无须担心何时释放 这些资源。</p>
+<p> 例如，下面代码片段定义了四个Sales_data对象：</p>
+<pre><code class="lang-c++">{    // 新作用域
+    // p和p2指向动态分配的对象
+
+    Sales_data *p = new Sales_data;        // p是一个内置指针
+    auto p2 = make_shared&lt;Sales_data&gt;(); // p2是一个shared_ptr
+
+    Sales_data item(*p);                // 拷贝构造函数将*p拷贝到item中。
+    vector&lt;Sales_data&gt; vec;                // 局部对象
+    vec.push_back(*p2);                    // 拷贝p2所指向的对象
+    delete p;                            // 对p指向的对象执行析构函数
+}
+
+/*
+    退出局部作用域，对item，p2和vec调用析构函数
+    销毁p2会递减其引用计数。如果引用计数为0，对象被释放
+    销毁vec会销毁它的元素
+*/
+</code></pre>
+<p>每个Sales_data对象都包含一个string成员，它分配动态内存来保存bookNo成员中的字符。但是，我们的代码<strong>唯一需要直接管理的内存就是我们直接分配的Sales_data对象</strong>。我们的代码只需直接释放绑定到p的动态分配象。</p>
+<p>其他Sales_data对象会在离开作用域时被自动销毁。当程序块结束时，vec、p2和item都离开了作用域，意味着在这些对象上分别会执行vector、shared_ptr和Sales_data的析构函数。vector的析构函数会销毁我们添加到vec的元素。Shared_ptr的析构函数会递减p2指向的对象的引用计数。在本例中，引用计数会变为0，因此shared_ptr的析构函数会<strong>delete p2</strong>分配的Sales_data对象。</p>
+<p>在所有情况下，Sales_data的析构函数都会隐式地销毁bookNo成员，销毁bookNo会调用string的析构函数，它会释放用来保存ISBN的内存。</p>
+<h4 id="1-4-3-合成析构函数"><a href="#1-4-3-合成析构函数" class="headerlink" title="1.4.3 合成析构函数"></a>1.4.3 合成析构函数</h4><p>当一个类未定义自己的析构函数时，编译器会为它定义一个<strong>合成析构函数</strong>。类似拷贝构造函数和拷贝赋值运算符，对于某些类，合成析构函数被用来阻止该类型的对象被销毁。如果不是这种情况，合成析构函数的函数体就为空。</p>
+<p>例如，下面的代码片段等价于salesdata的合成析构函数：</p>
+<pre><code class="lang-c++">class Sales_data{
+    public:
+    //成员会被自动销毁，除此之外不需要做其他事情
+   ~Salesdata() {};
+
+}
+</code></pre>
+<p>在（空）析构函数体执行完毕后，成员会被自动销毁。特别的，string的析构函数会被<br>调用，它将释放bookNo成员所用的内存。</p>
+<p>认识到析构函数体自身并不直接销毁成员是非常重要的。成员是在析构函数体之后隐<br>含的析构阶段中被销毁的。在整个对象销毁过程中，析构函数体是作为成员销毁步骤之外<br>的另一部分而进行的。</p>
+<h4 id="1-4-4-练习"><a href="#1-4-4-练习" class="headerlink" title="1.4.4 练习"></a>1.4.4 练习</h4><h5 id="1-4-4-1-析构函数是什么？合成析构函数完成什么工作？什么时候会生成合成析构函数？"><a href="#1-4-4-1-析构函数是什么？合成析构函数完成什么工作？什么时候会生成合成析构函数？" class="headerlink" title="1.4.4.1 析构函数是什么？合成析构函数完成什么工作？什么时候会生成合成析构函数？"></a>1.4.4.1 析构函数是什么？合成析构函数完成什么工作？什么时候会生成合成析构函数？</h5><pre><code>- 析构函数执行与构造函数相反的操作：构造函数初始化对象的非static数据成员， 还可能做一些其他工作；析构函数释放对象使用的资源，并销毁对象的非static数成员。析构函数是类的一个成员函数，名字由波浪号接类名构成。它没有返回值，也不接受参数：
+
+- 对于某些类，合成析构函数被用来阻止该类型的对象被销毁。如果不是这种情况，合成析构函数的函数体就为空。
+
+
+- 当一个类未定义自己的析构函数时，编译器会为它定义一个合成析构函数
+</code></pre><h5 id="1-4-4-2-在下面的代码片段中会发生几次析构函数调用？"><a href="#1-4-4-2-在下面的代码片段中会发生几次析构函数调用？" class="headerlink" title="1.4.4.2  在下面的代码片段中会发生几次析构函数调用？"></a>1.4.4.2  在下面的代码片段中会发生几次析构函数调用？</h5><pre><code class="lang-c++">bool fcn (const Sales_data *trans, Sales_data accum)
+{
+    Sales_data item1(*trans), item2(accum);
+
+    return item1.isbn() != item2.isbn();
+}
+// 3次 accum item1 item2
+</code></pre>
+<h3 id="1-5-三-五法则"><a href="#1-5-三-五法则" class="headerlink" title="1.5 三/五法则"></a>1.5 三/五法则</h3><p>如前所述，有三个基本操作可以控制类的拷贝操作：<strong>拷贝构造函数</strong>、<strong>拷贝赋值运算符</strong>和<strong>析构函数</strong>。而且，在新标准下，一个类还可以定义一个移动构造函数和一个移动赋值运算符，我们将在后面介绍这些内容。</p>
+<p>C++语言并不要求我们定义所有这些操作：可以只定义其中一个或两个，而不必定义所有。但是，这些操作通常应该被看作一个整体。通常，只需要其中一个操作，而不需要定义所有操作的情况是很少见的。</p>
+<h4 id="1-5-1-需要析构函数的类也需要拷贝和赋值操作"><a href="#1-5-1-需要析构函数的类也需要拷贝和赋值操作" class="headerlink" title="1.5.1 需要析构函数的类也需要拷贝和赋值操作"></a>1.5.1 需要析构函数的类也需要拷贝和赋值操作</h4><p>当我们决定一个类是否要定义它自己版本的拷贝控制成员时，<strong>一个基本原则是首先确定这个类是否需要一个析构函数</strong>。<strong>通常，对析构函数的需求要比对拷贝构造函数或赋值运算符的需求更为明显</strong>。如果这个类需要一个析构函数，我们几乎可以肯定它也需要一个拷贝构造函数和一个拷贝赋值运算符。</p>
+<p>我们在练习中用过的HasPtr类是一个好例子。这个类在构造函数中分配动态内存。合成析构函数不会delete一个指针数据成员。因此，此类需要定义一个析构函数来释放构造函数分配的内存。基本原则告诉我们，HasPtr也需要一个拷贝构造函数和一个拷贝赋值运算符。</p>
+<p>如果我们为HasPtr定义一个析构函数，但使用合成版本的拷贝构造函数和拷贝赋值<br>运算符，考虑会发生什么：</p>
+<pre><code class="lang-c++">class HasPtr
+{
+    public:
+    HasPtr(const string &amp;s = string ()):ps(new string(s), i(0))
+    {};
+    ~HasPtr()
+    {
+        delete ps;
+    }
+};
+</code></pre>
+<p>在这个版本的类定义中，构造函数中分配的内存将在HasPtr对象销毁时被释放。但不幸的是，我们引入了一个严重的错误！这个版本的类使用了<strong>合成的拷贝构造函数</strong>和<strong>拷贝赋值运算符</strong>，这意味着有多个HasPtr对象可能指向相同的内存:</p>
+<pre><code class="lang-c++">HasPtr f(HasPtr hp) // HasPtr传值参数，所以被拷贝
+{
+    HasPtr ret = hp;    // 拷贝给定的HasPtr
+
+    // 处理ret
+    return ret            // ret和hp被销毁
+}
+</code></pre>
+<p>当f返回时，hp和ret都被销毁，在两个对象上都会调用HasPtr的析构函数。此析构函数会<strong>delete ret</strong>和<strong>hp</strong>中的指针成员。但<strong>这两个对象包含相同的指针值</strong>。此代码会导致此指针被delete两次，这显然是一个错误。将要发生什么是未定义的。</p>
+<pre><code class="lang-c++">HasPtr p(&quot;some value&quot;);
+f(p);            // 当f结束时，p．ps指向的内存被释放
+HasPtr q(p);    // 现在p和q都指向无效内存！
+</code></pre>
+<p>p（以及q)指向的内存不冉有效，在hp（或ret!）销毁时它就被归还给系统了。此外，f的调用者还会使用传递给f的对象：</p>
+]]></content>
+      <categories>
+        <category>Cpp Primer</category>
+      </categories>
+      <tags>
+        <tag>Cpp</tag>
+        <tag>Cpp学习笔记</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>第十二章学习笔记</title>
+    <url>/2020/09/30/%E7%AC%AC%E5%8D%81%E4%BA%8C%E7%AB%A0%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/</url>
+    <content><![CDATA[]]></content>
+      <categories>
+        <category>Cpp Primer</category>
+      </categories>
+      <tags>
+        <tag>Cpp</tag>
+        <tag>Cpp学习笔记</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>第十一章学习笔记</title>
+    <url>/2020/09/30/%E7%AC%AC%E5%8D%81%E4%B8%80%E7%AB%A0%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/</url>
+    <content><![CDATA[]]></content>
+      <categories>
+        <category>Cpp Primer</category>
+      </categories>
+      <tags>
+        <tag>Cpp</tag>
+        <tag>Cpp学习笔记</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>第十章学习笔记</title>
+    <url>/2020/09/30/%E7%AC%AC%E5%8D%81%E7%AB%A0%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/</url>
+    <content><![CDATA[]]></content>
+      <categories>
+        <category>Cpp Primer</category>
+      </categories>
+      <tags>
+        <tag>Cpp</tag>
+        <tag>Cpp学习笔记</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>第九章学习笔记</title>
+    <url>/2020/09/30/%E7%AC%AC%E4%B9%9D%E7%AB%A0%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/</url>
+    <content><![CDATA[]]></content>
+      <categories>
+        <category>Cpp Primer</category>
+      </categories>
+      <tags>
+        <tag>Cpp</tag>
+        <tag>Cpp学习笔记</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>第八章学习笔记</title>
+    <url>/2020/09/30/%E7%AC%AC%E5%85%AB%E7%AB%A0%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/</url>
+    <content><![CDATA[]]></content>
+      <categories>
+        <category>Cpp Primer</category>
+      </categories>
+      <tags>
+        <tag>Cpp</tag>
+        <tag>Cpp学习笔记</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>第七章学习笔记</title>
+    <url>/2020/09/30/%E7%AC%AC%E4%B8%83%E7%AB%A0%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/</url>
+    <content><![CDATA[]]></content>
+      <categories>
+        <category>Cpp Primer</category>
+      </categories>
+      <tags>
+        <tag>Cpp</tag>
+        <tag>Cpp学习笔记</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>第五章学习笔记</title>
+    <url>/2020/09/30/%E7%AC%AC%E4%BA%94%E7%AB%A0%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/</url>
+    <content><![CDATA[]]></content>
+      <categories>
+        <category>Cpp Primer</category>
+      </categories>
+      <tags>
+        <tag>Cpp</tag>
+        <tag>Cpp学习笔记</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>第四章学习笔记</title>
+    <url>/2020/09/30/%E7%AC%AC%E5%9B%9B%E7%AB%A0%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/</url>
+    <content><![CDATA[]]></content>
+      <categories>
+        <category>Cpp Primer</category>
+      </categories>
+      <tags>
+        <tag>Cpp</tag>
+        <tag>Cpp学习笔记</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>第三章学习笔记</title>
+    <url>/2020/09/30/%E7%AC%AC%E4%B8%89%E7%AB%A0%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/</url>
+    <content><![CDATA[<center><b>本文初识标准库和迭代器,以及using在 c++11中新用处。</b></center>
+
+<a id="more"></a>
+<h2 id="0x00-命名空间的using-声明"><a href="#0x00-命名空间的using-声明" class="headerlink" title="0x00. 命名空间的using 声明"></a>0x00. 命名空间的using 声明</h2><p>头文件不应该使用using 声明,因为头文件的内容会拷贝到所有引用它的文件中。这样容易产生名字冲突。</p>
+<h2 id="0x01-标准库类型string"><a href="#0x01-标准库类型string" class="headerlink" title="0x01. 标准库类型string"></a>0x01. 标准库类型string</h2><h3 id="1-1-初始化"><a href="#1-1-初始化" class="headerlink" title="1.1 初始化"></a>1.1 初始化</h3><pre><code class="lang-c++">string s1;          // 默认初始化 空串
+
+string s2(s1);      // s2是s1的副本。
+
+string s2 = s1;     // 等价于s2(s1)。
+
+string s3(&quot;value&quot;); // 等价写法 string s3 = &quot;value&quot;;
+
+string s4(n, &#39;c&#39;);  // s4为连续n个字符c组成的字符串。
+</code></pre>
+<h3 id="1-2-直接初始化和拷贝初始化"><a href="#1-2-直接初始化和拷贝初始化" class="headerlink" title="1.2 直接初始化和拷贝初始化"></a>1.2 直接初始化和拷贝初始化</h3><p>如果使用等号初始化一个变量的时候, 实际上执行的是拷贝初始化，反之则是直接初始化。</p>
+<p>当初始值只有一个时，使用直接初始化或靠被初始化都行。</p>
+<pre><code class="lang-c++">string s5 = &quot;hiya&quot;;    //拷贝初始化。
+string s6(&quot;jojo&quot;);    // 直接初始化。
+string s7(10, &#39;c&#39;);    // 直接初始化，s7的内容是cccccccccc
+</code></pre>
+<p>对于多个值进行初始化的时候，用拷贝初始化的方式来处理也不是不可以,不过需要显式地的创建一个(临时)对象用于拷贝：</p>
+<pre><code class="lang-c++">string s8 = string(10, &#39;c&#39;);
+
+// 上面这条语句等价于下面的
+string temp(10, &#39;c&#39;);
+string s8 = temp;
+</code></pre>
+<h3 id="1-3-读写string-对象"><a href="#1-3-读写string-对象" class="headerlink" title="1.3 读写string 对象"></a>1.3 读写string 对象</h3><pre><code class="lang-c++">int main()
+{
+    string str;
+    cin &gt;&gt; str;
+    cout &lt;&lt; str &lt;&lt; endl;
+
+    return 0;
+}
+</code></pre>
+<p>上面的程序定义了一个名为str的空string,然后将标准输入的内容读取到s中。在执行读取的操作时，<strong>string对象回自动忽略开头的空白(空格符, 换行符, 制表符等)并从第一个真正的字符开始读起,直到遇到下一个空白开始。</strong></p>
+<h4 id="1-3-1-读取未知数量的string对象"><a href="#1-3-1-读取未知数量的string对象" class="headerlink" title="1.3.1 读取未知数量的string对象"></a>1.3.1 读取未知数量的string对象</h4><pre><code class="lang-c++">int main()
+{
+    string word;
+    while(cin &gt;&gt; word)
+    {
+        cout &lt;&lt; word &lt;&lt; endl;
+    }
+    return 0;
+}
+</code></pre>
+<p>一旦遇到文件结束符或非法输入也就结束了。</p>
+<h4 id="1-3-2-getline"><a href="#1-3-2-getline" class="headerlink" title="1.3.2 getline()"></a>1.3.2 getline()</h4><p>getline读取一整行，直到遇到换行符，所读的内容存入string对象中。换行符也被读进来了,但是被丢弃了,并没有存储到string对象中</p>
+<h3 id="1-4-empty-和size"><a href="#1-4-empty-和size" class="headerlink" title="1.4 empty()和size()"></a>1.4 empty()和size()</h3><p>empty函数根据string对象是否为空返回一个对应的布尔值。</p>
+<p>size()函数的返回值是string::size_type类型,这是一个与机器无关的无符号整数类型。所以当出现string.size()就不要使用int了。</p>
+<h3 id="1-5-string的比较"><a href="#1-5-string的比较" class="headerlink" title="1.5 string的比较"></a>1.5 string的比较</h3><p>关系运算符 <strong>&lt;， &lt;= ，&gt;， &gt;=</strong>都遵循以下的字典顺序：</p>
+<ol>
+<li><strong>如果两个string对象的长度不同,而且较短string对象的每个字符都与较长string对象对应位置上的字符相同,就说较短的string对象小于较长的string对象。</strong></li>
+<li><strong>如果两个string对象在某些对应位置上不一致,则string对象比较的结果实际上是第一对相异字符比较的结果。</strong></li>
+</ol>
+<h3 id="1-6-字面值和string对象相加"><a href="#1-6-字面值和string对象相加" class="headerlink" title="1.6 字面值和string对象相加"></a>1.6 字面值和string对象相加</h3><pre><code class="lang-c++">string s1 = &quot;hello&quot;, s2 = &quot;world&quot;；
+
+string s3 = s1 + &quot;,&quot; + s2 + &#39;\n\;
+</code></pre>
+<p>当我们把string对象和字符字面值及字符串字面值混在一条语句使用时，必须确保每个加法运算符(+)的两侧运算对象至少有一个是string：</p>
+<h3 id="1-7-练习1"><a href="#1-7-练习1" class="headerlink" title="1.7 练习1"></a>1.7 练习1</h3><h4 id="1-7-1-编写一段程序从标准输入中一次读入一行，然后修改该程序使其一次读入一个词。"><a href="#1-7-1-编写一段程序从标准输入中一次读入一行，然后修改该程序使其一次读入一个词。" class="headerlink" title="1.7.1 编写一段程序从标准输入中一次读入一行，然后修改该程序使其一次读入一个词。"></a>1.7.1 编写一段程序从标准输入中一次读入一行，然后修改该程序使其一次读入一个词。</h4><pre><code class="lang-c++">// 读入一整行
+void lineOfstr(string &amp;str)
+{
+    while (getline(cin, str))
+    {
+        cout &lt;&lt; str &lt;&lt; endl;
+    }
+}
+
+// 读入一个词
+void wordOfstr(string &amp;str)
+{
+    while (cin &gt;&gt; str)
+    {
+        cout &lt;&lt; str &lt;&lt; endl;
+    }
+}
+
+int main()
+{
+    string str;
+//    lineOfstr(str);
+    wordOfstr(str);
+
+    return 0;
+}
+</code></pre>
+<h4 id="1-7-2-请说明string类的输入运算符和getline函数分别是如何处理空白字符的。"><a href="#1-7-2-请说明string类的输入运算符和getline函数分别是如何处理空白字符的。" class="headerlink" title="1.7.2 请说明string类的输入运算符和getline函数分别是如何处理空白字符的。"></a>1.7.2 请说明string类的输入运算符和getline函数分别是如何处理空白字符的。</h4><pre><code>cin &gt;&gt; s 的读取，string对象会忽略开头的空白并从第一个真正的字符开始，直到遇见下一空白为止。
+
+getline(cin, s) 的读取，string对象会从输入流中读取字符，直到遇见换行符为止。
+</code></pre><h4 id="1-7-3-编写一段程序读取两个字符串，比较其是否相等并输出结果。如果不相等，输出比较大的那个字符串。改写上述程序，比较输入的两个字符串是否等长，如果不等长，输出长度较大的那个字符串。"><a href="#1-7-3-编写一段程序读取两个字符串，比较其是否相等并输出结果。如果不相等，输出比较大的那个字符串。改写上述程序，比较输入的两个字符串是否等长，如果不等长，输出长度较大的那个字符串。" class="headerlink" title="1.7.3 编写一段程序读取两个字符串，比较其是否相等并输出结果。如果不相等，输出比较大的那个字符串。改写上述程序，比较输入的两个字符串是否等长，如果不等长，输出长度较大的那个字符串。"></a>1.7.3 编写一段程序读取两个字符串，比较其是否相等并输出结果。如果不相等，输出比较大的那个字符串。改写上述程序，比较输入的两个字符串是否等长，如果不等长，输出长度较大的那个字符串。</h4><pre><code class="lang-c++">void compareStrOne(const string &amp;str1, const string &amp;str2)
+{
+    if (str1 == str2)
+    {
+        cout &lt;&lt; &quot;The two strings are equals.\n&quot;;
+    }
+    else
+    {
+        cout &lt;&lt; &quot;The larger string is &quot; &lt;&lt; ((str1 &gt; str2) ? str1 : str2) &lt;&lt; &quot;.\n&quot;;
+    }
+}
+
+void compareStrTwo(const string &amp;str1, const string &amp;str2)
+{
+    if (str1.length() == str2.length())
+    {
+        cout &lt;&lt; &quot;The two strings are equal length.&quot;;
+    }
+    else
+    {
+        cout &lt;&lt; &quot;The longer string is &quot; &lt;&lt; ((str1.size() &gt; str2.size()) ? str1 : str2) &lt;&lt; &quot;.\n&quot;;
+    }
+
+}
+
+int main()
+{
+    string str1;
+    string str2;
+    while(cin &gt;&gt; str1 &gt;&gt; str2)
+    {
+        compareStrOne(str1, str2);
+        compareStrTwo(str1, str2);
+    }
+
+    return 0;
+}
+</code></pre>
+<h3 id="1-8-处理string对象中的字符"><a href="#1-8-处理string对象中的字符" class="headerlink" title="1.8 处理string对象中的字符"></a>1.8 处理string对象中的字符</h3><h4 id="1-8-1-处理每个字符-gt-使用基于范围的for语句"><a href="#1-8-1-处理每个字符-gt-使用基于范围的for语句" class="headerlink" title="1.8.1 处理每个字符-&gt;使用基于范围的for语句"></a>1.8.1 处理每个字符-&gt;使用基于范围的for语句</h4><pre><code class="lang-c++">string str(&quot;some string&quot;);
+for(auto c : str)
+    cout &lt;&lt; c &lt;&lt; endl;
+</code></pre>
+<h4 id="1-8-2-使用范围for语句改变字符串中的字符"><a href="#1-8-2-使用范围for语句改变字符串中的字符" class="headerlink" title="1.8.2 使用范围for语句改变字符串中的字符"></a>1.8.2 使用范围for语句改变字符串中的字符</h4><pre><code class="lang-c++">string s(&quot;Hello World!!!&quot;);
+
+for(auto &amp;c : s)
+    c = toupper(c);
+
+cout &lt;&lt; s &lt;&lt; endl;        // HELLO WORLD!!!
+</code></pre>
+<h4 id="1-8-3-只处理一部分字符"><a href="#1-8-3-只处理一部分字符" class="headerlink" title="1.8.3 只处理一部分字符"></a>1.8.3 只处理一部分字符</h4><ul>
+<li><p>使用下标运算符</p>
+<pre><code class="lang-c++">string s(&quot;some string&quot;);
+
+if(!s.empty())
+    cout &lt;&lt; s[0] &lt;&lt; endl;
+    s[0] =     toupper(s[0]);        // 为s的第一个字符赋一个新值
+</code></pre>
+<pre><code class="lang-c++">// 依次处理s中的字符，直至我们处理完全的全部字符或遇到一个空白
+for(decltype(s.size()) index = 0;
+    index != s.size() &amp;&amp; !isspace(s[index]);
+    index++)
+{
+    s[index] = toupper(s[index]);
+}
+</code></pre>
+</li>
+</ul>
+<ul>
+<li>使用迭代器</li>
+</ul>
+<h4 id="1-8-4-使用下标执行随机访问"><a href="#1-8-4-使用下标执行随机访问" class="headerlink" title="1.8.4 使用下标执行随机访问"></a>1.8.4 使用下标执行随机访问</h4><h3 id="1-9-练习2"><a href="#1-9-练习2" class="headerlink" title="1.9 练习2"></a>1.9 练习2</h3><h4 id="1-9-1-编写一段程序，使用范围for语句将字符串内所有字符串用X代替"><a href="#1-9-1-编写一段程序，使用范围for语句将字符串内所有字符串用X代替" class="headerlink" title="1.9.1 编写一段程序，使用范围for语句将字符串内所有字符串用X代替"></a>1.9.1 编写一段程序，使用范围for语句将字符串内所有字符串用X代替</h4><pre><code class="lang-c++">string str = &quot;some string&quot;;
+
+for (auto &amp;c : str)
+    if(!isspace(c))
+           c = &#39;X&#39;;
+</code></pre>
+<h4 id="1-9-2-就上一题完成的程序而言，如果将循环控制变量的类型设为char将发生什么？先估计一下结果，然后就实际编程进行验证"><a href="#1-9-2-就上一题完成的程序而言，如果将循环控制变量的类型设为char将发生什么？先估计一下结果，然后就实际编程进行验证" class="headerlink" title="1.9.2 就上一题完成的程序而言，如果将循环控制变量的类型设为char将发生什么？先估计一下结果，然后就实际编程进行验证"></a>1.9.2 就上一题完成的程序而言，如果将循环控制变量的类型设为char将发生什么？先估计一下结果，然后就实际编程进行验证</h4><pre><code class="lang-c++">不会修改原字符串，因为c在迭代时是str每个字符的复制。
+</code></pre>
+<h4 id="1-9-3-分别用while循环和传统for循环重写第一题的程序，你觉得哪种形式更好呢？为什么"><a href="#1-9-3-分别用while循环和传统for循环重写第一题的程序，你觉得哪种形式更好呢？为什么" class="headerlink" title="1.9.3 分别用while循环和传统for循环重写第一题的程序，你觉得哪种形式更好呢？为什么?"></a>1.9.3 分别用while循环和传统for循环重写第一题的程序，你觉得哪种形式更好呢？为什么?</h4><pre><code class="lang-c++">string str = &quot;some string&quot;;
+
+// while循环
+decltype(str.size()) index = 0;
+while(index != str.size())
+{
+    if (!isspace(str[index]))
+        str[index] = &#39;X&#39;;
+
+    index++;
+}
+
+// 传统for循环
+for (decltype(str.size()) index = 0;
+     index != str.size() ; index++)
+{
+    if(isspace(str[index]))
+        continue;
+    str[index] = &#39;X&#39;;
+}
+</code></pre>
+<p>我觉得各有优点，while循环判断条件更见简洁，传统for循环更倾向于将所有条件书写完再执行代码块，更容易理清楚思路。</p>
+<h4 id="1-9-4-下面的程序有何作业，它合法吗？如果不合法，为什么？"><a href="#1-9-4-下面的程序有何作业，它合法吗？如果不合法，为什么？" class="headerlink" title="1.9.4 下面的程序有何作业，它合法吗？如果不合法，为什么？"></a>1.9.4 下面的程序有何作业，它合法吗？如果不合法，为什么？</h4><pre><code class="lang-c++">string s;
+cout &lt;&lt; s[0] &lt;&lt; endl;
+</code></pre>
+<p>上面是不合法的，因为s是一个空字符串，没有存放任何实质性的内容，但是开辟了一块内存空间，所以不可以通过下标来访问。</p>
+<p>但是我试了许多种类的编译器，是可以编译成功的。</p>
+<h4 id="1-9-5-编写一段程序，读入一个包含标点符号的字符串，将标点符号去除后输出字符串剩余的部份。"><a href="#1-9-5-编写一段程序，读入一个包含标点符号的字符串，将标点符号去除后输出字符串剩余的部份。" class="headerlink" title="1.9.5 编写一段程序，读入一个包含标点符号的字符串，将标点符号去除后输出字符串剩余的部份。"></a>1.9.5 编写一段程序，读入一个包含标点符号的字符串，将标点符号去除后输出字符串剩余的部份。</h4><pre><code class="lang-c++">int main()
+{
+    string str = &quot;some,string&quot;;
+    string newStr;
+    for(auto &amp;c : str)
+    {
+        if(ispunct(c))
+            continue;
+
+        newStr += c;
+    }
+
+    cout &lt;&lt; newStr &lt;&lt; endl;
+
+    return 0;
+}
+</code></pre>
+<h4 id="1-9-6-下面的范围for语句合法吗？如果合法，c的类型是什么？"><a href="#1-9-6-下面的范围for语句合法吗？如果合法，c的类型是什么？" class="headerlink" title="1.9.6 下面的范围for语句合法吗？如果合法，c的类型是什么？"></a>1.9.6 下面的范围for语句合法吗？如果合法，c的类型是什么？</h4><pre><code class="lang-c++">const string s = &quot;Keep out!&quot;;
+for(auto &amp;c : s)
+{
+    /*...*/
+}
+// s是一个常量字符串对象，不允许修改。
+// auto会忽略掉顶层const,保留底层const,所以c是底层const，也就是常量引用。
+</code></pre>
+<h2 id="0x02-vector"><a href="#0x02-vector" class="headerlink" title="0x02. vector"></a>0x02. vector</h2><p><strong>实例化:编译器根据模板创建类和函数的过程。</strong></p>
+<h3 id="2-1-定义和初始化"><a href="#2-1-定义和初始化" class="headerlink" title="2.1 定义和初始化"></a>2.1 定义和初始化</h3><pre><code class="lang-c++">vector(T) v1;           // v1是一个空vector,执行T类型的默认初始化。
+
+vector(T) v2(v1);       // v2中包含了v1所有元素的副本。
+
+vector(T) v2 = v1;       //等价于v2(v1)。
+
+vector(T) v3(n, nval);     // v3包含了n个重复的元素,每个元素的值都是val。
+
+vector(T) V4(n);        // n个执行了T类型的值初始化的对象。
+
+
+// 列表初始化
+vector(T) v5{a, b, c ...} // v5包含了初始值个数的元素。
+
+vector(T) v5 = {a, b, c ...} // 等价于v5{a, b, c ...}
+</code></pre>
+<h3 id="2-2-练习1"><a href="#2-2-练习1" class="headerlink" title="2.2 练习1"></a>2.2 练习1</h3><h4 id="2-2-1-下面vector对象的定义有什么不正确的吗？如果有，请指出。对于正确的，描述其执行结果。对于不正确的，说明其错误的原因"><a href="#2-2-1-下面vector对象的定义有什么不正确的吗？如果有，请指出。对于正确的，描述其执行结果。对于不正确的，说明其错误的原因" class="headerlink" title="2.2.1 下面vector对象的定义有什么不正确的吗？如果有，请指出。对于正确的，描述其执行结果。对于不正确的，说明其错误的原因"></a>2.2.1 下面vector对象的定义有什么不正确的吗？如果有，请指出。对于正确的，描述其执行结果。对于不正确的，说明其错误的原因</h4><pre><code>(a) vector&lt;vector&lt;int&gt;&gt; ivec; // 正确，空vector。
+(b)    vector&lt;string&gt; svec = ivec;    //错误，不能用不同类型初始化。
+(c) vector&lt;string&gt; svec(10, &quot;null&quot;); //正确。
+</code></pre><h4 id="2-2-2-下列vector对象各包含多少个元素，这些元素的值分别是什么？"><a href="#2-2-2-下列vector对象各包含多少个元素，这些元素的值分别是什么？" class="headerlink" title="2.2.2 下列vector对象各包含多少个元素，这些元素的值分别是什么？"></a>2.2.2 下列vector对象各包含多少个元素，这些元素的值分别是什么？</h4><pre><code class="lang-c++">(a)vector&lt;int&gt; v1;     // 0个，空。        (b)vector&lt;int&gt; v2(10);    // 10个，0
+(C)vector&lt;int&gt; v3(10, 42); //10个42      (c)vector&lt;int&gt; v4(10);  // 10个，0
+...
+...
+</code></pre>
+<h3 id="2-3-添加元素"><a href="#2-3-添加元素" class="headerlink" title="2.3 添加元素"></a>2.3 添加元素</h3><p><strong>push_back()负责将一个元素添加到vector的尾端。</strong></p>
+<p>c++ 更习惯于先创建空的vector对象,在运行的时候动态添加元素。</p>
+<pre><code class="lang-c++">vector&lt;int&gt; v2;
+
+for(int i = 0; i != 100; ++i)
+    v2.push_back(i);
+</code></pre>
+<p>vector不能使用下标运算符去添加元素,但是可以用于访问已经存在的元素。</p>
+<h3 id="2-4-练习2"><a href="#2-4-练习2" class="headerlink" title="2.4 练习2"></a>2.4 练习2</h3><h4 id="2-4-1-编写一段程序，用cin读入一段整数并把它们存入一个vector对象"><a href="#2-4-1-编写一段程序，用cin读入一段整数并把它们存入一个vector对象" class="headerlink" title="2.4.1 编写一段程序，用cin读入一段整数并把它们存入一个vector对象"></a>2.4.1 编写一段程序，用cin读入一段整数并把它们存入一个vector对象</h4><pre><code class="lang-c++">vector&lt;int&gt; v1;
+int intBuffer;
+while (cin &gt;&gt; intBuffer)
+{
+    v1.push_back(intBuffer);
+}
+</code></pre>
+<h4 id="2-4-2-改写上题的程序，不过这次读入的是字符串"><a href="#2-4-2-改写上题的程序，不过这次读入的是字符串" class="headerlink" title="2.4.2 改写上题的程序，不过这次读入的是字符串"></a>2.4.2 改写上题的程序，不过这次读入的是字符串</h4><p>略</p>
+<h3 id="2-5-其他vector操作"><a href="#2-5-其他vector操作" class="headerlink" title="2.5 其他vector操作"></a>2.5 其他vector操作</h3><div class="table-container">
+<table>
+<thead>
+<tr>
+<th style="text-align:center"><strong>v.empty()</strong></th>
+<th><strong>如果v不含有任何元素，返回真，否则返回假</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center"><strong>v.size()</strong></td>
+<td><strong>返回v中元素的个数</strong></td>
+</tr>
+<tr>
+<td style="text-align:center"><strong>v[n]</strong></td>
+<td><strong>返回v中第n个元素位置的引用</strong></td>
+</tr>
+<tr>
+<td style="text-align:center"><strong>v1 = v2</strong></td>
+<td><strong>用v2中的元素拷贝替换v1中的元素</strong></td>
+</tr>
+<tr>
+<td style="text-align:center"><strong>v1 = {a, b, c, …..}</strong></td>
+<td><strong>用列表中的元素拷贝替换v1中的元素</strong></td>
+</tr>
+<tr>
+<td style="text-align:center"><strong>v1 == v2</strong></td>
+<td><strong>v1和v2相等当且仅当它们的元素数量相同且对应的元素值相同</strong></td>
+</tr>
+<tr>
+<td style="text-align:center"><strong>v1 != v2</strong></td>
+<td></td>
+</tr>
+<tr>
+<td style="text-align:center"><strong>&lt;, &lt;=，&gt;=, &gt;</strong></td>
+<td><strong>以字典顺序比较</strong></td>
+</tr>
+</tbody>
+</table>
+</div>
+<p><strong>vector对象的下标运算符可用于访问已经存在的元素，而不能用于添加元素。</strong></p>
+<h3 id="2-6-练习3"><a href="#2-6-练习3" class="headerlink" title="2.6 练习3"></a>2.6 练习3</h3><h4 id="2-6-1-从cin读入一组词并把它们存入一个vector对象，然后设法把所有词改写为大写形式，输出改变后的结果，每个词占一行。"><a href="#2-6-1-从cin读入一组词并把它们存入一个vector对象，然后设法把所有词改写为大写形式，输出改变后的结果，每个词占一行。" class="headerlink" title="2.6.1 从cin读入一组词并把它们存入一个vector对象，然后设法把所有词改写为大写形式，输出改变后的结果，每个词占一行。"></a>2.6.1 从cin读入一组词并把它们存入一个vector对象，然后设法把所有词改写为大写形式，输出改变后的结果，每个词占一行。</h4><pre><code class="lang-c++">void upperStr(string &amp;str)
+{
+    /*
+        you can use transform function. this is a standard libnary function.
+    */
+    for (decltype(str.size()) index = 0; index &lt; str.size(); index++)
+    {
+        str[index] = toupper(str[index]);
+    }
+}
+int main()
+{
+    string word;
+    vector&lt;string&gt; strVector;
+    while (cin &gt;&gt; word)
+    {
+        upperStr(word);
+        strVector.push_back(word);
+
+        if(cin.get() == &#39;\n&#39;)
+            break;
+    }
+
+    for (auto &amp;c : strVector)
+    {
+        cout &lt;&lt; c &lt;&lt; endl;
+    }
+
+    return 0;
+}
+</code></pre>
+<h4 id="2-6-2-如果想定义一个含有10个元素的vector对象，所有元素值都是42，请列举出三种不同的实现方法，哪种方法更好呢？为什么？"><a href="#2-6-2-如果想定义一个含有10个元素的vector对象，所有元素值都是42，请列举出三种不同的实现方法，哪种方法更好呢？为什么？" class="headerlink" title="2.6.2 如果想定义一个含有10个元素的vector对象，所有元素值都是42，请列举出三种不同的实现方法，哪种方法更好呢？为什么？"></a>2.6.2 如果想定义一个含有10个元素的vector对象，所有元素值都是42，请列举出三种不同的实现方法，哪种方法更好呢？为什么？</h4><pre><code class="lang-c++">vector&lt;int&gt; v1(10, 42);
+
+vector&lt;int&gt; v2  = {
+    42, 42, 42, 42, 42, 42, 42, 42, 42, 42
+};
+
+vector&lt;int&gt; v3;
+for (int i = 0; i &lt; 10; i++)
+{
+    v3.push_back(42);
+}
+</code></pre>
+<h4 id="2-6-3-读入一组整数并把它们存入一个vector对象，将每对相邻整数的和输出出来。改写你的程序，这次要求先输出第一个和最后一个元素的和，接着输出第2个和倒数第二2个元素的和，以此类推。"><a href="#2-6-3-读入一组整数并把它们存入一个vector对象，将每对相邻整数的和输出出来。改写你的程序，这次要求先输出第一个和最后一个元素的和，接着输出第2个和倒数第二2个元素的和，以此类推。" class="headerlink" title="2.6.3 读入一组整数并把它们存入一个vector对象，将每对相邻整数的和输出出来。改写你的程序，这次要求先输出第一个和最后一个元素的和，接着输出第2个和倒数第二2个元素的和，以此类推。"></a>2.6.3 读入一组整数并把它们存入一个vector对象，将每对相邻整数的和输出出来。改写你的程序，这次要求先输出第一个和最后一个元素的和，接着输出第2个和倒数第二2个元素的和，以此类推。</h4><pre><code class="lang-c++">void outputOne(const vector&lt;int&gt; &amp;v1)
+{
+    for (decltype(v1.size()) index = 0; index &lt; v1.size() - 1; index++)
+    {
+        cout &lt;&lt; v1[index] + v1[index + 1] &lt;&lt; endl;
+    }
+}
+
+void outputTwo(const vector&lt;int&gt; &amp;v2)
+{
+    auto length = v2.size();
+    for (decltype(v2.size()) index = 0; index &lt; length / 2; index++)
+    {
+        auto result = v2[index] + v2[length - index - 1];
+        cout &lt;&lt; result &lt;&lt; endl;
+    }
+}
+
+int main()
+{
+    vector&lt;int&gt; vInt;
+    int intBuffer;
+    while (cin &gt;&gt; intBuffer)
+    {
+        vInt.push_back(intBuffer);
+        if (cin.get() == &#39;\n&#39;)
+        {
+            break;
+        }
+    }
+
+    outputOne(vInt);        
+    cout &lt;&lt; &quot;**********************&quot; &lt;&lt; endl;
+    outputTwo(vInt);
+
+    return 0;
+}
+</code></pre>
+<h3 id="2-7-迭代器"><a href="#2-7-迭代器" class="headerlink" title="2.7 迭代器"></a>2.7 迭代器</h3><h4 id="2-7-1-使用迭代器"><a href="#2-7-1-使用迭代器" class="headerlink" title="2.7.1 使用迭代器"></a>2.7.1 使用迭代器</h4><pre><code class="lang-c++">/* 怎样获取迭代器？
+    使用begin()和end().
+    end成员负责返回指向容器尾元素的下一个元素的迭代器，也就是说，该迭代器指示的是容器的一个本不存在的“尾后”元素。
+    这样的迭代器没什么实际含义，仅仅是个标记而已，表示我们已经处理完容器中所有元素。
+    end() 返回的迭代器并不实际指示某个元素,所以不能对其进行递增或解引用的操作.
+*/
+auto b = v.begin();
+auto e = v.end();
+</code></pre>
+<p>怎样称为一个有效的迭代器呢？</p>
+<ul>
+<li><strong>或者指向某个元素,或者指向容器中尾元素的下一个位置</strong></li>
+</ul>
+<p><strong>其次，但凡是使用了迭代器的循环体,都不要向使用迭代器所属的容器添加元素。因为会使迭代器失效。</strong></p>
+<h4 id="2-7-2-迭代器运算符"><a href="#2-7-2-迭代器运算符" class="headerlink" title="2.7.2 迭代器运算符"></a>2.7.2 迭代器运算符</h4><div class="table-container">
+<table>
+<thead>
+<tr>
+<th style="text-align:center"><em>ite<em>*r</em></em></th>
+<th><strong>返回迭代器iter所选元素的引用</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center"><strong>iter-&gt;mem</strong></td>
+<td><strong>解引用iter并获取该元素名为mem的成员，等价于(*iter).mem</strong></td>
+</tr>
+<tr>
+<td style="text-align:center"><strong>++iter</strong></td>
+<td><strong>令iter指向容器中下一个元素</strong></td>
+</tr>
+<tr>
+<td style="text-align:center"><strong>—iter</strong></td>
+<td><strong>令iter指向容器中上一个元素</strong></td>
+</tr>
+<tr>
+<td style="text-align:center"><strong>iter1 == iter2</strong></td>
+<td><strong>判断两个迭代器是否相等(不相等)，如果两个迭代器指示的是同一个元素或者是同一个容器的尾后迭代器，则相等。反之，不想等。</strong></td>
+</tr>
+<tr>
+<td style="text-align:center"><strong>iter1 != iter2</strong></td>
+<td>同上</td>
+</tr>
+</tbody>
+</table>
+</div>
+<h4 id="2-7-3-迭代器运算"><a href="#2-7-3-迭代器运算" class="headerlink" title="2.7.3 迭代器运算"></a>2.7.3 迭代器运算</h4><p>所有标准库容器都有支持递增运算的迭代器。</p>
+<p>string和vector迭代器支持更多运算。</p>
+]]></content>
+      <categories>
+        <category>Cpp Primer</category>
+      </categories>
+      <tags>
+        <tag>Cpp</tag>
+        <tag>Cpp学习笔记</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>第二章学习笔记</title>
     <url>/2020/09/30/%E7%AC%AC%E4%BA%8C%E7%AB%A0%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/</url>
     <content><![CDATA[<center><b>本章主要讲述了c++变量声明,以及各种修饰符的作用和技巧</b></center>
@@ -436,304 +1389,6 @@ decltype(i) e;        // 正确，e是一个未初始化的int.
 <li>decltype(( variable ))结果永远是引用</li>
 <li>decltype( variable ) 只有variable本身是引用才是引用。</li>
 </ul>
-]]></content>
-      <categories>
-        <category>Cpp Primer</category>
-      </categories>
-      <tags>
-        <tag>Cpp</tag>
-        <tag>Cpp学习笔记</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>第十六章学习笔记</title>
-    <url>/2020/03/03/C++-Primer-%E7%AC%AC%E5%8D%81%E5%85%AD%E7%AB%A0%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/</url>
-    <content><![CDATA[]]></content>
-  </entry>
-  <entry>
-    <title>第十五章学习笔记</title>
-    <url>/2020/03/03/C++-Primer-%E7%AC%AC%E5%8D%81%E4%BA%94%E7%AB%A0%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/</url>
-    <content><![CDATA[]]></content>
-  </entry>
-  <entry>
-    <title>第十四章学习笔记</title>
-    <url>/2020/03/03/C++-Primer-%E7%AC%AC%E5%8D%81%E5%9B%9B%E7%AB%A0%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/</url>
-    <content><![CDATA[]]></content>
-  </entry>
-  <entry>
-    <title>C++ Primer第十三章学习笔记</title>
-    <url>/2020/03/03/C++-Primer-%E7%AC%AC%E5%8D%81%E4%B8%89%E7%AB%A0%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/</url>
-    <content><![CDATA[<p><center><b>本章主要讲述了类在控制对象拷贝，赋值，移动和销毁时做什么的相关知识</b></center><br><a id="more"></a></p>
-<h2 id="0x01-拷贝，赋值与销毁"><a href="#0x01-拷贝，赋值与销毁" class="headerlink" title="0x01 拷贝，赋值与销毁"></a>0x01 拷贝，赋值与销毁</h2><h3 id="1-1-拷贝构造函数"><a href="#1-1-拷贝构造函数" class="headerlink" title="1.1 拷贝构造函数"></a>1.1 拷贝构造函数</h3><p>定义：<strong>如果一个构造函数的第一个参数是自身类类型的引用，且任何额外参数都有默认值，那么此构造函数是拷贝构造函数。</strong></p>
-<pre><code class="lang-c++">class Foo{
-    public:
-        Foo();                // 默认构造函数
-        Foo(const Foo&amp;);    // 拷贝构造函数
-}
-</code></pre>
-<p>拷贝构造函数接受的第一个参数必须是一个引用类型。拷贝构造函数在几种情况下都会被隐式的使用。因此，拷贝构造函数通常不应该是<strong>explicit</strong>的。</p>
-<h4 id="1-1-1-合成拷贝构造函数"><a href="#1-1-1-合成拷贝构造函数" class="headerlink" title="1.1.1 合成拷贝构造函数"></a>1.1.1 合成拷贝构造函数</h4><p>如果我们没有为一个类定义拷贝构造函数，编译器会为我们定义一个。与合成默认构造函数不同，即使我们定义了其他构造函数，编译器也会为我们合成一个拷贝构造函数。</p>
-<p>对某些类来说，<strong>合成拷贝构造函数</strong>用来阻止我们拷贝该类类型的对象。而在一般的情况下，合成拷贝构造函数会将其参数的成员逐个拷贝到正在创建的对象中，编译器从给定的对象中依次将每个非static成员拷贝到正在创建的对象中。</p>
-<p>每个成员的类型决定了它如何拷贝，对类类型的成员，会使用其拷贝构造函数来拷贝。<strong>内置类型成员则直接拷贝，虽然我们不能直接拷贝一个数组，但合成拷贝构造函数会逐元素地拷贝一个数组类型的成员。如果数组元素是类类型，则使用元素的拷贝构造函数来进行拷贝。</strong></p>
-<p>编译器为类合成的拷贝构造函数等价于下面：</p>
-<pre><code class="lang-c++">class Sales_data
-{
-    public:
-        Sales_data(const Sales_data &amp;);
-
-    private:
-        string bookNo;
-        int units_sold = 0;
-        double revenue = 0.0;
-};
-
-Sales_data::Sales_data(const Sales_data &amp;orig)
-        : bookNo(orig.bookNo),
-          units_sold(orig.units_sold),
-          revenue(orig.revenue)
-{
-    /*...*/
-}
-</code></pre>
-<h4 id="1-1-2-拷贝初始化"><a href="#1-1-2-拷贝初始化" class="headerlink" title="1.1.2 拷贝初始化"></a>1.1.2 拷贝初始化</h4><p><strong>当使用直接初始化时，我们实际上时要求编译器使用普通的函数匹配来选择与我们提供的参数最匹配的构造函数。当我们使用拷贝初始化时，我们要求编译器将右侧运算对象拷贝正在创建的对象中，如果需要的话还要进行类型转换。</strong></p>
-<p>拷贝初始化通常使用拷贝构造函数来完成，但是，如我们所见，如果一个类有一个移动构造函数，则拷贝初始化有时会使用移动构造函数来完成。</p>
-<p>拷贝初始化不仅在我们用=定义变量时会发生，在下列情况下也会发生：</p>
-<ul>
-<li><strong>将一个对象作为实参传递给一个非引用类型的形参</strong></li>
-<li><strong>从一个返回类型为非引用类型的函数返回一个对象</strong></li>
-<li><strong>用花括号列表初始化一个数组中的元素或一个聚合类中的成员</strong></li>
-</ul>
-<p>并且，某些类类型还会对它们所分配的对象使用拷贝初始化。例如，当我们初始化标准库容器或是调用其<strong>insert或push</strong>成员时，容器会对其元素进行拷贝初始化。与之相对，用<strong>emplace</strong>成员创建的元素进行直接初始化。</p>
-<h4 id="1-1-3-参数和返回值"><a href="#1-1-3-参数和返回值" class="headerlink" title="1.1.3 参数和返回值"></a>1.1.3 参数和返回值</h4><p>在函数调用过程中，具有非引用类型的参数要进行拷贝初始化，对形参的使用不会影响到实参。</p>
-<p>类似的，当一个函数具有非引用的返回类型时，返回值会被用来初始化调用方的结果。</p>
-<pre><code class="lang-c++">// 该函数的返回值是string，是一个非引用类型。
-// 意味着返回值会拷贝到调用点，函数返回副本或者一个未命名的临时string对象
-string make_plural(size_t ctr, const string &amp;word,
-                               const string &amp;ending)
-{
-    return (ctr &gt; 1) ? word + ending : word;
-}
-</code></pre>
-<p>拷贝构造函数被用来初始化非引用类类型参数，这一特性解释了为什么拷贝构造函数自己的参数必须是引用类型。<strong>如果参数不是引用类型，则调用永远不会成功，为了调用拷贝构造函数，我们必须拷贝它的实参，但为了拷贝实参，但为了拷贝实参，我们又需要调用拷贝构造函数，一直循环下去…</strong></p>
-<h4 id="1-1-4-拷贝初始化的限制"><a href="#1-1-4-拷贝初始化的限制" class="headerlink" title="1.1.4 拷贝初始化的限制"></a>1.1.4 拷贝初始化的限制</h4><p>如果我们使用的初始化值要求通过一个explicit的构造函数来进行类型转换，那么使用拷贝初始化还是直接初始化就不是无关紧要的了:</p>
-<pre><code class="lang-c++">vector&lt;int&gt; v1(10);            // 直接初始化，true
-vector&lt;int&gt; v2 = 10;        // 接收大小参数的构造函数是explicit的, error
-void f(vector&lt;int&gt;);        // f的参数进行拷贝初始化
-f(10);                        // 不能用一个explicit的构造函数拷贝字面值转换成一个实参，error
-f(vector&lt;int&gt;(10));            // true, 从一个int直接构造一个临时vector
-</code></pre>
-<h4 id="1-1-5-编译器可以绕过拷贝构造函数"><a href="#1-1-5-编译器可以绕过拷贝构造函数" class="headerlink" title="1.1.5 编译器可以绕过拷贝构造函数"></a>1.1.5 编译器可以绕过拷贝构造函数</h4><p>在拷贝初始化过程中，编译器可以（但不是必须）跳过拷贝/移动构造函数，直接创建对象。</p>
-<pre><code class="lang-c++">string null_book = &quot;9-999-99999-9&quot;;    //拷贝初始化 
-
-string null_booK(&quot;9-999-99999-9&quot;);    // compiler略过了拷贝构造函数
-</code></pre>
-<p>但是，即使是compiler略过了拷贝/移动构造函数，但是在这个程序点上，拷贝/移动构造函数必须是存在且可访问的。</p>
-<h4 id="1-1-6-练习"><a href="#1-1-6-练习" class="headerlink" title="1.1.6 练习"></a>1.1.6 练习</h4><h5 id="1-1-6-1-什么是拷贝构造函数？什么时候使用它？"><a href="#1-1-6-1-什么是拷贝构造函数？什么时候使用它？" class="headerlink" title="1.1.6.1 什么是拷贝构造函数？什么时候使用它？"></a>1.1.6.1 什么是拷贝构造函数？什么时候使用它？</h5><p>如果一个类的构造函数的第一个参数是自身类型的引用，且额外参数都有默认值，那么此构造函数就是拷贝构造函数。</p>
-<p>用作拷贝初始化。</p>
-<h5 id="1-1-6-2-解释下为什么下面的声明是非法的？"><a href="#1-1-6-2-解释下为什么下面的声明是非法的？" class="headerlink" title="1.1.6.2 解释下为什么下面的声明是非法的？"></a>1.1.6.2 解释下为什么下面的声明是非法的？</h5><pre><code>Sales_data::Sale_data(Sales_data rhs);
-
-// 拷贝构造函数第一个参数必须是自身类型的引用。
-</code></pre><h5 id="1-1-6-3-假定Point是一个类类型，它有一个public的拷贝构造函数，指出下面程序片段哪些地方使用了拷贝构造函数："><a href="#1-1-6-3-假定Point是一个类类型，它有一个public的拷贝构造函数，指出下面程序片段哪些地方使用了拷贝构造函数：" class="headerlink" title="1.1.6.3 假定Point是一个类类型，它有一个public的拷贝构造函数，指出下面程序片段哪些地方使用了拷贝构造函数："></a>1.1.6.3 假定Point是一个类类型，它有一个public的拷贝构造函数，指出下面程序片段哪些地方使用了拷贝构造函数：</h5><pre><code class="lang-c++">Point global;
-Point foo_bar(Point arg)     // 实参转换成形参使用，1
-{
-    Point local = arg, *heap = new Point(global);        // here，2，3
-    *heap = local;
-    Point pa[4] = { local, *heap };            // 4，5
-    return *heap;     // 这里也是拷贝构造函数，生成一个临时对象 6
-}
-
-static int count = 0;
-// 可用这个例子进行测试
-class Point
-{
-    public:
-        Point()
-        {};
-
-        Point(string name) : name(name)
-        {};
-
-        Point(const Point &amp;arg) : name(arg.name)
-        {
-            cout &lt;&lt; &quot;copy:&quot; &lt;&lt; count++ &lt;&lt; endl;
-        };
-
-    private:
-        string name;
-
-};
-
-Point global;
-
-Point foo_bar(Point arg)
-{
-    Point local = arg, *heap = new Point(global);
-    *heap = local;
-    Point pa[4] = {local, *heap};
-    return *heap;
-}
-</code></pre>
-<h5 id="1-1-6-4-给定下面的类框架，编写一个拷贝构造函数，拷贝所有成员。你的构造函数应该动态分配一个新的string，并将对象拷贝到ps指向的位置，而不是ps本身的位置。"><a href="#1-1-6-4-给定下面的类框架，编写一个拷贝构造函数，拷贝所有成员。你的构造函数应该动态分配一个新的string，并将对象拷贝到ps指向的位置，而不是ps本身的位置。" class="headerlink" title="1.1.6.4 给定下面的类框架，编写一个拷贝构造函数，拷贝所有成员。你的构造函数应该动态分配一个新的string，并将对象拷贝到ps指向的位置，而不是ps本身的位置。"></a>1.1.6.4 给定下面的类框架，编写一个拷贝构造函数，拷贝所有成员。你的构造函数应该动态分配一个新的string，并将对象拷贝到ps指向的位置，而不是ps本身的位置。</h5><pre><code class="lang-c++">class HasPtr
-{
-    public:
-        HasPtr(const std::string &amp;s = std::string()) :
-                ps(new std::string(s)), i(0)
-        {}
-
-        HasPtr(const HasPtr &amp;hasPtr) :
-                ps(new std::string(*hasPtr.ps)),
-                i(hasPtr.i)
-        {}
-}
-</code></pre>
-<h3 id="1-3-拷贝赋值运算符"><a href="#1-3-拷贝赋值运算符" class="headerlink" title="1.3 拷贝赋值运算符"></a>1.3 拷贝赋值运算符</h3><p>与类控制其对象如何初始化一样，类也可以控制其对象如何赋值：</p>
-<pre><code class="lang-c++">Sale_data trans, accum;
-trans = accum;            // 调用拷贝赋值运算符
-</code></pre>
-<p>与拷贝构造函数一样，如果类未定义自己的拷贝赋值运算符，编译器会为他合成一个。</p>
-<h4 id="1-3-1-重载赋值运算符"><a href="#1-3-1-重载赋值运算符" class="headerlink" title="1.3.1 重载赋值运算符"></a>1.3.1 重载赋值运算符</h4><p>什么是重载运算符？重载运算符本质上是函数，其名字由operator关键字后接表示要定义的运算符的符号组成，因此，赋值运算符就是一个名为<strong>operator=</strong>的函数。<strong>类似于任何其他函数． 运算符函数也有一个返回类型和一个参数列表。</strong></p>
-<p>重载运算符的参数表示运算符的运算对象。某些运算符，包括赋值运算符，必须定义为成员函数。<strong>如果一个运算符是一个成员函数，其左侧运算对象就绑定到隐式的this参数。对于一个二元运算符，例如赋值运算符，其右侧运算对象作为显式参数传递</strong>。例如：</p>
-<pre><code class="lang-c++">class Foo{
-    public:
-        Foo&amp; operator= (const Foo&amp;);
-    //...
-}
-</code></pre>
-<p>为了与内置类型的赋值保持一致，<strong>赋值运算符通常返回一个指向其左侧运算对象的引用</strong>。另外值得注意的是，标准库通常要求保存在容器中的类型要具有赋值运算符，且其返回值是侧运算对象的引用。</p>
-<h4 id="1-3-2-合成拷贝赋值运算符"><a href="#1-3-2-合成拷贝赋值运算符" class="headerlink" title="1.3.2 合成拷贝赋值运算符"></a>1.3.2 合成拷贝赋值运算符</h4><p>与处理拷贝构造函数一样，如果一个类未定义自己的拷贝赋值运算符，编译器会为它生成一个合成拷贝值运算符。类似拷贝构造函数， 对于某些类，合成拷贝赋值运算符用来禁止该类型对象的赋值。 如果拷贝赋值运算符并非出此目的，它会将右侧运算对象的每个非static成员赋予左侧运算对象的对应成员，这一工作是通过成员类型的拷贝赋值运算符来完成的。对于数组类型的成员，逐个赋值数组元素。<strong>合成拷贝赋值运算符返回一个指向其左侧运算对象的引用</strong>。</p>
-<p> 作为一个例了，下面的代码等价于Sales_data的合成拷贝赋值运算符：</p>
-<pre><code class="lang-c++">Sales_data &amp; Sales_data::operator= (const Sales_datas &amp;rhs)
-{
-    bookNo = rhs.bookNo;
-    units_sold = rhs.units_sold;
-    revenue = rhs.revenue;
-    return *this;            //返回对象的引用
-}
-</code></pre>
-<h4 id="1-3-3-练习"><a href="#1-3-3-练习" class="headerlink" title="1.3.3 练习"></a>1.3.3 练习</h4><h5 id="1-3-3-1-拷贝赋值运算符是什么？什么时候使用它？合成拷贝赋值运算符完成什么工作？什么时候会生成合成拷贝赋值运算符？"><a href="#1-3-3-1-拷贝赋值运算符是什么？什么时候使用它？合成拷贝赋值运算符完成什么工作？什么时候会生成合成拷贝赋值运算符？" class="headerlink" title="1.3.3.1  拷贝赋值运算符是什么？什么时候使用它？合成拷贝赋值运算符完成什么工作？什么时候会生成合成拷贝赋值运算符？"></a>1.3.3.1  拷贝赋值运算符是什么？什么时候使用它？合成拷贝赋值运算符完成什么工作？什么时候会生成合成拷贝赋值运算符？</h5><pre><code>- 拷贝赋值运算符是重载”=“运算符，即为一个名为operator=的函数，拷贝赋值运算符接受一个与其所在类相同类型的参数。
-- 在发生赋值操作的时候使用。
-- 合成拷贝赋值的工作：将后侧运算对象的每个非static成员赋予左侧运算对象的对应成员。
-- 当类未定义自己的拷贝赋值运算符，编译器会生成一个合成拷贝运算符。
-</code></pre><h5 id="1-3-3-2-为上面的HasPtr类编写赋值运算符。类似拷贝构造函数，你的赋值运算符应该将对象拷贝到ps指向的位置。"><a href="#1-3-3-2-为上面的HasPtr类编写赋值运算符。类似拷贝构造函数，你的赋值运算符应该将对象拷贝到ps指向的位置。" class="headerlink" title="1.3.3.2 为上面的HasPtr类编写赋值运算符。类似拷贝构造函数，你的赋值运算符应该将对象拷贝到ps指向的位置。"></a>1.3.3.2 为上面的HasPtr类编写赋值运算符。类似拷贝构造函数，你的赋值运算符应该将对象拷贝到ps指向的位置。</h5><pre><code class="lang-c++">HasPtr &amp;operator=(const HasPtr &amp;hasPtr)
-{
-    ps = new string(*hasPtr.ps);
-    i = hasPtr.i;
-}
-</code></pre>
-<h3 id="1-4-析构函数"><a href="#1-4-析构函数" class="headerlink" title="1.4 析构函数"></a>1.4 析构函数</h3><p>析构函数执行与构造函数相反的操作：构造函数初始化对象的非static数据成员， 还可能做一些其他工作；析构函数释放对象使用的资源，并销毁对象的非static数成员。析构函数是类的一个成员函数，名字由波浪号接类名构成。它没有返回值，也不接受参数：</p>
-<pre><code class="lang-c++">class Foo{
-    ~Foo()
-    {}
-};
-</code></pre>
-<h4 id="1-4-1-析构函数完成什么工作"><a href="#1-4-1-析构函数完成什么工作" class="headerlink" title="1.4.1 析构函数完成什么工作"></a>1.4.1 析构函数完成什么工作</h4><p>如同构造函数有一个初始化部分和一个函数体，析构函数也有一个函数体和一个析构部分。</p>
-<p>在一个构造函数中，成员的初始化是在函数体执行之前完成的，且按照它们在类中出现的顺序进行初始化。在一个析构函数中，首先执行函数体， 然后销毁成员。成员按初始化顺序的逆序销毁。 </p>
-<p>在对象最后一次使用之后，析构涵数的函数体可执行类设计者希望执行的任何收尾工作。通常，析构函数释放对象在生存期分配的所有资源。</p>
-<p>在一个析构函数中，不存在类似构造函数中初始化列表的东西来控制成员如何销毁， 析构部分是隐式的。成员销毁时发生什么完全依赖于成员的类型。销毁类类型的成员需要执行成员自己的析构函数。内置类型没有析构函数，因此销毁内置类型成员什么也不需要做。</p>
-<blockquote id="fn_note">
-<sup>note</sup>. 隐式销毁一个内置指针成员不会delete它所指向的对象。<a href="#reffn_note" title="Jump back to footnote [note] in the text."> &#8617;</a>
-</blockquote>
-<p>与普通指针相比，智能指针是类类型，所以具有析构函数。因此与普通指针不同，智能指针成员在析构阶段会被自动销毁。</p>
-<h4 id="1-4-2-什么时候使用析构函数？"><a href="#1-4-2-什么时候使用析构函数？" class="headerlink" title="1.4.2 什么时候使用析构函数？"></a>1.4.2 什么时候使用析构函数？</h4><ul>
-<li>无论何时一个对象被销毁，就会自动调用其析构函数：</li>
-<li>变量在离开其作用域时被销毁。 </li>
-<li>当一个对象被销毁时，其成员被销毁。</li>
-<li>容器（无论是标准厍容器还是数组）被销毁时，其元素被销毁。</li>
-<li>对于动态分配的对象，当对指向它的指针应用delete运算符时被销毁</li>
-<li>对于临时对象，当创建它的完整表达式结束时被销毁 </li>
-</ul>
-<p>由于析构函数自动运行，我们的程序可以按需要分配资源，而（通常）无须担心何时释放 这些资源。</p>
-<p> 例如，下面代码片段定义了四个Sales_data对象：</p>
-<pre><code class="lang-c++">{    // 新作用域
-    // p和p2指向动态分配的对象
-
-    Sales_data *p = new Sales_data;        // p是一个内置指针
-    auto p2 = make_shared&lt;Sales_data&gt;(); // p2是一个shared_ptr
-
-    Sales_data item(*p);                // 拷贝构造函数将*p拷贝到item中。
-    vector&lt;Sales_data&gt; vec;                // 局部对象
-    vec.push_back(*p2);                    // 拷贝p2所指向的对象
-    delete p;                            // 对p指向的对象执行析构函数
-}
-
-/*
-    退出局部作用域，对item，p2和vec调用析构函数
-    销毁p2会递减其引用计数。如果引用计数为0，对象被释放
-    销毁vec会销毁它的元素
-*/
-</code></pre>
-<p>每个Sales_data对象都包含一个string成员，它分配动态内存来保存bookNo成员中的字符。但是，我们的代码<strong>唯一需要直接管理的内存就是我们直接分配的Sales_data对象</strong>。我们的代码只需直接释放绑定到p的动态分配象。</p>
-<p>其他Sales_data对象会在离开作用域时被自动销毁。当程序块结束时，vec、p2和item都离开了作用域，意味着在这些对象上分别会执行vector、shared_ptr和Sales_data的析构函数。vector的析构函数会销毁我们添加到vec的元素。Shared_ptr的析构函数会递减p2指向的对象的引用计数。在本例中，引用计数会变为0，因此shared_ptr的析构函数会<strong>delete p2</strong>分配的Sales_data对象。</p>
-<p>在所有情况下，Sales_data的析构函数都会隐式地销毁bookNo成员，销毁bookNo会调用string的析构函数，它会释放用来保存ISBN的内存。</p>
-<h4 id="1-4-3-合成析构函数"><a href="#1-4-3-合成析构函数" class="headerlink" title="1.4.3 合成析构函数"></a>1.4.3 合成析构函数</h4><p>当一个类未定义自己的析构函数时，编译器会为它定义一个<strong>合成析构函数</strong>。类似拷贝构造函数和拷贝赋值运算符，对于某些类，合成析构函数被用来阻止该类型的对象被销毁。如果不是这种情况，合成析构函数的函数体就为空。</p>
-<p>例如，下面的代码片段等价于salesdata的合成析构函数：</p>
-<pre><code class="lang-c++">class Sales_data{
-    public:
-    //成员会被自动销毁，除此之外不需要做其他事情
-   ~Salesdata() {};
-
-}
-</code></pre>
-<p>在（空）析构函数体执行完毕后，成员会被自动销毁。特别的，string的析构函数会被<br>调用，它将释放bookNo成员所用的内存。</p>
-<p>认识到析构函数体自身并不直接销毁成员是非常重要的。成员是在析构函数体之后隐<br>含的析构阶段中被销毁的。在整个对象销毁过程中，析构函数体是作为成员销毁步骤之外<br>的另一部分而进行的。</p>
-<h4 id="1-4-4-练习"><a href="#1-4-4-练习" class="headerlink" title="1.4.4 练习"></a>1.4.4 练习</h4><h5 id="1-4-4-1-析构函数是什么？合成析构函数完成什么工作？什么时候会生成合成析构函数？"><a href="#1-4-4-1-析构函数是什么？合成析构函数完成什么工作？什么时候会生成合成析构函数？" class="headerlink" title="1.4.4.1 析构函数是什么？合成析构函数完成什么工作？什么时候会生成合成析构函数？"></a>1.4.4.1 析构函数是什么？合成析构函数完成什么工作？什么时候会生成合成析构函数？</h5><pre><code>- 析构函数执行与构造函数相反的操作：构造函数初始化对象的非static数据成员， 还可能做一些其他工作；析构函数释放对象使用的资源，并销毁对象的非static数成员。析构函数是类的一个成员函数，名字由波浪号接类名构成。它没有返回值，也不接受参数：
-
-- 对于某些类，合成析构函数被用来阻止该类型的对象被销毁。如果不是这种情况，合成析构函数的函数体就为空。
-
-
-- 当一个类未定义自己的析构函数时，编译器会为它定义一个合成析构函数
-</code></pre><h5 id="1-4-4-2-在下面的代码片段中会发生几次析构函数调用？"><a href="#1-4-4-2-在下面的代码片段中会发生几次析构函数调用？" class="headerlink" title="1.4.4.2  在下面的代码片段中会发生几次析构函数调用？"></a>1.4.4.2  在下面的代码片段中会发生几次析构函数调用？</h5><pre><code class="lang-c++">bool fcn (const Sales_data *trans, Sales_data accum)
-{
-    Sales_data item1(*trans), item2(accum);
-
-    return item1.isbn() != item2.isbn();
-}
-// 3次 accum item1 item2
-</code></pre>
-<h3 id="1-5-三-五法则"><a href="#1-5-三-五法则" class="headerlink" title="1.5 三/五法则"></a>1.5 三/五法则</h3><p>如前所述，有三个基本操作可以控制类的拷贝操作：<strong>拷贝构造函数</strong>、<strong>拷贝赋值运算符</strong>和<strong>析构函数</strong>。而且，在新标准下，一个类还可以定义一个移动构造函数和一个移动赋值运算符，我们将在后面介绍这些内容。</p>
-<p>C++语言并不要求我们定义所有这些操作：可以只定义其中一个或两个，而不必定义所有。但是，这些操作通常应该被看作一个整体。通常，只需要其中一个操作，而不需要定义所有操作的情况是很少见的。</p>
-<h4 id="1-5-1-需要析构函数的类也需要拷贝和赋值操作"><a href="#1-5-1-需要析构函数的类也需要拷贝和赋值操作" class="headerlink" title="1.5.1 需要析构函数的类也需要拷贝和赋值操作"></a>1.5.1 需要析构函数的类也需要拷贝和赋值操作</h4><p>当我们决定一个类是否要定义它自己版本的拷贝控制成员时，<strong>一个基本原则是首先确定这个类是否需要一个析构函数</strong>。<strong>通常，对析构函数的需求要比对拷贝构造函数或赋值运算符的需求更为明显</strong>。如果这个类需要一个析构函数，我们几乎可以肯定它也需要一个拷贝构造函数和一个拷贝赋值运算符。</p>
-<p>我们在练习中用过的HasPtr类是一个好例子。这个类在构造函数中分配动态内存。合成析构函数不会delete一个指针数据成员。因此，此类需要定义一个析构函数来释放构造函数分配的内存。基本原则告诉我们，HasPtr也需要一个拷贝构造函数和一个拷贝赋值运算符。</p>
-<p>如果我们为HasPtr定义一个析构函数，但使用合成版本的拷贝构造函数和拷贝赋值<br>运算符，考虑会发生什么：</p>
-<pre><code class="lang-c++">class HasPtr
-{
-    public:
-    HasPtr(const string &amp;s = string ()):ps(new string(s), i(0))
-    {};
-    ~HasPtr()
-    {
-        delete ps;
-    }
-};
-</code></pre>
-<p>在这个版本的类定义中，构造函数中分配的内存将在HasPtr对象销毁时被释放。但不幸的是，我们引入了一个严重的错误！这个版本的类使用了<strong>合成的拷贝构造函数</strong>和<strong>拷贝赋值运算符</strong>，这意味着有多个HasPtr对象可能指向相同的内存:</p>
-<pre><code class="lang-c++">HasPtr f(HasPtr hp) // HasPtr传值参数，所以被拷贝
-{
-    HasPtr ret = hp;    // 拷贝给定的HasPtr
-
-    // 处理ret
-    return ret            // ret和hp被销毁
-}
-</code></pre>
-<p>当f返回时，hp和ret都被销毁，在两个对象上都会调用HasPtr的析构函数。此析构函数会<strong>delete ret</strong>和<strong>hp</strong>中的指针成员。但<strong>这两个对象包含相同的指针值</strong>。此代码会导致此指针被delete两次，这显然是一个错误。将要发生什么是未定义的。</p>
-<pre><code class="lang-c++">HasPtr p(&quot;some value&quot;);
-f(p);            // 当f结束时，p．ps指向的内存被释放
-HasPtr q(p);    // 现在p和q都指向无效内存！
-</code></pre>
-<p>p（以及q)指向的内存不冉有效，在hp（或ret!）销毁时它就被归还给系统了。此外，f的调用者还会使用传递给f的对象：</p>
-]]></content>
-      <categories>
-        <category>Cpp Primer</category>
-      </categories>
-      <tags>
-        <tag>Cpp</tag>
-        <tag>Cpp学习笔记</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>Template学习笔记</title>
-    <url>/2020/03/03/C++-Primer-Template%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/</url>
-    <content><![CDATA[<p><center><b>本章主要讲述了C++ Template的相关知识</b></center><br><a id="more"></a></p>
 ]]></content>
       <categories>
         <category>Cpp Primer</category>
@@ -1218,70 +1873,6 @@ class Sample&lt;T, U&gt; where T : struct where U   class, T {...}
       </tags>
   </entry>
   <entry>
-    <title>const对指针和引用的限定</title>
-    <url>/2019/12/08/C++-Primer-const%E5%AF%B9%E6%8C%87%E9%92%88%E5%92%8C%E5%BC%95%E7%94%A8%E7%9A%84%E9%99%90%E5%AE%9A/</url>
-    <content><![CDATA[<p><center> <b>本文讲述const和指针，引用之间微妙的关系</b> </center><br><a id="more"></a></p>
-<h2 id="0x01-const与引用"><a href="#0x01-const与引用" class="headerlink" title="0x01 const与引用"></a>0x01 const与引用</h2><h3 id="1-1-const的引用（reference-to-const"><a href="#1-1-const的引用（reference-to-const" class="headerlink" title="1.1 const的引用（reference to const)"></a>1.1 const的引用（reference to const)</h3><p>简称为常量引用，<strong>引用的对象时常量还是非常量可以决定其所参与的操作，但是不会影响引用和对象的绑定关系。</strong></p>
-<pre><code class="lang-cpp">const int ci = 1024;
-const int &amp;r1 = ci;     // 引用及其对应的对象都是常量
-
-
-r1 = 42;
-int &amp;r2 = ci; // error, 使用一个非常量引用指向一个常量。
-
-int i = 42;
-const int &amp;r4 = r3; // 常量引用可以指向一个非常量，但是不允许通过r4对r3进行修改。
-</code></pre>
-<h2 id="0x02-const与指针"><a href="#0x02-const与指针" class="headerlink" title="0x02 const与指针"></a>0x02 const与指针</h2><h3 id="2-1-指向常量的指针-pointer-to-const"><a href="#2-1-指向常量的指针-pointer-to-const" class="headerlink" title="2.1 指向常量的指针(pointer to const)"></a>2.1 指向常量的指针(pointer to const)</h3><blockquote>
-<p>指向常量的指针没有规定其所指的对象必须是一个常量,也就是说可以非常量，指向常量的指针是指不能通过指针来改变所指的变量的值。。</p>
-</blockquote>
-<pre><code class="lang-cpp">const double pi1 = 3.14;
-double pi2 = 3.14;
-
-// 下面两条赋值语句都是合法的。
-const double *cptr1 = &amp;pi1;
-const double *cptr2 = &amp;pi2;
-</code></pre>
-<p><br></p>
-<h3 id="2-2-常量指针-const-pointer"><a href="#2-2-常量指针-const-pointer" class="headerlink" title="2.2 常量指针(const pointer)"></a>2.2 常量指针(const pointer)</h3><blockquote>
-<p>常量指针必须初始化，一旦初始化完成，那么它的值将不会在变化。</p>
-</blockquote>
-<p> <strong>const pointer 不变的是指针本身的值而不是所指向的那个值，所以const pointer可以通过指针修改所指对象的值。</strong></p>
-<pre><code class="lang-cpp">int errNum = 0;
-int *const curErr = &amp;errNum;
-
-const double pi = 3.14;
-// 将*放在const可以说明指针是一个常量
-const double* const pip = &amp;pi; // pip是一个指向常量对象的常量指针。
-</code></pre>
-<h2 id="0x03-const-介绍"><a href="#0x03-const-介绍" class="headerlink" title="0x03 const 介绍"></a>0x03 const 介绍</h2><ul>
-<li>顶层 const 代表对象本身是个常量。</li>
-<li>底层 const 代表指针所指的对象是一个常量。</li>
-<li>指针既可以是顶层const，也可以是底层const</li>
-</ul>
-<pre><code class="lang-cpp">  int i = 0;
-  int *const p1 = &amp;i;           //  const pointer -- 这是顶层const 
-  const int ci = 42;            // const var -- 这是顶层const
-  const int *p2 = &amp;ci;          // pointer to const -- 这是底层const
-  const int *const p3 = p2;     // 右边是顶层const， 左边是底层const
-
-  const int &amp;r = ci;            // 用于声明引用的const 都是底层const
-</code></pre>
-<p>如果进行copy时，顶层const的不受影响，但是底层const受限制。</p>
-<ul>
-<li>进行copy的对象，拷入和拷出必须具有相同的底层const资格，或者两个对象的数据类型必须能够转换。<strong>一般来说，非常量可以转换成常量，但是反之不行。</strong></li>
-</ul>
-<p><br></p>
-]]></content>
-      <categories>
-        <category>Cpp Primer</category>
-      </categories>
-      <tags>
-        <tag>Cpp</tag>
-        <tag>Cpp学习笔记</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>第六章学习笔记</title>
     <url>/2019/12/08/C++-Primer-%E7%AC%AC%E5%85%AD%E7%AB%A0%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/</url>
     <content><![CDATA[<p><center><b> 本章主要介绍函数的定义和声明</b> </center><br><a id="more"></a></p>
@@ -1335,892 +1926,6 @@ for(size_t i = 0; i != size; ++i)
 }
 </code></pre>
 </li>
-</ul>
-]]></content>
-      <categories>
-        <category>Cpp Primer</category>
-      </categories>
-      <tags>
-        <tag>Cpp</tag>
-        <tag>Cpp学习笔记</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>第三章学习笔记</title>
-    <url>/2019/05/20/C++-Primer-%E7%AC%AC%E4%B8%89%E7%AB%A0%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/</url>
-    <content><![CDATA[<p><center><b>本文初识标准库和迭代器,以及using在 c++11中新用处。</b></center><br><a id="more"></a></p>
-<h2 id="0x00-命名空间的using-声明"><a href="#0x00-命名空间的using-声明" class="headerlink" title="0x00. 命名空间的using 声明"></a>0x00. 命名空间的using 声明</h2><p>头文件不应该使用using 声明,因为头文件的内容会拷贝到所有引用它的文件中。这样容易产生名字冲突。</p>
-<h2 id="0x01-标准库类型string"><a href="#0x01-标准库类型string" class="headerlink" title="0x01. 标准库类型string"></a>0x01. 标准库类型string</h2><h3 id="1-1-初始化"><a href="#1-1-初始化" class="headerlink" title="1.1 初始化"></a>1.1 初始化</h3><pre><code class="lang-c++">string s1;          // 默认初始化 空串
-
-string s2(s1);      // s2是s1的副本。
-
-string s2 = s1;     // 等价于s2(s1)。
-
-string s3(&quot;value&quot;); // 等价写法 string s3 = &quot;value&quot;;
-
-string s4(n, &#39;c&#39;);  // s4为连续n个字符c组成的字符串。
-</code></pre>
-<h3 id="1-2-直接初始化和拷贝初始化"><a href="#1-2-直接初始化和拷贝初始化" class="headerlink" title="1.2 直接初始化和拷贝初始化"></a>1.2 直接初始化和拷贝初始化</h3><p>如果使用等号初始化一个变量的时候, 实际上执行的是拷贝初始化，反之则是直接初始化。</p>
-<p>当初始值只有一个时，使用直接初始化或靠被初始化都行。</p>
-<pre><code class="lang-c++">string s5 = &quot;hiya&quot;;    //拷贝初始化。
-string s6(&quot;jojo&quot;);    // 直接初始化。
-string s7(10, &#39;c&#39;);    // 直接初始化，s7的内容是cccccccccc
-</code></pre>
-<p>对于多个值进行初始化的时候，用拷贝初始化的方式来处理也不是不可以,不过需要显式地的创建一个(临时)对象用于拷贝：</p>
-<pre><code class="lang-c++">string s8 = string(10, &#39;c&#39;);
-
-// 上面这条语句等价于下面的
-string temp(10, &#39;c&#39;);
-string s8 = temp;
-</code></pre>
-<h3 id="1-3-读写string-对象"><a href="#1-3-读写string-对象" class="headerlink" title="1.3 读写string 对象"></a>1.3 读写string 对象</h3><pre><code class="lang-c++">int main()
-{
-    string str;
-    cin &gt;&gt; str;
-    cout &lt;&lt; str &lt;&lt; endl;
-
-    return 0;
-}
-</code></pre>
-<p>上面的程序定义了一个名为str的空string,然后将标准输入的内容读取到s中。在执行读取的操作时，<strong>string对象回自动忽略开头的空白(空格符, 换行符, 制表符等)并从第一个真正的字符开始读起,直到遇到下一个空白开始。</strong></p>
-<h4 id="1-3-1-读取未知数量的string对象"><a href="#1-3-1-读取未知数量的string对象" class="headerlink" title="1.3.1 读取未知数量的string对象"></a>1.3.1 读取未知数量的string对象</h4><pre><code class="lang-c++">int main()
-{
-    string word;
-    while(cin &gt;&gt; word)
-    {
-        cout &lt;&lt; word &lt;&lt; endl;
-    }
-    return 0;
-}
-</code></pre>
-<p>一旦遇到文件结束符或非法输入也就结束了。</p>
-<h4 id="1-3-2-getline"><a href="#1-3-2-getline" class="headerlink" title="1.3.2 getline()"></a>1.3.2 getline()</h4><p>getline读取一整行，直到遇到换行符，所读的内容存入string对象中。换行符也被读进来了,但是被丢弃了,并没有存储到string对象中</p>
-<h3 id="1-4-empty-和size"><a href="#1-4-empty-和size" class="headerlink" title="1.4 empty()和size()"></a>1.4 empty()和size()</h3><p>empty函数根据string对象是否为空返回一个对应的布尔值。</p>
-<p>size()函数的返回值是string::size_type类型,这是一个与机器无关的无符号整数类型。所以当出现string.size()就不要使用int了。</p>
-<h3 id="1-5-string的比较"><a href="#1-5-string的比较" class="headerlink" title="1.5 string的比较"></a>1.5 string的比较</h3><p>关系运算符 <strong>&lt;， &lt;= ，&gt;， &gt;=</strong>都遵循以下的字典顺序：</p>
-<ol>
-<li><strong>如果两个string对象的长度不同,而且较短string对象的每个字符都与较长string对象对应位置上的字符相同,就说较短的string对象小于较长的string对象。</strong></li>
-<li><strong>如果两个string对象在某些对应位置上不一致,则string对象比较的结果实际上是第一对相异字符比较的结果。</strong></li>
-</ol>
-<h3 id="1-6-字面值和string对象相加"><a href="#1-6-字面值和string对象相加" class="headerlink" title="1.6 字面值和string对象相加"></a>1.6 字面值和string对象相加</h3><pre><code class="lang-c++">string s1 = &quot;hello&quot;, s2 = &quot;world&quot;；
-
-string s3 = s1 + &quot;,&quot; + s2 + &#39;\n\;
-</code></pre>
-<p>当我们把string对象和字符字面值及字符串字面值混在一条语句使用时，必须确保每个加法运算符(+)的两侧运算对象至少有一个是string：</p>
-<h3 id="1-7-练习1"><a href="#1-7-练习1" class="headerlink" title="1.7 练习1"></a>1.7 练习1</h3><h4 id="1-7-1-编写一段程序从标准输入中一次读入一行，然后修改该程序使其一次读入一个词。"><a href="#1-7-1-编写一段程序从标准输入中一次读入一行，然后修改该程序使其一次读入一个词。" class="headerlink" title="1.7.1 编写一段程序从标准输入中一次读入一行，然后修改该程序使其一次读入一个词。"></a>1.7.1 编写一段程序从标准输入中一次读入一行，然后修改该程序使其一次读入一个词。</h4><pre><code class="lang-c++">// 读入一整行
-void lineOfstr(string &amp;str)
-{
-    while (getline(cin, str))
-    {
-        cout &lt;&lt; str &lt;&lt; endl;
-    }
-}
-
-// 读入一个词
-void wordOfstr(string &amp;str)
-{
-    while (cin &gt;&gt; str)
-    {
-        cout &lt;&lt; str &lt;&lt; endl;
-    }
-}
-
-int main()
-{
-    string str;
-//    lineOfstr(str);
-    wordOfstr(str);
-
-    return 0;
-}
-</code></pre>
-<h4 id="1-7-2-请说明string类的输入运算符和getline函数分别是如何处理空白字符的。"><a href="#1-7-2-请说明string类的输入运算符和getline函数分别是如何处理空白字符的。" class="headerlink" title="1.7.2 请说明string类的输入运算符和getline函数分别是如何处理空白字符的。"></a>1.7.2 请说明string类的输入运算符和getline函数分别是如何处理空白字符的。</h4><pre><code>cin &gt;&gt; s 的读取，string对象会忽略开头的空白并从第一个真正的字符开始，直到遇见下一空白为止。
-
-getline(cin, s) 的读取，string对象会从输入流中读取字符，直到遇见换行符为止。
-</code></pre><h4 id="1-7-3-编写一段程序读取两个字符串，比较其是否相等并输出结果。如果不相等，输出比较大的那个字符串。改写上述程序，比较输入的两个字符串是否等长，如果不等长，输出长度较大的那个字符串。"><a href="#1-7-3-编写一段程序读取两个字符串，比较其是否相等并输出结果。如果不相等，输出比较大的那个字符串。改写上述程序，比较输入的两个字符串是否等长，如果不等长，输出长度较大的那个字符串。" class="headerlink" title="1.7.3 编写一段程序读取两个字符串，比较其是否相等并输出结果。如果不相等，输出比较大的那个字符串。改写上述程序，比较输入的两个字符串是否等长，如果不等长，输出长度较大的那个字符串。"></a>1.7.3 编写一段程序读取两个字符串，比较其是否相等并输出结果。如果不相等，输出比较大的那个字符串。改写上述程序，比较输入的两个字符串是否等长，如果不等长，输出长度较大的那个字符串。</h4><pre><code class="lang-c++">
-void compareStrOne(const string &amp;str1, const string &amp;str2)
-{
-    if (str1 == str2)
-    {
-        cout &lt;&lt; &quot;The two strings are equals.\n&quot;;
-    }
-    else
-    {
-        cout &lt;&lt; &quot;The larger string is &quot; &lt;&lt; ((str1 &gt; str2) ? str1 : str2) &lt;&lt; &quot;.\n&quot;;
-    }
-}
-
-void compareStrTwo(const string &amp;str1, const string &amp;str2)
-{
-    if (str1.length() == str2.length())
-    {
-        cout &lt;&lt; &quot;The two strings are equal length.&quot;;
-    }
-    else
-    {
-        cout &lt;&lt; &quot;The longer string is &quot; &lt;&lt; ((str1.size() &gt; str2.size()) ? str1 : str2) &lt;&lt; &quot;.\n&quot;;
-    }
-
-}
-
-int main()
-{
-    string str1;
-    string str2;
-    while(cin &gt;&gt; str1 &gt;&gt; str2)
-    {
-        compareStrOne(str1, str2);
-        compareStrTwo(str1, str2);
-    }
-
-    return 0;
-}
-</code></pre>
-<h3 id="1-8-处理string对象中的字符"><a href="#1-8-处理string对象中的字符" class="headerlink" title="1.8 处理string对象中的字符"></a>1.8 处理string对象中的字符</h3><h4 id="1-8-1-处理每个字符-gt-使用基于范围的for语句"><a href="#1-8-1-处理每个字符-gt-使用基于范围的for语句" class="headerlink" title="1.8.1 处理每个字符-&gt;使用基于范围的for语句"></a>1.8.1 处理每个字符-&gt;使用基于范围的for语句</h4><pre><code class="lang-c++">string str(&quot;some string&quot;);
-for(auto c : str)
-    cout &lt;&lt; c &lt;&lt; endl;
-</code></pre>
-<h4 id="1-8-2-使用范围for语句改变字符串中的字符"><a href="#1-8-2-使用范围for语句改变字符串中的字符" class="headerlink" title="1.8.2 使用范围for语句改变字符串中的字符"></a>1.8.2 使用范围for语句改变字符串中的字符</h4><pre><code class="lang-c++">string s(&quot;Hello World!!!&quot;);
-
-for(auto &amp;c : s)
-    c = toupper(c);
-
-cout &lt;&lt; s &lt;&lt; endl;        // HELLO WORLD!!!
-</code></pre>
-<h4 id="1-8-3-只处理一部分字符"><a href="#1-8-3-只处理一部分字符" class="headerlink" title="1.8.3 只处理一部分字符"></a>1.8.3 只处理一部分字符</h4><ul>
-<li><p>使用下标运算符</p>
-<pre><code class="lang-c++">string s(&quot;some string&quot;);
-
-if(!s.empty())
-    cout &lt;&lt; s[0] &lt;&lt; endl;
-    s[0] =     toupper(s[0]);        // 为s的第一个字符赋一个新值
-</code></pre>
-<pre><code class="lang-c++">// 依次处理s中的字符，直至我们处理完全的全部字符或遇到一个空白
-for(decltype(s.size()) index = 0;
-    index != s.size() &amp;&amp; !isspace(s[index]);
-    index++)
-{
-    s[index] = toupper(s[index]);
-}
-</code></pre>
-</li>
-</ul>
-<ul>
-<li>使用迭代器</li>
-</ul>
-<h4 id="1-8-4-使用下标执行随机访问"><a href="#1-8-4-使用下标执行随机访问" class="headerlink" title="1.8.4 使用下标执行随机访问"></a>1.8.4 使用下标执行随机访问</h4><h3 id="1-9-练习2"><a href="#1-9-练习2" class="headerlink" title="1.9 练习2"></a>1.9 练习2</h3><h4 id="1-9-1-编写一段程序，使用范围for语句将字符串内所有字符串用X代替"><a href="#1-9-1-编写一段程序，使用范围for语句将字符串内所有字符串用X代替" class="headerlink" title="1.9.1 编写一段程序，使用范围for语句将字符串内所有字符串用X代替"></a>1.9.1 编写一段程序，使用范围for语句将字符串内所有字符串用X代替</h4><pre><code class="lang-c++">string str = &quot;some string&quot;;
-
-for (auto &amp;c : str)
-    if(!isspace(c))
-           c = &#39;X&#39;;
-</code></pre>
-<h4 id="1-9-2-就上一题完成的程序而言，如果将循环控制变量的类型设为char将发生什么？先估计一下结果，然后就实际编程进行验证"><a href="#1-9-2-就上一题完成的程序而言，如果将循环控制变量的类型设为char将发生什么？先估计一下结果，然后就实际编程进行验证" class="headerlink" title="1.9.2 就上一题完成的程序而言，如果将循环控制变量的类型设为char将发生什么？先估计一下结果，然后就实际编程进行验证"></a>1.9.2 就上一题完成的程序而言，如果将循环控制变量的类型设为char将发生什么？先估计一下结果，然后就实际编程进行验证</h4><pre><code class="lang-c++">不会修改原字符串，因为c在迭代时是str每个字符的复制。
-</code></pre>
-<h4 id="1-9-3-分别用while循环和传统for循环重写第一题的程序，你觉得哪种形式更好呢？为什么"><a href="#1-9-3-分别用while循环和传统for循环重写第一题的程序，你觉得哪种形式更好呢？为什么" class="headerlink" title="1.9.3 分别用while循环和传统for循环重写第一题的程序，你觉得哪种形式更好呢？为什么?"></a>1.9.3 分别用while循环和传统for循环重写第一题的程序，你觉得哪种形式更好呢？为什么?</h4><pre><code class="lang-c++">string str = &quot;some string&quot;;
-
-// while循环
-decltype(str.size()) index = 0;
-while(index != str.size())
-{
-    if (!isspace(str[index]))
-        str[index] = &#39;X&#39;;
-
-    index++;
-}
-
-// 传统for循环
-for (decltype(str.size()) index = 0;
-     index != str.size() ; index++)
-{
-    if(isspace(str[index]))
-        continue;
-    str[index] = &#39;X&#39;;
-}
-</code></pre>
-<p>我觉得各有优点，while循环判断条件更见简洁，传统for循环更倾向于将所有条件书写完再执行代码块，更容易理清楚思路。</p>
-<h4 id="1-9-4-下面的程序有何作业，它合法吗？如果不合法，为什么？"><a href="#1-9-4-下面的程序有何作业，它合法吗？如果不合法，为什么？" class="headerlink" title="1.9.4 下面的程序有何作业，它合法吗？如果不合法，为什么？"></a>1.9.4 下面的程序有何作业，它合法吗？如果不合法，为什么？</h4><pre><code class="lang-c++">string s;
-cout &lt;&lt; s[0] &lt;&lt; endl;
-</code></pre>
-<p>上面是不合法的，因为s是一个空字符串，没有存放任何实质性的内容，但是开辟了一块内存空间，所以不可以通过下标来访问。</p>
-<p>但是我试了许多种类的编译器，是可以编译成功的。</p>
-<h4 id="1-9-5-编写一段程序，读入一个包含标点符号的字符串，将标点符号去除后输出字符串剩余的部份。"><a href="#1-9-5-编写一段程序，读入一个包含标点符号的字符串，将标点符号去除后输出字符串剩余的部份。" class="headerlink" title="1.9.5 编写一段程序，读入一个包含标点符号的字符串，将标点符号去除后输出字符串剩余的部份。"></a>1.9.5 编写一段程序，读入一个包含标点符号的字符串，将标点符号去除后输出字符串剩余的部份。</h4><pre><code class="lang-c++">int main()
-{
-    string str = &quot;some,string&quot;;
-    string newStr;
-    for(auto &amp;c : str)
-    {
-        if(ispunct(c))
-            continue;
-
-        newStr += c;
-    }
-
-    cout &lt;&lt; newStr &lt;&lt; endl;
-
-    return 0;
-}
-</code></pre>
-<h4 id="1-9-6-下面的范围for语句合法吗？如果合法，c的类型是什么？"><a href="#1-9-6-下面的范围for语句合法吗？如果合法，c的类型是什么？" class="headerlink" title="1.9.6 下面的范围for语句合法吗？如果合法，c的类型是什么？"></a>1.9.6 下面的范围for语句合法吗？如果合法，c的类型是什么？</h4><pre><code class="lang-c++">const string s = &quot;Keep out!&quot;;
-for(auto &amp;c : s)
-{
-    /*...*/
-}
-// s是一个常量字符串对象，不允许修改。
-// auto会忽略掉顶层const,保留底层const,所以c是底层const，也就是常量引用。
-</code></pre>
-<h2 id="0x02-vector"><a href="#0x02-vector" class="headerlink" title="0x02. vector"></a>0x02. vector</h2><p><strong>实例化:编译器根据模板创建类和函数的过程。</strong></p>
-<h3 id="2-1-定义和初始化"><a href="#2-1-定义和初始化" class="headerlink" title="2.1 定义和初始化"></a>2.1 定义和初始化</h3><pre><code class="lang-c++">vector(T) v1;           // v1是一个空vector,执行T类型的默认初始化。
-
-vector(T) v2(v1);       // v2中包含了v1所有元素的副本。
-
-vector(T) v2 = v1;       //等价于v2(v1)。
-
-vector(T) v3(n, nval);     // v3包含了n个重复的元素,每个元素的值都是val。
-
-vector(T) V4(n);        // n个执行了T类型的值初始化的对象。
-
-
-// 列表初始化
-vector(T) v5{a, b, c ...} // v5包含了初始值个数的元素。
-
-vector(T) v5 = {a, b, c ...} // 等价于v5{a, b, c ...}
-</code></pre>
-<h3 id="2-2-练习1"><a href="#2-2-练习1" class="headerlink" title="2.2 练习1"></a>2.2 练习1</h3><h4 id="2-2-1-下面vector对象的定义有什么不正确的吗？如果有，请指出。对于正确的，描述其执行结果。对于不正确的，说明其错误的原因"><a href="#2-2-1-下面vector对象的定义有什么不正确的吗？如果有，请指出。对于正确的，描述其执行结果。对于不正确的，说明其错误的原因" class="headerlink" title="2.2.1 下面vector对象的定义有什么不正确的吗？如果有，请指出。对于正确的，描述其执行结果。对于不正确的，说明其错误的原因"></a>2.2.1 下面vector对象的定义有什么不正确的吗？如果有，请指出。对于正确的，描述其执行结果。对于不正确的，说明其错误的原因</h4><pre><code>(a) vector&lt;vector&lt;int&gt;&gt; ivec; // 正确，空vector。
-(b)    vector&lt;string&gt; svec = ivec;    //错误，不能用不同类型初始化。
-(c) vector&lt;string&gt; svec(10, &quot;null&quot;); //正确。
-</code></pre><h4 id="2-2-2-下列vector对象各包含多少个元素，这些元素的值分别是什么？"><a href="#2-2-2-下列vector对象各包含多少个元素，这些元素的值分别是什么？" class="headerlink" title="2.2.2 下列vector对象各包含多少个元素，这些元素的值分别是什么？"></a>2.2.2 下列vector对象各包含多少个元素，这些元素的值分别是什么？</h4><pre><code class="lang-c++">(a)vector&lt;int&gt; v1;     // 0个，空。        (b)vector&lt;int&gt; v2(10);    // 10个，0
-(C)vector&lt;int&gt; v3(10, 42); //10个42      (c)vector&lt;int&gt; v4(10);  // 10个，0
-...
-...
-</code></pre>
-<h3 id="2-3-添加元素"><a href="#2-3-添加元素" class="headerlink" title="2.3 添加元素"></a>2.3 添加元素</h3><p><strong>push_back()负责将一个元素添加到vector的尾端。</strong></p>
-<p>c++ 更习惯于先创建空的vector对象,在运行的时候动态添加元素。</p>
-<pre><code class="lang-c++">vector&lt;int&gt; v2;
-
-for(int i = 0; i != 100; ++i)
-    v2.push_back(i);
-</code></pre>
-<p>vector不能使用下标运算符去添加元素,但是可以用于访问已经存在的元素。</p>
-<h3 id="2-4-练习2"><a href="#2-4-练习2" class="headerlink" title="2.4 练习2"></a>2.4 练习2</h3><h4 id="2-4-1-编写一段程序，用cin读入一段整数并把它们存入一个vector对象"><a href="#2-4-1-编写一段程序，用cin读入一段整数并把它们存入一个vector对象" class="headerlink" title="2.4.1 编写一段程序，用cin读入一段整数并把它们存入一个vector对象"></a>2.4.1 编写一段程序，用cin读入一段整数并把它们存入一个vector对象</h4><pre><code class="lang-c++">vector&lt;int&gt; v1;
-int intBuffer;
-while (cin &gt;&gt; intBuffer)
-{
-    v1.push_back(intBuffer);
-}
-</code></pre>
-<h4 id="2-4-2-改写上题的程序，不过这次读入的是字符串"><a href="#2-4-2-改写上题的程序，不过这次读入的是字符串" class="headerlink" title="2.4.2 改写上题的程序，不过这次读入的是字符串"></a>2.4.2 改写上题的程序，不过这次读入的是字符串</h4><p>略</p>
-<h3 id="2-5-其他vector操作"><a href="#2-5-其他vector操作" class="headerlink" title="2.5 其他vector操作"></a>2.5 其他vector操作</h3><div class="table-container">
-<table>
-<thead>
-<tr>
-<th style="text-align:center"><strong>v.empty()</strong></th>
-<th><strong>如果v不含有任何元素，返回真，否则返回假</strong></th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td style="text-align:center"><strong>v.size()</strong></td>
-<td><strong>返回v中元素的个数</strong></td>
-</tr>
-<tr>
-<td style="text-align:center"><strong>v[n]</strong></td>
-<td><strong>返回v中第n个元素位置的引用</strong></td>
-</tr>
-<tr>
-<td style="text-align:center"><strong>v1 = v2</strong></td>
-<td><strong>用v2中的元素拷贝替换v1中的元素</strong></td>
-</tr>
-<tr>
-<td style="text-align:center"><strong>v1 = {a, b, c, …..}</strong></td>
-<td><strong>用列表中的元素拷贝替换v1中的元素</strong></td>
-</tr>
-<tr>
-<td style="text-align:center"><strong>v1 == v2</strong></td>
-<td><strong>v1和v2相等当且仅当它们的元素数量相同且对应的元素值相同</strong></td>
-</tr>
-<tr>
-<td style="text-align:center"><strong>v1 != v2</strong></td>
-<td></td>
-</tr>
-<tr>
-<td style="text-align:center"><strong>&lt;, &lt;=，&gt;=, &gt;</strong></td>
-<td><strong>以字典顺序比较</strong></td>
-</tr>
-</tbody>
-</table>
-</div>
-<p><strong>vector对象的下标运算符可用于访问已经存在的元素，而不能用于添加元素。</strong></p>
-<h3 id="2-6-练习3"><a href="#2-6-练习3" class="headerlink" title="2.6 练习3"></a>2.6 练习3</h3><h4 id="2-6-1-从cin读入一组词并把它们存入一个vector对象，然后设法把所有词改写为大写形式，输出改变后的结果，每个词占一行。"><a href="#2-6-1-从cin读入一组词并把它们存入一个vector对象，然后设法把所有词改写为大写形式，输出改变后的结果，每个词占一行。" class="headerlink" title="2.6.1 从cin读入一组词并把它们存入一个vector对象，然后设法把所有词改写为大写形式，输出改变后的结果，每个词占一行。"></a>2.6.1 从cin读入一组词并把它们存入一个vector对象，然后设法把所有词改写为大写形式，输出改变后的结果，每个词占一行。</h4><pre><code class="lang-c++">void upperStr(string &amp;str)
-{
-    /*
-        you can use transform function. this is a standard libnary function.
-    */
-    for (decltype(str.size()) index = 0; index &lt; str.size(); index++)
-    {
-        str[index] = toupper(str[index]);
-    }
-}
-int main()
-{
-    string word;
-    vector&lt;string&gt; strVector;
-    while (cin &gt;&gt; word)
-    {
-        upperStr(word);
-        strVector.push_back(word);
-
-        if(cin.get() == &#39;\n&#39;)
-            break;
-    }
-
-    for (auto &amp;c : strVector)
-    {
-        cout &lt;&lt; c &lt;&lt; endl;
-    }
-
-    return 0;
-}
-</code></pre>
-<h4 id="2-6-2-如果想定义一个含有10个元素的vector对象，所有元素值都是42，请列举出三种不同的实现方法，哪种方法更好呢？为什么？"><a href="#2-6-2-如果想定义一个含有10个元素的vector对象，所有元素值都是42，请列举出三种不同的实现方法，哪种方法更好呢？为什么？" class="headerlink" title="2.6.2 如果想定义一个含有10个元素的vector对象，所有元素值都是42，请列举出三种不同的实现方法，哪种方法更好呢？为什么？"></a>2.6.2 如果想定义一个含有10个元素的vector对象，所有元素值都是42，请列举出三种不同的实现方法，哪种方法更好呢？为什么？</h4><pre><code class="lang-c++">vector&lt;int&gt; v1(10, 42);
-
-vector&lt;int&gt; v2  = {
-    42, 42, 42, 42, 42, 42, 42, 42, 42, 42
-};
-
-vector&lt;int&gt; v3;
-for (int i = 0; i &lt; 10; i++)
-{
-    v3.push_back(42);
-}
-</code></pre>
-<h4 id="2-6-3-读入一组整数并把它们存入一个vector对象，将每对相邻整数的和输出出来。改写你的程序，这次要求先输出第一个和最后一个元素的和，接着输出第2个和倒数第二2个元素的和，以此类推。"><a href="#2-6-3-读入一组整数并把它们存入一个vector对象，将每对相邻整数的和输出出来。改写你的程序，这次要求先输出第一个和最后一个元素的和，接着输出第2个和倒数第二2个元素的和，以此类推。" class="headerlink" title="2.6.3 读入一组整数并把它们存入一个vector对象，将每对相邻整数的和输出出来。改写你的程序，这次要求先输出第一个和最后一个元素的和，接着输出第2个和倒数第二2个元素的和，以此类推。"></a>2.6.3 读入一组整数并把它们存入一个vector对象，将每对相邻整数的和输出出来。改写你的程序，这次要求先输出第一个和最后一个元素的和，接着输出第2个和倒数第二2个元素的和，以此类推。</h4><pre><code class="lang-c++">void outputOne(const vector&lt;int&gt; &amp;v1)
-{
-    for (decltype(v1.size()) index = 0; index &lt; v1.size() - 1; index++)
-    {
-        cout &lt;&lt; v1[index] + v1[index + 1] &lt;&lt; endl;
-    }
-}
-
-void outputTwo(const vector&lt;int&gt; &amp;v2)
-{
-    auto length = v2.size();
-    for (decltype(v2.size()) index = 0; index &lt; length / 2; index++)
-    {
-        auto result = v2[index] + v2[length - index - 1];
-        cout &lt;&lt; result &lt;&lt; endl;
-    }
-}
-
-int main()
-{
-    vector&lt;int&gt; vInt;
-    int intBuffer;
-    while (cin &gt;&gt; intBuffer)
-    {
-        vInt.push_back(intBuffer);
-        if (cin.get() == &#39;\n&#39;)
-        {
-            break;
-        }
-    }
-
-    outputOne(vInt);        
-    cout &lt;&lt; &quot;**********************&quot; &lt;&lt; endl;
-    outputTwo(vInt);
-
-    return 0;
-}
-</code></pre>
-<h3 id="2-7-迭代器"><a href="#2-7-迭代器" class="headerlink" title="2.7 迭代器"></a>2.7 迭代器</h3><h4 id="2-7-1-使用迭代器"><a href="#2-7-1-使用迭代器" class="headerlink" title="2.7.1 使用迭代器"></a>2.7.1 使用迭代器</h4><pre><code class="lang-c++">/* 怎样获取迭代器？
-    使用begin()和end().
-    end成员负责返回指向容器尾元素的下一个元素的迭代器，也就是说，该迭代器指示的是容器的一个本不存在的“尾后”元素。
-    这样的迭代器没什么实际含义，仅仅是个标记而已，表示我们已经处理完容器中所有元素。
-    end() 返回的迭代器并不实际指示某个元素,所以不能对其进行递增或解引用的操作.
-*/
-auto b = v.begin();
-auto e = v.end();
-</code></pre>
-<p>怎样称为一个有效的迭代器呢？</p>
-<ul>
-<li><strong>或者指向某个元素,或者指向容器中尾元素的下一个位置</strong></li>
-</ul>
-<p><strong>其次，但凡是使用了迭代器的循环体,都不要向使用迭代器所属的容器添加元素。因为会使迭代器失效。</strong></p>
-<h4 id="2-7-2-迭代器运算符"><a href="#2-7-2-迭代器运算符" class="headerlink" title="2.7.2 迭代器运算符"></a>2.7.2 迭代器运算符</h4><div class="table-container">
-<table>
-<thead>
-<tr>
-<th style="text-align:center"><em>ite<em>*r</em></em></th>
-<th><strong>返回迭代器iter所选元素的引用</strong></th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td style="text-align:center"><strong>iter-&gt;mem</strong></td>
-<td><strong>解引用iter并获取该元素名为mem的成员，等价于(*iter).mem</strong></td>
-</tr>
-<tr>
-<td style="text-align:center"><strong>++iter</strong></td>
-<td><strong>令iter指向容器中下一个元素</strong></td>
-</tr>
-<tr>
-<td style="text-align:center"><strong>—iter</strong></td>
-<td><strong>令iter指向容器中上一个元素</strong></td>
-</tr>
-<tr>
-<td style="text-align:center"><strong>iter1 == iter2</strong></td>
-<td><strong>判断两个迭代器是否相等(不相等)，如果两个迭代器指示的是同一个元素或者是同一个容器的尾后迭代器，则相等。反之，不想等。</strong></td>
-</tr>
-<tr>
-<td style="text-align:center"><strong>iter1 != iter2</strong></td>
-<td>同上</td>
-</tr>
-</tbody>
-</table>
-</div>
-<h4 id="2-7-3-迭代器运算"><a href="#2-7-3-迭代器运算" class="headerlink" title="2.7.3 迭代器运算"></a>2.7.3 迭代器运算</h4><p>所有标准库容器都有支持递增运算的迭代器。</p>
-<p>string和vector迭代器支持更多运算。</p>
-]]></content>
-      <categories>
-        <category>Cpp Primer</category>
-      </categories>
-      <tags>
-        <tag>Cpp</tag>
-        <tag>Cpp学习笔记</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>第二章学习笔记</title>
-    <url>/2019/05/20/C++-Primer-%E7%AC%AC%E4%BA%8C%E7%AB%A0%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/</url>
-    <content><![CDATA[<p><center><b>本章主要讲述了c++变量声明,以及各种修饰符的作用和技巧</b></center><br><a id="more"></a></p>
-<h2 id="0x00-变量初始化和赋值"><a href="#0x00-变量初始化和赋值" class="headerlink" title="0x00. 变量初始化和赋值"></a>0x00. 变量初始化和赋值</h2><p><strong>初始化指变量在创建时给它赋予一个初始值，赋值是将当前对象的值擦除掉,而以一个新值来代替.  </strong></p>
-<pre><code class="lang-c++">int var1 = 1;  // 这是初始化。
-
-int var2;
-var2 = 3;       // 这是赋值。
-</code></pre>
-<h3 id="0-1-列表初始化"><a href="#0-1-列表初始化" class="headerlink" title="0.1 列表初始化"></a>0.1 列表初始化</h3><p>下面四条语句都可以定义int类型的units_sold的变量并初始化为0.</p>
-<pre><code class="lang-c++">int units_sold = 0;
-int units_sold = {0};
-int units_sold{0};
-int units_sold(0);s
-</code></pre>
-<pre><code class="lang-c++">long double ld = 3.1415926536;
-int a(ld), b = {ld};   // 错误： 转换未执行，因为存在丢失信息的危险。
-int c(ld), d = ld;        // 正确：转换执行，且确实丢失了部分值。
-</code></pre>
-<h3 id="0-2-默认初始化"><a href="#0-2-默认初始化" class="headerlink" title="0.2 默认初始化"></a>0.2 默认初始化</h3><p>如果定义变量时没有指定初值，则变量被默认初始化( default initialized), 此时变量被赋予了“默认值”。<strong>默认值到底是什么由变量类型决定，同时定义变量的位置也会对此有影响</strong>。</p>
-<p>如果是内置类型的变量未被显式初始化，它的值由定义的位置决定。定义于任何函数体之外的变量被初始化为0。一种例外情况是，定义在函数体内部的内置类型变量将不被初始化(uninitialized)。一个未被初始化的内置类型变量的值是未定义的，如果试图拷贝或以其他形式访问此类值将引发错误。</p>
-<p><strong>每个类各自决定其初始化对象的方式。而且，是否允许不经初始化就定义对象也由类自己决定。如果类允许这种行为，它将决定对象的初始值到底是什么。</strong></p>
-<pre><code class="lang-c++">class T1{ int number; };
-
-class T2
-{
-    public:
-        int number;
-        T2()
-        {};
-};
-
-int var1; // 静态非类，进行两阶段初始化：
-         // 1) 零初始化将 n 初始化为零
-         // 2) 默认初始化不做任何事，令 n 保留为零
-
-int main()
-{
-    int var2;               // 其值不确定，属于未定义行为
-    int var3 = var2;        //  未定义行为
-
-    std::string str1;       // 调用string的默认构造函数，值为&quot;&quot;
-    std::string strA[2];    // 每个元素都默认初始化为&quot;&quot;
-    // int &amp;r;              // error, 引用必须初始化
-    // const T1 t1;         // error ,T1只有隐式默认构造函数
-    T1 t1;                  // 调用隐式默认构造函数
-    const T2 t2;            // 调用用户提供的默认构造函数
-
-    return 0;
-}
-</code></pre>
-<h2 id="0x01-声明和定义"><a href="#0x01-声明和定义" class="headerlink" title="0x01. 声明和定义"></a>0x01. 声明和定义</h2><p><strong>声明: 使得名字被程序所知道,一个文件如果想使用别处定义的名字则必须包含那个对那个名字的声明。</strong></p>
-<p><strong>定义: 负责创建和名字关联的实体</strong></p>
-<p>声明一个变量而非定义它,就在变量名前添加关键字extern,而且不要显示化的初始化变量。</p>
-<pre><code class="lang-c++">extern int i;                    // 声明i但没定义i
-int j;                           //声明并定义j
-extern double pi = 3.1416;      // 定义pi
-</code></pre>
-<p><strong>变量只能被定义一次,但是可以被多次声明。</strong>  </p>
-<h2 id="0x02-字面值常量"><a href="#0x02-字面值常量" class="headerlink" title="0x02. 字面值常量"></a>0x02. 字面值常量</h2><h3 id="2-1-字面值介绍"><a href="#2-1-字面值介绍" class="headerlink" title="2.1 字面值介绍"></a>2.1 字面值介绍</h3><p>一个形如42的值被称为字面值常量。字面值是指只能通过它的值来称呼它，没有别名。</p>
-<p>类似的字符字面值和字符串字面值，‘a’, “hello world!”</p>
-<h3 id="2-2-指定字面值的类型"><a href="#2-2-指定字面值的类型" class="headerlink" title="2.2 指定字面值的类型"></a>2.2 指定字面值的类型</h3><pre><code class="lang-c++">    auto char_1 = L&#39;a&#39;;
-    auto string_1 = u8&quot;hi!&quot;;
-    auto ulonglong_1 = 42ULL;
-    auto float_1 = 1E-3F;
-    auto ldouble_1 = 3.14159L;
-</code></pre>
-<p><img src="https://cdn.mathpix.com/snip/images/MI-2K7rAaDg2cTqzcTM8gdkXaj5RNfZ-3v6VxH66hZU.original.fullsize.png"></p>
-<p>布尔类型的字面值是true 和 false. 而指针类型的字面值是<strong>nullptr</strong></p>
-<h3 id="2-3-练习"><a href="#2-3-练习" class="headerlink" title="2.3 练习"></a>2.3 练习</h3><p><img src="https://cdn.mathpix.com/snip/images/lSfilGRj7na2imGs4iAxUIA7l4ZFRl5gJkwJ5erRBJ4.original.fullsize.png" alt></p>
-<h4 id="2-3-1"><a href="#2-3-1" class="headerlink" title="2.3.1"></a>2.3.1</h4><pre><code>(a)组的数据类型分别是 char, wchar_t,  const char*, const wchar_t *。
-
-(b)组的数据类型分别是 int, unsigned int, long, unsigned long, 八进制的10, 十六进制的12。
-
-(c)组的数据类型:第一个却决于你所声明变量的类型，若是依靠编译器自动推导,类型是double.
-
-​    后面两个分别为float, long double.
-
-(d) 组的数据类型:int, unsigned int , 第三个为float或double，double。
-</code></pre><h4 id="2-3-2"><a href="#2-3-2" class="headerlink" title="2.3.2"></a>2.3.2</h4><pre><code>有区别，上面一组定义的字面值为十进制，下面一组定义的字面值为八进制。
-</code></pre><h4 id="2-3-3"><a href="#2-3-3" class="headerlink" title="2.3.3"></a>2.3.3</h4><pre><code>1024F 存在语法错误，编译不通过。
-
-\145 值为&#39;e&#39;,  \012值为 &#39;\n&#39;
-
-3.14e1L为long double.
-</code></pre><h2 id="0x03-复合类型"><a href="#0x03-复合类型" class="headerlink" title="0x03. 复合类型"></a>0x03. 复合类型</h2><p><strong>复合类型</strong>是指基于其他类型定义的类型，c++语言有几种复合类型， 本章将介绍其中的两种：引用和指针。 </p>
-<p>与我们已经掌握的变量声明相比，定义复合类型的变量要复杂很多。一条简单的声明语句由一个数据类型和紧随其后的一个变量名列表组成。</p>
-<p>其实更通用的描述是，一条声明语句由一个<strong>基本数据类型</strong>（basetype）和紧随其后的一个<strong>声明符</strong> （declarator）列表组成。每个声明符命名了一个变量并指定该变量为与基本数据类型有关 的某种类型。 目前为止，我们所接触的声明语句中，声明符其实就是变量，此时变量的类型也就是声明的基本数据类型。其实还可能有更复杂的声明符，它基于基本数据类型得到更复杂 的类型，并把它指定给变量．</p>
-<h3 id="3-1-引用"><a href="#3-1-引用" class="headerlink" title="3.1 引用"></a>3.1 引用</h3><p>引用分为<strong>左值引用</strong>和<strong>右值引用(c++11引入)</strong>通常在c++的引用指代的是左值引用。</p>
-<p>1)<strong>左值引用声明符</strong>：声明 type &D; 将 <code>D</code> 声明为到 <em>声明说明符序列</em> 所确定的类型 <strong>type</strong> 的左值引用。</p>
-<p>2)<strong>右值引用声明符</strong>：声明 S&amp;&amp; D; 将 <code>D</code> 声明为到 <em>声明说明符序列</em> 所确定的类型 <code>S</code> 的<em>右值引用</em>。</p>
-<p>这里主要介绍左值引用。</p>
-<h4 id="3-1-1-引用必须初始化"><a href="#3-1-1-引用必须初始化" class="headerlink" title="3.1.1 引用必须初始化"></a>3.1.1 引用必须初始化</h4><pre><code class="lang-c++">int ival = 1024;
-int &amp;refVal = ival;        // refVal指向ival, ival的另外一个名字。
-int refVal2;            // error, 引用必须初始化。
-</code></pre>
-<h4 id="3-1-2-引用即别名"><a href="#3-1-2-引用即别名" class="headerlink" title="3.1.2 引用即别名"></a>3.1.2 引用即别名</h4><p>引用并非是一个对象，它只是一个已经存在的对象所起的另外一个名字。也就是说，当定义一个对象的时候，对引用所做的操作都是在与之绑定的对象上所进行的。</p>
-<p>也因为引用不是一个对象，所以不能建立引用的引用， 也不存在引用的数组，不存在指向引用的指针, 不存在void的引用。</p>
-<pre><code class="lang-c++">int&amp; a[3]; // 错误
-int&amp;* p;   // 错误
-int&amp; &amp;r;   // 错误
-</code></pre>
-<h4 id="3-1-3-引用可以怎样被定义"><a href="#3-1-3-引用可以怎样被定义" class="headerlink" title="3.1.3 引用可以怎样被定义"></a>3.1.3 引用可以怎样被定义</h4><p><strong>引用必须被初始化为指代一个有效的对象或函数。</strong></p>
-<pre><code class="lang-c++">int &amp;refVal = 10;   // error, 引用类型初始值必须为对象。
-
-double val1 = 3.1415926;
-int &amp;refVal2 = val1; // error, 引用类型必须与绑定的类型严格匹配
-</code></pre>
-<p><strong>当函数的返回值是左值引用时，函数调用表达式成为左值表达式。</strong></p>
-<pre><code class="lang-c++">#include &lt;iostream&gt;
-#include &lt;string&gt;
-
-char&amp; char_number(std::string&amp; s, std::size_t n) {
-    return s.at(n); // string::at() 返回 char 的引用
-}
-
-int main() {
-    std::string str = &quot;Test&quot;;
-    char_number(str, 1) = &#39;a&#39;; // 函数调用是左值，可被赋值
-    std::cout &lt;&lt; str &lt;&lt; &#39;\n&#39;;    // &gt;&gt; Tast
-}
-</code></pre>
-<h4 id="3-1-4-练习"><a href="#3-1-4-练习" class="headerlink" title="3.1.4 练习"></a>3.1.4 练习</h4><p><img src="https://cdn.mathpix.com/snip/images/7ysUDJtcvu3EfNBTD59Dyz52LN3kFuPYa80xjNd0teo.original.fullsize.png" alt></p>
-<h5 id="3-1-4-1"><a href="#3-1-4-1" class="headerlink" title="3.1.4.1"></a>3.1.4.1</h5><pre><code>(b)不合法，引用初始化必须为有效对象或函数表达式。
-
-(d)不合法，引用必须初始化。
-</code></pre><h5 id="3-1-4-2"><a href="#3-1-4-2" class="headerlink" title="3.1.4.2"></a>3.1.4.2</h5><pre><code>(a)合法，改变变量b的值。
-
-(b)不合法，类型不匹配。
-
-(c) (d)合法，改变i的值。
-</code></pre><h3 id="3-2-指针"><a href="#3-2-指针" class="headerlink" title="3.2 指针"></a>3.2 指针</h3><p>指针（pointer）是“指向(point to)”另外一种类型的复合类型。与引用类似，指针也实现了对其他对象的间接访问。然向指针与引用相比又有很多不同点．<strong>其一，指针本身就是一个对象，允许对指针献值和拷贝，而且在指针的生命周期内它可以先后指向几个不同的对象</strong>．<strong>其二，指针无须在定义时赋初值，和其他内置类型一样，在块作用域内定义的指针如果没有被初始化，也将拥有一个不确定的值</strong>。</p>
-<h4 id="3-2-1-获取对象的值"><a href="#3-2-1-获取对象的值" class="headerlink" title="3.2.1 获取对象的值"></a>3.2.1 获取对象的值</h4><p>指针存放某个对象的地址，想要获取该地址，需要使用取地址符&amp;。</p>
-<h4 id="3-2-2-指针值约定"><a href="#3-2-2-指针值约定" class="headerlink" title="3.2.2 指针值约定"></a>3.2.2 指针值约定</h4><ol>
-<li>指向一个对象。</li>
-<li>指向紧邻对象所占空间的下一个对象。</li>
-<li>空指针。</li>
-<li>无效指针，也就是上述情况的其他值。</li>
-</ol>
-<h4 id="3-2-3-void-指针"><a href="#3-2-3-void-指针" class="headerlink" title="3.2.3 void* 指针"></a>3.2.3 void* 指针</h4><p>void<em> 是一种特殊的指针类型，可用于存放任意对象的地址。一个void</em> 指针存放一个地址，但是无法确定是什么类型的对象。</p>
-<h4 id="3-2-4-练习"><a href="#3-2-4-练习" class="headerlink" title="3.2.4 练习"></a>3.2.4 练习</h4><p><img src="https://cdn.mathpix.com/snip/images/C5myQv2_1A50RkbvoRKauTQDn6-mZdIo-DF0dPWR-bI.original.fullsize.png" alt></p>
-<pre><code>19题:
-    见下面的3.3
-
-20题:
-    i = i^2;
-
-21题：
-​    (a)中类型不匹配，指针类型必须与所指对象的类型严格匹配。
-​    (b)非法，没有取地址符号&amp;。
-​    (c)正确。
-
-22题：
-       if(p) // ... 判断p是不是一个空指针。
-​    if(*p)  是将p指向的内存区域所存放的内容解析为布尔表达式。
-
-23题：
-​    给定一个指针，如果该指针没有被初始化，那么指针的值是一个不确定的值，这时使用指针是十分危险的。所以给定一个指针要知它所指的值是否合法，首先要清楚指针是否合法。
-
-24题：
-​    根据定义，void *指针是一种特殊的指针类型，可用于存放任意对象的地址，所以合法。而其他类型的指针必须与所指对象的类型严格匹配。
-</code></pre><h3 id="3-3-指针和引用的区别"><a href="#3-3-指针和引用的区别" class="headerlink" title="3.3 指针和引用的区别"></a>3.3 指针和引用的区别</h3><ol>
-<li>引用不是一个对象，引用只是一个对象的别名，而指针是一个对象。</li>
-<li>引用必须初始化，且绑定了对象就能在更改，而指针不需要在定义的时候赋初值，可以重新赋值指向不同的对象。</li>
-</ol>
-<h3 id="3-4-复合类型的声明"><a href="#3-4-复合类型的声明" class="headerlink" title="3.4 复合类型的声明"></a>3.4 复合类型的声明</h3><p><strong>变量的定义包括一个基本数据类型和一组声明符.</strong></p>
-<h4 id="3-4-1-指向指针的指针"><a href="#3-4-1-指向指针的指针" class="headerlink" title="3.4.1 指向指针的指针"></a>3.4.1 指向指针的指针</h4><pre><code class="lang-c++">int iVal = 1024;
-int *pi = &amp;iVal; 
-int **ppi = &amp;pi;  // 指向指针的指针,*个数可以区分指针的级别. ***代表指向指针的指针的指针.
-</code></pre>
-<h4 id="3-4-2-指向指针的引用"><a href="#3-4-2-指向指针的引用" class="headerlink" title="3.4.2 指向指针的引用."></a>3.4.2 指向指针的引用.</h4><p>因为引用不是一个对象,所以不存在指向引用的指针。但是指针是一个对象,所以就存在指向指针的引用.</p>
-<pre><code class="lang-c++">int i = 42;
-int *p;            // p是一个int类型指针
-int *&amp;r = p;    // r是指针p的引用.
-
-r = &amp;i;
-*r = 0;            // 改变了i的值.
-</code></pre>
-<p>当多种声明符复合在一起<strong>(或一条比较复杂的的指针或引用语句)</strong>,从右往左阅读可以帮助你理解它的真实含义.</p>
-<h4 id="3-4-3-练习"><a href="#3-4-3-练习" class="headerlink" title="3.4.3 练习"></a>3.4.3 练习</h4><h5 id="3-4-3-1-说明下列变量的类型和值"><a href="#3-4-3-1-说明下列变量的类型和值" class="headerlink" title="3.4.3.1 说明下列变量的类型和值."></a>3.4.3.1 说明下列变量的类型和值.</h5><p><strong>(a) int <em>ip, i, &amp;r = i;   (b)int i, </em>ip = 0; (c) int *ip, ip2;</strong></p>
-<pre><code>(a) ip是一个指向int类型指针, i 是int类型变量, r是i的引用.
-
-(b) i是int 类型变量, ip int类型的空指针.
-
-(c) ip 指向一个int类型的指针, ip2是一个int类型变量.
-</code></pre><h2 id="0x04-const限定符"><a href="#0x04-const限定符" class="headerlink" title="0x04. const限定符"></a>0x04. const限定符</h2><h3 id="4-0-相关概念"><a href="#4-0-相关概念" class="headerlink" title="4.0 相关概念"></a>4.0 相关概念</h3><p>const对象一旦创建之后其值就不能再改变,所以const对象必须初始化.</p>
-<pre><code class="lang-c++">const int i = getSize();    // 运行时初始化
-const int j = 42;            // 编译时初始化.
-const int k;                 // error,未初始化
-</code></pre>
-<p>指向常量的指针和应用都是自以为是,就是不能通过本身去改变指向对象的值。</p>
-<p>但是如果利用一个对象曲初始化另一个对象,则它们是不是const都无关紧要.</p>
-<pre><code class="lang-c++">int i = 42;
-const int ci = i;
-int j = ci;
-</code></pre>
-<p>且默认情况下,const对象仅在文件内有效,如果要在多个文件之间共享const变量,必须在变量定义之前添加extern关键字.</p>
-<h4 id="4-0-1-顶层const-底层const"><a href="#4-0-1-顶层const-底层const" class="headerlink" title="4.0.1 顶层const, 底层const"></a>4.0.1 顶层const, 底层const</h4><p><strong>顶层const : 表示本身是一个常量</strong></p>
-<p><strong>底层const : 表示指向的对象是一个常量</strong></p>
-<h4 id="4-0-2-类型转换"><a href="#4-0-2-类型转换" class="headerlink" title="4.0.2 类型转换"></a>4.0.2 类型转换</h4><p>前面学到，如果我们想把引用或指针绑定到一个对象上，则引用或指针的类型必须与对象的类型是一致的，但是存在两个例外：</p>
-<ol>
-<li><strong>初始化常量引用的时候允许用任意表达式作为初始值，只要表达式的结果能转换成引用的类型即可。</strong>(p144)</li>
-<li><strong>可以将基类的指针或引用绑定在派生类对象上。</strong>（p534)</li>
-</ol>
-<h4 id="4-0-3-练习"><a href="#4-0-3-练习" class="headerlink" title="4.0.3 练习"></a>4.0.3 练习</h4><p>下面哪些句子是合法?如果有不合法的句子,请说明为什么?</p>
-<p>(a) const int buf;       (b) int cnt = 0;   (C) const int sz = cnt;    (d)++cnt; ++sz;</p>
-<pre><code>a)不合法,const对象必须初始化
-b)合法
-c)合法,初始化对象,无关const
-d)cnt可以自增, sz是一个顶层const,不能自增.
-</code></pre><h3 id="4-1-const-和-指针"><a href="#4-1-const-和-指针" class="headerlink" title="4.1 const 和 指针"></a>4.1 const 和 指针</h3><h4 id="4-1-1-指向常量的指针"><a href="#4-1-1-指向常量的指针" class="headerlink" title="4.1.1 指向常量的指针"></a>4.1.1 指向常量的指针</h4><p>与引用一样，也可以令指针指向常量或非常量(类似于常量引用)，称为<strong>指向常量的指针</strong>。其不能改变其所指对象的值。要想存放常量对象的地址，只能使用指向常量的指针。</p>
-<pre><code class="lang-c++">const double pi = 3.14;            // 常量pi， 它的值不能改变。                        
-double *ptr = &amp;pi;            // 不能使用一个非常量指针指向一个常量。
-const double *cptr = &amp;pi;    // true
-*cptr = 42;                    // 错误， 不能给*cptr赋值
-</code></pre>
-<p>指针类型必须与所指对象的类型保持一致，但是有两个例外。第一个例外情况是允许令一个指向常量的指针指向一个非常量对象。</p>
-<pre><code class="lang-c++">double pi = 3.1415;
-const double *cptr = &amp;pi;
-</code></pre>
-<h4 id="4-1-2-常量指针"><a href="#4-1-2-常量指针" class="headerlink" title="4.1.2 常量指针"></a>4.1.2 常量指针</h4><p>指针是对象，因此像其他对象类型一样，允许把指针本身定为常量。<strong>常量指针</strong>必须初始化，一旦初始化完成，它的值就不能再改变了。</p>
-<pre><code class="lang-c++">int errNumber = 0;
-int *const curErr = &amp;errNumber;        //curErr是一个常量指针。
-const double pi = 3.14159;
-const double *const pip = &amp;pi;        //pip是一个指向常量对象的常量指针
-</code></pre>
-<p>从第二条声明我们可以看到，离curErr最近的的符号是<strong>const</strong>,意味着curErr本身是一个常量对象，而对象的类型由声明符其余部分确定，声明符下一个符号是*，意思是curErr是一个常量指针。</p>
-<h4 id="4-1-3-练习"><a href="#4-1-3-练习" class="headerlink" title="4.1.3 练习"></a>4.1.3 练习</h4><p><img src="https://cdn.mathpix.com/snip/images/FG2pazGL_8m4c6efRsU8qZJJbMWB6uqIcKJGrkuW2k0.original.fullsize.png" alt></p>
-<pre><code>题27：
-    (a)不合法，非常量引用需要用对象初始化，不能用字面值初始化。
-    (b)合法
-    (c)合法，常量引用可以使用字面值初始化。
-    (d)合法
-    (e)合法
-    (f)不合法，引用必须初始化且引用不能使用顶层const,因为引用不是对象。
-    (g)合法。
-题28：
-    (a)定义一个int类型的变量，和一个指向int的常量指针cp.不合法，const指针必须初始化。
-    (b)定义一个指向int的指针p1和常量指针p2.不合法，const指针必须初始化。
-    (c)ic未初始化，不合法。
-    (d)const指针必须初始化，不合法。
-    (e)合法，指向常量的指针不必初始化。
-题29：
-    (a)合法，常量赋值给普通变量
-    (b)不合法，p3是指向常量的指针不能赋值给普通指针。
-    (c)不合法，普通指针不能指向常量。
-    (d)合法。p3是指向常量的指针。
-    (e)合法。普通指针可以初始化常量指针。
-    (f)合法。
-</code></pre><h3 id="4-2-const引用"><a href="#4-2-const引用" class="headerlink" title="4.2 const引用"></a>4.2 const引用</h3><p>将引用绑定在const对象上,就像绑定在其他对象上一样，称为<strong>对常量的引用</strong>。与普通引用相比，对常量的引用不能用作修改它所绑定的对象。</p>
-<pre><code class="lang-c++">const int ci = 1024;
-const int &amp;ri = ci;        // true, 引用及其对应的对象都是常量。
-
-ri = 42;     // error,ri是对常量的引用。
-int &amp;r2 = ci;    // error, 试图用一个非常量的引用指向一个常量的对象。
-</code></pre>
-<p>c++并不允许随意改变引用所绑定的对象，所以从意义上理解所有的引用又算是常量，所以对常量的引用常被称为常量引用。此外，引用的对象是常量还是非常量可以决定其所能参与的操作，都无论如何都不会影响引用和对象的绑定关系本身。</p>
-<h4 id="4-2-1-初始化和对const的引用"><a href="#4-2-1-初始化和对const的引用" class="headerlink" title="4.2.1 初始化和对const的引用"></a>4.2.1 初始化和对const的引用</h4><pre><code class="lang-c++">const int var1 = 100;
-int var2 = 10;
-
-const int &amp;rv1 = var2;        
-int &amp;rv2 = var2;
-const int &amp;rv3 = var1;
-
-rv1 = 100;    //error, 不可以通过常量引用修改var2的值.
-rv2 = 100;     //true。
-rv3 = 100; //error, 不能通过常量引用修改var3的值。
-</code></pre>
-<p>允许一个常量引用绑定非常量的对象，字面值，甚至是一个一般表达式。</p>
-<pre><code class="lang-c++">int i = 42;
-const int &amp;r1 = i;        // 非常量对象初始化常量引用。
-const int &amp;r2 = 42;        // 字面值.....
-const int &amp;r3 = r1 * 2;    // 表达式
-int &amp;r4 = r1 * 2;        // error, r4是一个非常量引用。
-</code></pre>
-<p>如何去理解这种例外情况的原因呢？我们看看当一个常量引用被绑定到另外一种类型会发生什么：</p>
-<pre><code class="lang-c++">double dVal = 3.14;
-const int &amp;ri = dval;
-
-// 上面的代码编译器会转换成以下代码
-const int temp = dval;    // 生成一个临时的整型对象。
-const int &amp;ri = temp;
-</code></pre>
-<p>在这种情况下，ri绑定了一个临时量对象。所谓<strong>临时量对象</strong>就是当编译器需要一个空间来暂存表达式的求值结果时临时创建的一个未命名的对象。所以想象以下，如果ri不是常量引用时，如果执行了类似上面的初始化过程将带来一个极其错误的后果。当ri是一个非常量引用时，可以允许对ri进行赋值，这样就会改变ri所引用对象的值。既然通过ri来引用dval,当然是想通过ri来改变dval的值，那这样写通过对ri进行赋值，本质上是改变临时对象的值而没有达到改变dval的值，所以在c++中将ri绑定在一个临时对象上的行为视为非法。</p>
-<h4 id="4-2-2-对const引用可能引用一个并非const对象"><a href="#4-2-2-对const引用可能引用一个并非const对象" class="headerlink" title="4.2.2 对const引用可能引用一个并非const对象"></a>4.2.2 对const引用可能引用一个并非const对象</h4><p>我们必须知道：<strong>常量引用仅对引用可参与的操作做出了限定， 对于引用的对象本身是不是一个常量未作限定。因为对象也可能是一个非常量。</strong></p>
-<pre><code class="lang-c++">int i = 42;
-int &amp;r1 = i;
-const int &amp;r2 = i;    // 常量引用绑定一个非常量对象，但不能通过r2去修改i的值。
-r1 = 0;        // r1并非常量，i的值修改为0。
-r2 = 0;        // error,r2是常量引用，不能通过r2去修改i的值。
-</code></pre>
-<p>如上面的代码所示，常量引用r2绑定了一个非常量对象，不能通过r2去修改i的值，但是可以通过其他的途径去修改i的值。</p>
-<blockquote>
-<p>所谓的常量指针或引用，只不过是指针或引用“自以为是”罢了，它们觉得自己指向了常量，所以很自觉地不去改变所指向对象的值。                       ———- 《c++ primer 5th》</p>
-</blockquote>
-<h2 id="0x05-constexpr和常量表达式"><a href="#0x05-constexpr和常量表达式" class="headerlink" title="0x05. constexpr和常量表达式"></a>0x05. constexpr和常量表达式</h2><h3 id="5-1-常量表达式"><a href="#5-1-常量表达式" class="headerlink" title="5.1 常量表达式"></a>5.1 常量表达式</h3><blockquote>
-<p> <strong>常量表达式是指不会改变并且在编译过程就能得到计算结果的表达式。</strong></p>
-</blockquote>
-<p>很显然，字面值属于常量表达式。</p>
-<p>一个对象(或表达式)是不是常量表达式是由它的数据类型和初始值共同决定。</p>
-<pre><code class="lang-c++">const int buf_size = 20;        // 常量表达式
-const int limit = buf_size + 1  // 常量表达式
-int size = 10;                  // 不是常量表达式
-</code></pre>
-<h3 id="5-2-constexpr变量"><a href="#5-2-constexpr变量" class="headerlink" title="5.2 constexpr变量"></a>5.2 constexpr变量</h3><p>c++11新标准规定：<strong>允许将变量声明为constexpr以便由编译器来验证变量的值是否为常量表达式。</strong></p>
-<p>声明为constexpr变量一定是一个常量,而且必须用常量表达式初始化。</p>
-<pre><code class="lang-c++">constexpr int mf = 20;
-constexpr int limit = mf + 1;
-constexpr int sz = size(); //size()是一个constexpr函数的时候才是一条正确声明语句。
-</code></pre>
-<h3 id="5-3-字面值类型"><a href="#5-3-字面值类型" class="headerlink" title="5.3 字面值类型"></a>5.3 字面值类型</h3><p>常量表达式的值需要在编译时就得到计算，因此对声明constexpr时用到的类型必须有所限制。因为这些类型一般比较简单，值也显血易见、容易得到，就把它们称为“<strong>字面值类型</strong>”（literaltype)。</p>
-<p>到目前为止接触过的数据类型中，算术类型、引用和指针都属羊字面值类型.尽管指针和引用都能定义成constexpr，但它们的初始值却受到严格限制。</p>
-<p>函数体内定义的变量一般来说并非存放在固定地址中，因此constexpr指针不能指向这样的变量。相反的，定义于所有函数体之外的对象其地址固定不变，能用来初始化constexpr指针．同样是在（第185页）中还将提到，允许函数定义一类有效范围超出函数本身的变量，这类变量和定义在函数体之外的变 量一样也有固定地址。因此，const-expr引用能绑定到这样的变量上，constexpr指 针也能指向这样的变量．</p>
-<h3 id="5-4-指针和constexpr"><a href="#5-4-指针和constexpr" class="headerlink" title="5.4 指针和constexpr"></a>5.4 指针和constexpr</h3><p>在constexpr声明中如果定义了一个指针，限定符constexpr仅对指针有效，与所指的对象无效。<strong>一个 constexpr指针的初始值心须是nullptr或者0，或者是存储于某个固定地址中的对象</strong>。</p>
-<pre><code class="lang-c++">const int *p = nullptr;            // p是一个指向整型常量的指针。
-constexpr int *q = nullptr;        // q是一个指向整数的常量指针。
-</code></pre>
-<p>p,q的类型相差很远，原因是constexpr将所定义的对象置为了顶层const.当然与其他常量指针类似，constexpr指针可以指向常量也可以指向一个非常量。</p>
-<pre><code class="lang-c++">constexpr int *np =  nullptr; // np是一个指向整数的常量指针。
-int j = 0;            
-constexpr int i = 42;        // i是常量，是固定地址。
-constexpr const int *p = &amp;i; // p是一个指向常量的常量指针。j不是局部变量不能用来初始化constexpr指针
-
-// i和j都必须定义在函数体之外
-constexpr const int *p = &amp;i;    // p是一个指向常量的常量指针。
-constexpr int *p1  = &amp;j;        // p1是常量指针，指向整数j
-</code></pre>
-<h2 id="0x06-类型别名"><a href="#0x06-类型别名" class="headerlink" title="0x06 类型别名"></a>0x06 类型别名</h2><h3 id="6-1-相关使用"><a href="#6-1-相关使用" class="headerlink" title="6.1 相关使用"></a>6.1 相关使用</h3><p>类型别名是一个名字，它是某种类型的同义词。使用类型别名有很多好处，它让复杂的类型名字变得简单名了，易于理解和使用。有两种方法可用于定义类型别名：</p>
-<p>第一种是传统方法使用关键字<strong>typedef</strong>，含有typedef的声明语句定义的不再是变量而是类型别名。</p>
-<p>第二种是新标准规定的新方法：使用<strong>别名声明</strong>来定义类型的别名。</p>
-<pre><code class="lang-c++">typedef double wages;         // wages是double的同义词。
-typedef wafes base, *p;     // base是douwble的同义词，p是double*的同义词
-
-using SI = Sales_item; //    SI是Sales_item的同义词。
-</code></pre>
-<p>类型别名和类型的名字等价，只要是类型的名字能出现的地方，就能使用类型别名。</p>
-<pre><code class="lang-c++">wages hourly, weekly;     // 等价double hourly,weekly;
-SI item;                // 等价月Sales_item;
-</code></pre>
-<h3 id="6-2-指针，常量和类型别名"><a href="#6-2-指针，常量和类型别名" class="headerlink" title="6.2 指针，常量和类型别名"></a>6.2 指针，常量和类型别名</h3><p>如果某个类型别名指代的是复合类型或常量，那么把它用到声明语句里就会产生意想<br>不到的后果，例如下面的声明语句用到了类型<strong>pstring</strong>，它实际上是类型<strong>char *</strong>的别名：</p>
-<pre><code class="lang-c++">typedef char* pstring;
-const pstring cstr = 0;//cstr是指向char的常量指针
-const pstring *ps;    //ps是一个指针，它的对象是指向char的常量指针
-</code></pre>
-<p>​    上述两条声明语句的基本数据类型都是<strong>const pstring</strong>，和过去一样，<strong>const是对给定类型的修饰。pstring实际上是指向char的指针，因此，const pstring就是指向char的常量指针，而非指向常量字符的指针。</strong></p>
-<blockquote>
-<p><strong>上面的这句话是理解这一要点的关键之处.</strong></p>
-</blockquote>
-<p>遇到一条使用了类型别名的声明语句时，人们往往会错误地尝试把类型别名替换成它本来的样子，以理解该语句的含义：</p>
-<pre><code class="lang-c++">const char *cstr = 0;    //是对const pstring cstr的错误理解
-</code></pre>
-<p>再强调一遍：这种理解是错误的．声明语句中用到<strong>pstring</strong>时，其基本数据类型是指针。可是用<strong>char*</strong>重写了声明语句后，数据类型就变成了<strong>char*</strong>,·成为了声明符的一部分。这样改写的结果是，<strong>const char</strong>成了基本数据类型。前后两种声明含义截然不同，前者声明了一个指向char的常量指针，改写后的形式则声明了一个指向<strong>const char</strong>的指针。</p>
-<p>谈谈我自己的想法:</p>
-<pre><code class="lang-c++">typedef char* pstring;
-const pstring cstr = 0;
-const pstring *ps;    //ps是一个指针，它的对象是指向char的常量指针
-
-/*
-    第一条语句:pstring直接是类型别名,数据类型就是指向char的指针.
-    第二条语句:const直接修饰给定类型,cstr就是指向char的常量指针.
-    第三条语句:ps本质上就是一个指针,前面声明符都是它的指向的类型,代表ps指向一个指向char的常量指针.
-*/
-</code></pre>
-<h2 id="0x07-auto"><a href="#0x07-auto" class="headerlink" title="0x07. auto"></a>0x07. auto</h2><h3 id="7-1-相关概念"><a href="#7-1-相关概念" class="headerlink" title="7.1 相关概念"></a>7.1 相关概念</h3><p> C++11新标准引入了auto类型说明符，用它就能让编译器替我们去分析表达式所属的类型。和原来那些只对应一种特定类型的说明符（比如double）不同，auto让编译器通 过初始值来推算变量的类型。显然，auto定义的变量必须有初始值： </p>
-<pre><code class="lang-c++">//由vall和va12相加的结长可以推断出item的类型 
-auto item = vall + va12;    //item初始化为vall和va12相加的结果
-</code></pre>
-<p>此处编译器将根据val1和val2相加的结果来推断item的类型。如果vall和va12 是类Sales_item的对象，则item的类型就是Salesitem: 如果这两个变量的类型是double,则item的类型就是double，以此类推。 使用auto也能在一条语句中声明多个变量。<strong>因为一条声明语句只能有一个基本数据类型，所以该语句中所有变量的初始基本数据类型都必须一样：</strong> </p>
-<pre><code class="lang-c++">auto i = 0, *p = &amp;i;    //true,i是整数,p是指向整数的指针.
-auto sz = 0, pi = 3.14; // error, sz和pi的类型不一致.
-</code></pre>
-<h3 id="7-2-复合类型-常量和auto"><a href="#7-2-复合类型-常量和auto" class="headerlink" title="7.2 复合类型,常量和auto"></a>7.2 复合类型,常量和auto</h3><p>编译器推断出来的auto类型有时候和初始值的类型并不完全一样，编译器会适当地 改变结果类型使其史符合初始化规则。 首先，正如我们所熟知的，使用引用其实是使用引用的对象，特别是当引用被用作初始值时，真正参与初始化的其实是引用对象的值．此时编译器以引用对象的类型作为auto 的类型：</p>
-<pre><code class="lang-c++">int i = 0, &amp;r = i;
-auto a = r;        // 采用引用r初始化a,实质上是采用i的值取初始化a
-</code></pre>
-<p>其次,auto <strong>一般忽略掉顶层const，保留底层const</strong>。</p>
-<pre><code class="lang-c++">int i = 0;
-const int ci = i, &amp;cr = ci;    // cr是一个指向整数常量的引用,是底层const, ci是整数常量,是顶层const
-auto b = ci;    // b是一个整数 ci顶层const特性被忽略掉
-auto a = cr;    // c是一个整数(cr是ci的引用,本质上用ci初始化)
-auto d = &amp;i;    // d是一个整形指针
-auto e = &amp;ci;   // e是一个指向常量整数的指针,对常量对象取地址底层const
-</code></pre>
-<p>如果你希望推断出的auto类型是一个顶层const,需要明确指出:</p>
-<pre><code class="lang-c++">const auto f = ci; // 这个时候f才有顶层const特性, f是const int
-</code></pre>
-<p>还可以将引用的类型设置为 <strong>auto</strong>,此时原来的初始化规则仍然适用:</p>
-<pre><code class="lang-c++">auto &amp;g = ci;    // ci是整数常量(顶层const),g是一个整型常量引用(底层const)
-auto &amp;h = 42;    // 错误,非常量引用不能绑定字面值
-const auto &amp;j = 42;    // 可以为常量引用绑定字面值.
-</code></pre>
-<p>要在一条语句中定义多个变量,切记，<strong>符号&amp;和*只从属于某个声明符，而非基本数据类型的一部分</strong>，因此初始值必须是同一种类型： </p>
-<pre><code class="lang-c++">auto k = ci, &amp;l = i;     //k是整数，l是整型引用(底层const)
-auto &amp;m = ci, *p = &amp;ci;    //m是对整型常量的引用(底层const)，p是指向整型常量的指针(底层const)
-
-// error, i的类型是int, 而&amp;ci的类型是const int
-auto &amp;n = i, *p2 = &amp;ci;        // n是整型引用, p2是指向整型常量的指针(忽略了顶层const).
-</code></pre>
-<h3 id="7-3-练习"><a href="#7-3-练习" class="headerlink" title="7.3 练习"></a>7.3 练习</h3><p><img src="https://cdn.mathpix.com/snip/images/QUp7uLPrwBsM4F_gJuESdQiJfxS209iB2k3QdWWy6Sk.original.fullsize.png"></p>
-<pre><code>题33:
-    a=42; // a 是 int,合法
-    b=42; // b 是一个 int,(ci的顶层const在拷贝时被忽略掉了)
-    c=42; // c 也是一个int
-    d=42; // d 是一个 int *,所以语句非法
-    e=42; // e 是一个 const int *, 所以语句非法
-    g=42; // g 是一个 const int 的引用，引用都是底层const，所以不能被赋值
-题35:
-    j是int, k是const int &amp;, p是const int *, j2是const int, k2是const int &amp;
-</code></pre><h2 id="0x08-decltype类型指示符"><a href="#0x08-decltype类型指示符" class="headerlink" title="0x08. decltype类型指示符"></a>0x08. decltype类型指示符</h2><h3 id="8-1-相关概念"><a href="#8-1-相关概念" class="headerlink" title="8.1 相关概念"></a>8.1 相关概念</h3><p>有时会遇到这种情况：希望从表达式的类型推断出要定义的变量的类型，但是不想用该表达式的值初始化变量。为了满是这一要求，C++目新标准引入了第二种类型说明符<strong>decltype</strong>,它的作用是选择并返回操作数的数据类型。在此过程中，编译器分析表达式并得到它的类型，却不实际计算表达式的值：</p>
-<pre><code class="lang-c++">decltype(function()) sum = x;
-</code></pre>
-<p><strong>编译器并不实际调用函数,而是使用当调用发生时f的返回值类型作为sum的类型</strong>。换句话说，编译器为sum指定的类型是什么呢？就是假如f被调用的话将会返回的那个类型。<br>decLtype处理顶层const和引用的方式与auto有些许不同。如果decltype使用的表达式是一个变量，则decltype返回该变量的类型（包括顶层const和引用在内）：</p>
-<pre><code class="lang-c++">const int ci = 0, &amp;cj = ci;
-decltype(ci) x = 0;    //x类型是const int 
-decltype(cj) y = x; // y类型是const int &amp;, y绑定到变量x.
-decltype(cj) z;        // 错误, z是const int &amp;, 必须初始化.
-</code></pre>
-<h3 id="8-2-decltype和引用"><a href="#8-2-decltype和引用" class="headerlink" title="8.2 decltype和引用"></a>8.2 decltype和引用</h3><p>如果decltype使用的表达式不是一个变量，则decltype返回表达式结果对应的类型。有些表达式将向decltype返回一个引用类型。一般来说当这种情况发生时，意咪着该表达式的结果对象能作为一条赋值语句的左值：</p>
-<pre><code class="lang-c++">//decltype的结果可以是引用类型
-int i = 42, *p = &amp;i, &amp;r = i;
-decltype(r + 0) b;        // 正确，加法的结果是int,因此b是一个(未初始化的)int.
-decltype(*p) c;            // 正确，c是int&amp;,必须初始化。
-</code></pre>
-<p>​        因为r是一个引用，因此<strong>decltype（r）</strong>的结果是引用类型。如果想让结果类型是r所指的类型，可以把r作为表达式的一部分，如<strong>r+0</strong>，显然这个表达式的结果将是一个具体值而非一个引用。</p>
-<p>另一方面，<strong>如果表达式的内容是解引用操作，则decltype将得到引用类型，正如我们所熟悉的那样，解引用指针可以得到指针所指的对象</strong>，而且还能给这个对象赋值，因此，<strong>decltype(*p)</strong>的结果类型就是int&amp;，而非int*.</p>
-<p>decltype和auto的另一处重要区别是，<strong>decltype的结果类型与表达式形式密切相关</strong>。有一种情况需要特别注意：对于decltype所用的表达式来说，如果变量名加上了一对括号，则得到的类型与小加括号时会有不同。如果decltype使用的是一个不加括号的变量。则得到的结果就是该变量的类型：如果给变量加上了一层或多层括号，编译器就会把它当成是一个表达式。变量是一种可以作为赋值语句左值的特殊表达式，所以这样的decltype就会得到引用类型。</p>
-<pre><code class="lang-c++">decltype((i)) d;     // 错误，d是int&amp;,必须初始化。
-decltype(i) e;        // 正确，e是一个未初始化的int.
-</code></pre>
-<ul>
-<li>decltype(( variable ))结果永远是引用</li>
-<li>decltype( variable ) 只有variable本身是引用才是引用。</li>
 </ul>
 ]]></content>
       <categories>

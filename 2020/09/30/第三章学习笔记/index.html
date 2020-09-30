@@ -1,0 +1,1784 @@
+<!DOCTYPE html>
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+<html class="theme-next gemini use-motion" lang="zh-CN">
+<head><meta name="generator" content="Hexo 3.8.0">
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<link rel="stylesheet" href="/css/highlight/styles/solarized-light.css">
+
+
+
+
+
+  
+  
+    
+    
+  <script src="/lib/pace/pace.min.js?v=1.0.2"></script>
+  <link rel="stylesheet" href="/lib/pace/pace-theme-flash.min.css?v=1.0.2">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link rel="stylesheet" href="/lib/fancybox/source/jquery.fancybox.css">
+
+
+
+
+
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2">
+
+<link rel="stylesheet" href="/css/main.css?v=7.1.1">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=7.1.1">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/icon-32x32.png?v=7.1.1">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/icon-16x16.png?v=7.1.1">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=7.1.1" color="#222">
+
+
+
+
+
+
+
+<script id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Gemini',
+    version: '7.1.1',
+    sidebar: {"position":"left","display":"post","offset":12,"onmobile":false,"dimmer":false},
+    back2top: true,
+    back2top_sidebar: false,
+    fancybox: true,
+    fastclick: false,
+    lazyload: false,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+  
+
+
+
+
+  <meta name="description" content="本文初识标准库和迭代器,以及using在 c++11中新用处。">
+<meta name="keywords" content="Cpp,Cpp学习笔记">
+<meta property="og:type" content="article">
+<meta property="og:title" content="第三章学习笔记">
+<meta property="og:url" content="http://yoursite.com/2020/09/30/第三章学习笔记/index.html">
+<meta property="og:site_name" content="疯癫">
+<meta property="og:description" content="本文初识标准库和迭代器,以及using在 c++11中新用处。">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:updated_time" content="2020-09-30T07:42:46.008Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="第三章学习笔记">
+<meta name="twitter:description" content="本文初识标准库和迭代器,以及using在 c++11中新用处。">
+
+
+
+
+
+  
+  
+  <link rel="canonical" href="http://yoursite.com/2020/09/30/第三章学习笔记/">
+
+
+
+<script id="page.configurations">
+  CONFIG.page = {
+    sidebar: "",
+  };
+</script>
+
+  <title>第三章学习笔记 | 疯癫</title>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .motion-element,
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-title { opacity: initial; }
+
+  .use-motion .logo,
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-CN">
+
+  
+  
+    
+  
+
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">疯癫</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+    
+      
+        <p class="site-subtitle">学习沉淀之地</p>
+      
+    
+    
+  </div>
+
+  <div class="site-nav-toggle">
+    <button aria-label="切换导航栏">
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  
+    <ul id="menu" class="menu">
+      
+        
+        
+        
+          
+          <li class="menu-item menu-item-home">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/" rel="section"><i class="menu-item-icon fa fa-fw fa-home"></i> <br>首页</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-categories">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/categories/" rel="section"><i class="menu-item-icon fa fa-fw fa-th"></i> <br>分类</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-tags">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/tags/" rel="section"><i class="menu-item-icon fa fa-fw fa-tags"></i> <br>标签</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-archives">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/archives/" rel="section"><i class="menu-item-icon fa fa-fw fa-archive"></i> <br>归档</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-about">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/about/" rel="section"><i class="menu-item-icon fa fa-fw fa-user"></i> <br>关于</a>
+
+  </li>
+
+      
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br>搜索</a>
+        </li>
+      
+    </ul>
+  
+
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup search-popup local-search-popup">
+  <div class="local-search-header clearfix">
+    <span class="search-icon">
+      <i class="fa fa-search"></i>
+    </span>
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+    <div class="local-search-input-wrapper">
+      <input autocomplete="off" placeholder="搜索..." spellcheck="false" type="text" id="local-search-input">
+    </div>
+  </div>
+  <div id="local-search-result"></div>
+</div>
+
+
+
+    </div>
+  
+</nav>
+
+
+
+  
+
+
+
+</div>
+    </header>
+
+    
+
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+            
+
+          
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/09/30/第三章学习笔记/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Yw">
+      <meta itemprop="description" content="尽管眼下的日子十分艰难，可日后这段经历说不定会开花结果.">
+      <meta itemprop="image" content="/images/header.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="疯癫">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">第三章学习笔记
+
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+
+              
+                
+              
+
+              <time title="创建时间：2020-09-30 15:39:22 / 修改时间：15:42:46" itemprop="dateCreated datePublished" datetime="2020-09-30T15:39:22+08:00">2020-09-30</time>
+            
+
+            
+              
+
+              
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/Cpp-Primer/" itemprop="url" rel="index"><span itemprop="name">Cpp Primer</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+            
+          
+
+          
+          
+
+          
+            <span class="post-meta-divider">|</span>
+            <span class="post-meta-item-icon">
+            <i class="fa fa-eye"></i>
+             阅读次数： 
+            <span class="busuanzi-value" id="busuanzi_value_page_pv"></span>
+            </span>
+          
+
+          
+            <div class="post-symbolscount">
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">本文字数：</span>
+                
+                <span title="本文字数">9.2k</span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
+                
+                <span title="阅读时长">15 分钟</span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <center><b>本文初识标准库和迭代器,以及using在 c++11中新用处。</b></center>
+
+<a id="more"></a>
+<h2 id="0x00-命名空间的using-声明"><a href="#0x00-命名空间的using-声明" class="headerlink" title="0x00. 命名空间的using 声明"></a>0x00. 命名空间的using 声明</h2><p>头文件不应该使用using 声明,因为头文件的内容会拷贝到所有引用它的文件中。这样容易产生名字冲突。</p>
+<h2 id="0x01-标准库类型string"><a href="#0x01-标准库类型string" class="headerlink" title="0x01. 标准库类型string"></a>0x01. 标准库类型string</h2><h3 id="1-1-初始化"><a href="#1-1-初始化" class="headerlink" title="1.1 初始化"></a>1.1 初始化</h3><pre><code class="lang-c++">string s1;          // 默认初始化 空串
+
+string s2(s1);      // s2是s1的副本。
+
+string s2 = s1;     // 等价于s2(s1)。
+
+string s3(&quot;value&quot;); // 等价写法 string s3 = &quot;value&quot;;
+
+string s4(n, &#39;c&#39;);  // s4为连续n个字符c组成的字符串。
+</code></pre>
+<h3 id="1-2-直接初始化和拷贝初始化"><a href="#1-2-直接初始化和拷贝初始化" class="headerlink" title="1.2 直接初始化和拷贝初始化"></a>1.2 直接初始化和拷贝初始化</h3><p>如果使用等号初始化一个变量的时候, 实际上执行的是拷贝初始化，反之则是直接初始化。</p>
+<p>当初始值只有一个时，使用直接初始化或靠被初始化都行。</p>
+<pre><code class="lang-c++">string s5 = &quot;hiya&quot;;    //拷贝初始化。
+string s6(&quot;jojo&quot;);    // 直接初始化。
+string s7(10, &#39;c&#39;);    // 直接初始化，s7的内容是cccccccccc
+</code></pre>
+<p>对于多个值进行初始化的时候，用拷贝初始化的方式来处理也不是不可以,不过需要显式地的创建一个(临时)对象用于拷贝：</p>
+<pre><code class="lang-c++">string s8 = string(10, &#39;c&#39;);
+
+// 上面这条语句等价于下面的
+string temp(10, &#39;c&#39;);
+string s8 = temp;
+</code></pre>
+<h3 id="1-3-读写string-对象"><a href="#1-3-读写string-对象" class="headerlink" title="1.3 读写string 对象"></a>1.3 读写string 对象</h3><pre><code class="lang-c++">int main()
+{
+    string str;
+    cin &gt;&gt; str;
+    cout &lt;&lt; str &lt;&lt; endl;
+
+    return 0;
+}
+</code></pre>
+<p>上面的程序定义了一个名为str的空string,然后将标准输入的内容读取到s中。在执行读取的操作时，<strong>string对象回自动忽略开头的空白(空格符, 换行符, 制表符等)并从第一个真正的字符开始读起,直到遇到下一个空白开始。</strong></p>
+<h4 id="1-3-1-读取未知数量的string对象"><a href="#1-3-1-读取未知数量的string对象" class="headerlink" title="1.3.1 读取未知数量的string对象"></a>1.3.1 读取未知数量的string对象</h4><pre><code class="lang-c++">int main()
+{
+    string word;
+    while(cin &gt;&gt; word)
+    {
+        cout &lt;&lt; word &lt;&lt; endl;
+    }
+    return 0;
+}
+</code></pre>
+<p>一旦遇到文件结束符或非法输入也就结束了。</p>
+<h4 id="1-3-2-getline"><a href="#1-3-2-getline" class="headerlink" title="1.3.2 getline()"></a>1.3.2 getline()</h4><p>getline读取一整行，直到遇到换行符，所读的内容存入string对象中。换行符也被读进来了,但是被丢弃了,并没有存储到string对象中</p>
+<h3 id="1-4-empty-和size"><a href="#1-4-empty-和size" class="headerlink" title="1.4 empty()和size()"></a>1.4 empty()和size()</h3><p>empty函数根据string对象是否为空返回一个对应的布尔值。</p>
+<p>size()函数的返回值是string::size_type类型,这是一个与机器无关的无符号整数类型。所以当出现string.size()就不要使用int了。</p>
+<h3 id="1-5-string的比较"><a href="#1-5-string的比较" class="headerlink" title="1.5 string的比较"></a>1.5 string的比较</h3><p>关系运算符 <strong>&lt;， &lt;= ，&gt;， &gt;=</strong>都遵循以下的字典顺序：</p>
+<ol>
+<li><strong>如果两个string对象的长度不同,而且较短string对象的每个字符都与较长string对象对应位置上的字符相同,就说较短的string对象小于较长的string对象。</strong></li>
+<li><strong>如果两个string对象在某些对应位置上不一致,则string对象比较的结果实际上是第一对相异字符比较的结果。</strong></li>
+</ol>
+<h3 id="1-6-字面值和string对象相加"><a href="#1-6-字面值和string对象相加" class="headerlink" title="1.6 字面值和string对象相加"></a>1.6 字面值和string对象相加</h3><pre><code class="lang-c++">string s1 = &quot;hello&quot;, s2 = &quot;world&quot;；
+
+string s3 = s1 + &quot;,&quot; + s2 + &#39;\n\;
+</code></pre>
+<p>当我们把string对象和字符字面值及字符串字面值混在一条语句使用时，必须确保每个加法运算符(+)的两侧运算对象至少有一个是string：</p>
+<h3 id="1-7-练习1"><a href="#1-7-练习1" class="headerlink" title="1.7 练习1"></a>1.7 练习1</h3><h4 id="1-7-1-编写一段程序从标准输入中一次读入一行，然后修改该程序使其一次读入一个词。"><a href="#1-7-1-编写一段程序从标准输入中一次读入一行，然后修改该程序使其一次读入一个词。" class="headerlink" title="1.7.1 编写一段程序从标准输入中一次读入一行，然后修改该程序使其一次读入一个词。"></a>1.7.1 编写一段程序从标准输入中一次读入一行，然后修改该程序使其一次读入一个词。</h4><pre><code class="lang-c++">// 读入一整行
+void lineOfstr(string &amp;str)
+{
+    while (getline(cin, str))
+    {
+        cout &lt;&lt; str &lt;&lt; endl;
+    }
+}
+
+// 读入一个词
+void wordOfstr(string &amp;str)
+{
+    while (cin &gt;&gt; str)
+    {
+        cout &lt;&lt; str &lt;&lt; endl;
+    }
+}
+
+int main()
+{
+    string str;
+//    lineOfstr(str);
+    wordOfstr(str);
+
+    return 0;
+}
+</code></pre>
+<h4 id="1-7-2-请说明string类的输入运算符和getline函数分别是如何处理空白字符的。"><a href="#1-7-2-请说明string类的输入运算符和getline函数分别是如何处理空白字符的。" class="headerlink" title="1.7.2 请说明string类的输入运算符和getline函数分别是如何处理空白字符的。"></a>1.7.2 请说明string类的输入运算符和getline函数分别是如何处理空白字符的。</h4><pre><code>cin &gt;&gt; s 的读取，string对象会忽略开头的空白并从第一个真正的字符开始，直到遇见下一空白为止。
+
+getline(cin, s) 的读取，string对象会从输入流中读取字符，直到遇见换行符为止。
+</code></pre><h4 id="1-7-3-编写一段程序读取两个字符串，比较其是否相等并输出结果。如果不相等，输出比较大的那个字符串。改写上述程序，比较输入的两个字符串是否等长，如果不等长，输出长度较大的那个字符串。"><a href="#1-7-3-编写一段程序读取两个字符串，比较其是否相等并输出结果。如果不相等，输出比较大的那个字符串。改写上述程序，比较输入的两个字符串是否等长，如果不等长，输出长度较大的那个字符串。" class="headerlink" title="1.7.3 编写一段程序读取两个字符串，比较其是否相等并输出结果。如果不相等，输出比较大的那个字符串。改写上述程序，比较输入的两个字符串是否等长，如果不等长，输出长度较大的那个字符串。"></a>1.7.3 编写一段程序读取两个字符串，比较其是否相等并输出结果。如果不相等，输出比较大的那个字符串。改写上述程序，比较输入的两个字符串是否等长，如果不等长，输出长度较大的那个字符串。</h4><pre><code class="lang-c++">void compareStrOne(const string &amp;str1, const string &amp;str2)
+{
+    if (str1 == str2)
+    {
+        cout &lt;&lt; &quot;The two strings are equals.\n&quot;;
+    }
+    else
+    {
+        cout &lt;&lt; &quot;The larger string is &quot; &lt;&lt; ((str1 &gt; str2) ? str1 : str2) &lt;&lt; &quot;.\n&quot;;
+    }
+}
+
+void compareStrTwo(const string &amp;str1, const string &amp;str2)
+{
+    if (str1.length() == str2.length())
+    {
+        cout &lt;&lt; &quot;The two strings are equal length.&quot;;
+    }
+    else
+    {
+        cout &lt;&lt; &quot;The longer string is &quot; &lt;&lt; ((str1.size() &gt; str2.size()) ? str1 : str2) &lt;&lt; &quot;.\n&quot;;
+    }
+
+}
+
+int main()
+{
+    string str1;
+    string str2;
+    while(cin &gt;&gt; str1 &gt;&gt; str2)
+    {
+        compareStrOne(str1, str2);
+        compareStrTwo(str1, str2);
+    }
+
+    return 0;
+}
+</code></pre>
+<h3 id="1-8-处理string对象中的字符"><a href="#1-8-处理string对象中的字符" class="headerlink" title="1.8 处理string对象中的字符"></a>1.8 处理string对象中的字符</h3><h4 id="1-8-1-处理每个字符-gt-使用基于范围的for语句"><a href="#1-8-1-处理每个字符-gt-使用基于范围的for语句" class="headerlink" title="1.8.1 处理每个字符-&gt;使用基于范围的for语句"></a>1.8.1 处理每个字符-&gt;使用基于范围的for语句</h4><pre><code class="lang-c++">string str(&quot;some string&quot;);
+for(auto c : str)
+    cout &lt;&lt; c &lt;&lt; endl;
+</code></pre>
+<h4 id="1-8-2-使用范围for语句改变字符串中的字符"><a href="#1-8-2-使用范围for语句改变字符串中的字符" class="headerlink" title="1.8.2 使用范围for语句改变字符串中的字符"></a>1.8.2 使用范围for语句改变字符串中的字符</h4><pre><code class="lang-c++">string s(&quot;Hello World!!!&quot;);
+
+for(auto &amp;c : s)
+    c = toupper(c);
+
+cout &lt;&lt; s &lt;&lt; endl;        // HELLO WORLD!!!
+</code></pre>
+<h4 id="1-8-3-只处理一部分字符"><a href="#1-8-3-只处理一部分字符" class="headerlink" title="1.8.3 只处理一部分字符"></a>1.8.3 只处理一部分字符</h4><ul>
+<li><p>使用下标运算符</p>
+<pre><code class="lang-c++">string s(&quot;some string&quot;);
+
+if(!s.empty())
+    cout &lt;&lt; s[0] &lt;&lt; endl;
+    s[0] =     toupper(s[0]);        // 为s的第一个字符赋一个新值
+</code></pre>
+<pre><code class="lang-c++">// 依次处理s中的字符，直至我们处理完全的全部字符或遇到一个空白
+for(decltype(s.size()) index = 0;
+    index != s.size() &amp;&amp; !isspace(s[index]);
+    index++)
+{
+    s[index] = toupper(s[index]);
+}
+</code></pre>
+</li>
+</ul>
+<ul>
+<li>使用迭代器</li>
+</ul>
+<h4 id="1-8-4-使用下标执行随机访问"><a href="#1-8-4-使用下标执行随机访问" class="headerlink" title="1.8.4 使用下标执行随机访问"></a>1.8.4 使用下标执行随机访问</h4><h3 id="1-9-练习2"><a href="#1-9-练习2" class="headerlink" title="1.9 练习2"></a>1.9 练习2</h3><h4 id="1-9-1-编写一段程序，使用范围for语句将字符串内所有字符串用X代替"><a href="#1-9-1-编写一段程序，使用范围for语句将字符串内所有字符串用X代替" class="headerlink" title="1.9.1 编写一段程序，使用范围for语句将字符串内所有字符串用X代替"></a>1.9.1 编写一段程序，使用范围for语句将字符串内所有字符串用X代替</h4><pre><code class="lang-c++">string str = &quot;some string&quot;;
+
+for (auto &amp;c : str)
+    if(!isspace(c))
+           c = &#39;X&#39;;
+</code></pre>
+<h4 id="1-9-2-就上一题完成的程序而言，如果将循环控制变量的类型设为char将发生什么？先估计一下结果，然后就实际编程进行验证"><a href="#1-9-2-就上一题完成的程序而言，如果将循环控制变量的类型设为char将发生什么？先估计一下结果，然后就实际编程进行验证" class="headerlink" title="1.9.2 就上一题完成的程序而言，如果将循环控制变量的类型设为char将发生什么？先估计一下结果，然后就实际编程进行验证"></a>1.9.2 就上一题完成的程序而言，如果将循环控制变量的类型设为char将发生什么？先估计一下结果，然后就实际编程进行验证</h4><pre><code class="lang-c++">不会修改原字符串，因为c在迭代时是str每个字符的复制。
+</code></pre>
+<h4 id="1-9-3-分别用while循环和传统for循环重写第一题的程序，你觉得哪种形式更好呢？为什么"><a href="#1-9-3-分别用while循环和传统for循环重写第一题的程序，你觉得哪种形式更好呢？为什么" class="headerlink" title="1.9.3 分别用while循环和传统for循环重写第一题的程序，你觉得哪种形式更好呢？为什么?"></a>1.9.3 分别用while循环和传统for循环重写第一题的程序，你觉得哪种形式更好呢？为什么?</h4><pre><code class="lang-c++">string str = &quot;some string&quot;;
+
+// while循环
+decltype(str.size()) index = 0;
+while(index != str.size())
+{
+    if (!isspace(str[index]))
+        str[index] = &#39;X&#39;;
+
+    index++;
+}
+
+// 传统for循环
+for (decltype(str.size()) index = 0;
+     index != str.size() ; index++)
+{
+    if(isspace(str[index]))
+        continue;
+    str[index] = &#39;X&#39;;
+}
+</code></pre>
+<p>我觉得各有优点，while循环判断条件更见简洁，传统for循环更倾向于将所有条件书写完再执行代码块，更容易理清楚思路。</p>
+<h4 id="1-9-4-下面的程序有何作业，它合法吗？如果不合法，为什么？"><a href="#1-9-4-下面的程序有何作业，它合法吗？如果不合法，为什么？" class="headerlink" title="1.9.4 下面的程序有何作业，它合法吗？如果不合法，为什么？"></a>1.9.4 下面的程序有何作业，它合法吗？如果不合法，为什么？</h4><pre><code class="lang-c++">string s;
+cout &lt;&lt; s[0] &lt;&lt; endl;
+</code></pre>
+<p>上面是不合法的，因为s是一个空字符串，没有存放任何实质性的内容，但是开辟了一块内存空间，所以不可以通过下标来访问。</p>
+<p>但是我试了许多种类的编译器，是可以编译成功的。</p>
+<h4 id="1-9-5-编写一段程序，读入一个包含标点符号的字符串，将标点符号去除后输出字符串剩余的部份。"><a href="#1-9-5-编写一段程序，读入一个包含标点符号的字符串，将标点符号去除后输出字符串剩余的部份。" class="headerlink" title="1.9.5 编写一段程序，读入一个包含标点符号的字符串，将标点符号去除后输出字符串剩余的部份。"></a>1.9.5 编写一段程序，读入一个包含标点符号的字符串，将标点符号去除后输出字符串剩余的部份。</h4><pre><code class="lang-c++">int main()
+{
+    string str = &quot;some,string&quot;;
+    string newStr;
+    for(auto &amp;c : str)
+    {
+        if(ispunct(c))
+            continue;
+
+        newStr += c;
+    }
+
+    cout &lt;&lt; newStr &lt;&lt; endl;
+
+    return 0;
+}
+</code></pre>
+<h4 id="1-9-6-下面的范围for语句合法吗？如果合法，c的类型是什么？"><a href="#1-9-6-下面的范围for语句合法吗？如果合法，c的类型是什么？" class="headerlink" title="1.9.6 下面的范围for语句合法吗？如果合法，c的类型是什么？"></a>1.9.6 下面的范围for语句合法吗？如果合法，c的类型是什么？</h4><pre><code class="lang-c++">const string s = &quot;Keep out!&quot;;
+for(auto &amp;c : s)
+{
+    /*...*/
+}
+// s是一个常量字符串对象，不允许修改。
+// auto会忽略掉顶层const,保留底层const,所以c是底层const，也就是常量引用。
+</code></pre>
+<h2 id="0x02-vector"><a href="#0x02-vector" class="headerlink" title="0x02. vector"></a>0x02. vector</h2><p><strong>实例化:编译器根据模板创建类和函数的过程。</strong></p>
+<h3 id="2-1-定义和初始化"><a href="#2-1-定义和初始化" class="headerlink" title="2.1 定义和初始化"></a>2.1 定义和初始化</h3><pre><code class="lang-c++">vector(T) v1;           // v1是一个空vector,执行T类型的默认初始化。
+
+vector(T) v2(v1);       // v2中包含了v1所有元素的副本。
+
+vector(T) v2 = v1;       //等价于v2(v1)。
+
+vector(T) v3(n, nval);     // v3包含了n个重复的元素,每个元素的值都是val。
+
+vector(T) V4(n);        // n个执行了T类型的值初始化的对象。
+
+
+// 列表初始化
+vector(T) v5{a, b, c ...} // v5包含了初始值个数的元素。
+
+vector(T) v5 = {a, b, c ...} // 等价于v5{a, b, c ...}
+</code></pre>
+<h3 id="2-2-练习1"><a href="#2-2-练习1" class="headerlink" title="2.2 练习1"></a>2.2 练习1</h3><h4 id="2-2-1-下面vector对象的定义有什么不正确的吗？如果有，请指出。对于正确的，描述其执行结果。对于不正确的，说明其错误的原因"><a href="#2-2-1-下面vector对象的定义有什么不正确的吗？如果有，请指出。对于正确的，描述其执行结果。对于不正确的，说明其错误的原因" class="headerlink" title="2.2.1 下面vector对象的定义有什么不正确的吗？如果有，请指出。对于正确的，描述其执行结果。对于不正确的，说明其错误的原因"></a>2.2.1 下面vector对象的定义有什么不正确的吗？如果有，请指出。对于正确的，描述其执行结果。对于不正确的，说明其错误的原因</h4><pre><code>(a) vector&lt;vector&lt;int&gt;&gt; ivec; // 正确，空vector。
+(b)    vector&lt;string&gt; svec = ivec;    //错误，不能用不同类型初始化。
+(c) vector&lt;string&gt; svec(10, &quot;null&quot;); //正确。
+</code></pre><h4 id="2-2-2-下列vector对象各包含多少个元素，这些元素的值分别是什么？"><a href="#2-2-2-下列vector对象各包含多少个元素，这些元素的值分别是什么？" class="headerlink" title="2.2.2 下列vector对象各包含多少个元素，这些元素的值分别是什么？"></a>2.2.2 下列vector对象各包含多少个元素，这些元素的值分别是什么？</h4><pre><code class="lang-c++">(a)vector&lt;int&gt; v1;     // 0个，空。        (b)vector&lt;int&gt; v2(10);    // 10个，0
+(C)vector&lt;int&gt; v3(10, 42); //10个42      (c)vector&lt;int&gt; v4(10);  // 10个，0
+...
+...
+</code></pre>
+<h3 id="2-3-添加元素"><a href="#2-3-添加元素" class="headerlink" title="2.3 添加元素"></a>2.3 添加元素</h3><p><strong>push_back()负责将一个元素添加到vector的尾端。</strong></p>
+<p>c++ 更习惯于先创建空的vector对象,在运行的时候动态添加元素。</p>
+<pre><code class="lang-c++">vector&lt;int&gt; v2;
+
+for(int i = 0; i != 100; ++i)
+    v2.push_back(i);
+</code></pre>
+<p>vector不能使用下标运算符去添加元素,但是可以用于访问已经存在的元素。</p>
+<h3 id="2-4-练习2"><a href="#2-4-练习2" class="headerlink" title="2.4 练习2"></a>2.4 练习2</h3><h4 id="2-4-1-编写一段程序，用cin读入一段整数并把它们存入一个vector对象"><a href="#2-4-1-编写一段程序，用cin读入一段整数并把它们存入一个vector对象" class="headerlink" title="2.4.1 编写一段程序，用cin读入一段整数并把它们存入一个vector对象"></a>2.4.1 编写一段程序，用cin读入一段整数并把它们存入一个vector对象</h4><pre><code class="lang-c++">vector&lt;int&gt; v1;
+int intBuffer;
+while (cin &gt;&gt; intBuffer)
+{
+    v1.push_back(intBuffer);
+}
+</code></pre>
+<h4 id="2-4-2-改写上题的程序，不过这次读入的是字符串"><a href="#2-4-2-改写上题的程序，不过这次读入的是字符串" class="headerlink" title="2.4.2 改写上题的程序，不过这次读入的是字符串"></a>2.4.2 改写上题的程序，不过这次读入的是字符串</h4><p>略</p>
+<h3 id="2-5-其他vector操作"><a href="#2-5-其他vector操作" class="headerlink" title="2.5 其他vector操作"></a>2.5 其他vector操作</h3><div class="table-container">
+<table>
+<thead>
+<tr>
+<th style="text-align:center"><strong>v.empty()</strong></th>
+<th><strong>如果v不含有任何元素，返回真，否则返回假</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center"><strong>v.size()</strong></td>
+<td><strong>返回v中元素的个数</strong></td>
+</tr>
+<tr>
+<td style="text-align:center"><strong>v[n]</strong></td>
+<td><strong>返回v中第n个元素位置的引用</strong></td>
+</tr>
+<tr>
+<td style="text-align:center"><strong>v1 = v2</strong></td>
+<td><strong>用v2中的元素拷贝替换v1中的元素</strong></td>
+</tr>
+<tr>
+<td style="text-align:center"><strong>v1 = {a, b, c, …..}</strong></td>
+<td><strong>用列表中的元素拷贝替换v1中的元素</strong></td>
+</tr>
+<tr>
+<td style="text-align:center"><strong>v1 == v2</strong></td>
+<td><strong>v1和v2相等当且仅当它们的元素数量相同且对应的元素值相同</strong></td>
+</tr>
+<tr>
+<td style="text-align:center"><strong>v1 != v2</strong></td>
+<td></td>
+</tr>
+<tr>
+<td style="text-align:center"><strong>&lt;, &lt;=，&gt;=, &gt;</strong></td>
+<td><strong>以字典顺序比较</strong></td>
+</tr>
+</tbody>
+</table>
+</div>
+<p><strong>vector对象的下标运算符可用于访问已经存在的元素，而不能用于添加元素。</strong></p>
+<h3 id="2-6-练习3"><a href="#2-6-练习3" class="headerlink" title="2.6 练习3"></a>2.6 练习3</h3><h4 id="2-6-1-从cin读入一组词并把它们存入一个vector对象，然后设法把所有词改写为大写形式，输出改变后的结果，每个词占一行。"><a href="#2-6-1-从cin读入一组词并把它们存入一个vector对象，然后设法把所有词改写为大写形式，输出改变后的结果，每个词占一行。" class="headerlink" title="2.6.1 从cin读入一组词并把它们存入一个vector对象，然后设法把所有词改写为大写形式，输出改变后的结果，每个词占一行。"></a>2.6.1 从cin读入一组词并把它们存入一个vector对象，然后设法把所有词改写为大写形式，输出改变后的结果，每个词占一行。</h4><pre><code class="lang-c++">void upperStr(string &amp;str)
+{
+    /*
+        you can use transform function. this is a standard libnary function.
+    */
+    for (decltype(str.size()) index = 0; index &lt; str.size(); index++)
+    {
+        str[index] = toupper(str[index]);
+    }
+}
+int main()
+{
+    string word;
+    vector&lt;string&gt; strVector;
+    while (cin &gt;&gt; word)
+    {
+        upperStr(word);
+        strVector.push_back(word);
+
+        if(cin.get() == &#39;\n&#39;)
+            break;
+    }
+
+    for (auto &amp;c : strVector)
+    {
+        cout &lt;&lt; c &lt;&lt; endl;
+    }
+
+    return 0;
+}
+</code></pre>
+<h4 id="2-6-2-如果想定义一个含有10个元素的vector对象，所有元素值都是42，请列举出三种不同的实现方法，哪种方法更好呢？为什么？"><a href="#2-6-2-如果想定义一个含有10个元素的vector对象，所有元素值都是42，请列举出三种不同的实现方法，哪种方法更好呢？为什么？" class="headerlink" title="2.6.2 如果想定义一个含有10个元素的vector对象，所有元素值都是42，请列举出三种不同的实现方法，哪种方法更好呢？为什么？"></a>2.6.2 如果想定义一个含有10个元素的vector对象，所有元素值都是42，请列举出三种不同的实现方法，哪种方法更好呢？为什么？</h4><pre><code class="lang-c++">vector&lt;int&gt; v1(10, 42);
+
+vector&lt;int&gt; v2  = {
+    42, 42, 42, 42, 42, 42, 42, 42, 42, 42
+};
+
+vector&lt;int&gt; v3;
+for (int i = 0; i &lt; 10; i++)
+{
+    v3.push_back(42);
+}
+</code></pre>
+<h4 id="2-6-3-读入一组整数并把它们存入一个vector对象，将每对相邻整数的和输出出来。改写你的程序，这次要求先输出第一个和最后一个元素的和，接着输出第2个和倒数第二2个元素的和，以此类推。"><a href="#2-6-3-读入一组整数并把它们存入一个vector对象，将每对相邻整数的和输出出来。改写你的程序，这次要求先输出第一个和最后一个元素的和，接着输出第2个和倒数第二2个元素的和，以此类推。" class="headerlink" title="2.6.3 读入一组整数并把它们存入一个vector对象，将每对相邻整数的和输出出来。改写你的程序，这次要求先输出第一个和最后一个元素的和，接着输出第2个和倒数第二2个元素的和，以此类推。"></a>2.6.3 读入一组整数并把它们存入一个vector对象，将每对相邻整数的和输出出来。改写你的程序，这次要求先输出第一个和最后一个元素的和，接着输出第2个和倒数第二2个元素的和，以此类推。</h4><pre><code class="lang-c++">void outputOne(const vector&lt;int&gt; &amp;v1)
+{
+    for (decltype(v1.size()) index = 0; index &lt; v1.size() - 1; index++)
+    {
+        cout &lt;&lt; v1[index] + v1[index + 1] &lt;&lt; endl;
+    }
+}
+
+void outputTwo(const vector&lt;int&gt; &amp;v2)
+{
+    auto length = v2.size();
+    for (decltype(v2.size()) index = 0; index &lt; length / 2; index++)
+    {
+        auto result = v2[index] + v2[length - index - 1];
+        cout &lt;&lt; result &lt;&lt; endl;
+    }
+}
+
+int main()
+{
+    vector&lt;int&gt; vInt;
+    int intBuffer;
+    while (cin &gt;&gt; intBuffer)
+    {
+        vInt.push_back(intBuffer);
+        if (cin.get() == &#39;\n&#39;)
+        {
+            break;
+        }
+    }
+
+    outputOne(vInt);        
+    cout &lt;&lt; &quot;**********************&quot; &lt;&lt; endl;
+    outputTwo(vInt);
+
+    return 0;
+}
+</code></pre>
+<h3 id="2-7-迭代器"><a href="#2-7-迭代器" class="headerlink" title="2.7 迭代器"></a>2.7 迭代器</h3><h4 id="2-7-1-使用迭代器"><a href="#2-7-1-使用迭代器" class="headerlink" title="2.7.1 使用迭代器"></a>2.7.1 使用迭代器</h4><pre><code class="lang-c++">/* 怎样获取迭代器？
+    使用begin()和end().
+    end成员负责返回指向容器尾元素的下一个元素的迭代器，也就是说，该迭代器指示的是容器的一个本不存在的“尾后”元素。
+    这样的迭代器没什么实际含义，仅仅是个标记而已，表示我们已经处理完容器中所有元素。
+    end() 返回的迭代器并不实际指示某个元素,所以不能对其进行递增或解引用的操作.
+*/
+auto b = v.begin();
+auto e = v.end();
+</code></pre>
+<p>怎样称为一个有效的迭代器呢？</p>
+<ul>
+<li><strong>或者指向某个元素,或者指向容器中尾元素的下一个位置</strong></li>
+</ul>
+<p><strong>其次，但凡是使用了迭代器的循环体,都不要向使用迭代器所属的容器添加元素。因为会使迭代器失效。</strong></p>
+<h4 id="2-7-2-迭代器运算符"><a href="#2-7-2-迭代器运算符" class="headerlink" title="2.7.2 迭代器运算符"></a>2.7.2 迭代器运算符</h4><div class="table-container">
+<table>
+<thead>
+<tr>
+<th style="text-align:center"><em>ite<em>*r</em></em></th>
+<th><strong>返回迭代器iter所选元素的引用</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center"><strong>iter-&gt;mem</strong></td>
+<td><strong>解引用iter并获取该元素名为mem的成员，等价于(*iter).mem</strong></td>
+</tr>
+<tr>
+<td style="text-align:center"><strong>++iter</strong></td>
+<td><strong>令iter指向容器中下一个元素</strong></td>
+</tr>
+<tr>
+<td style="text-align:center"><strong>—iter</strong></td>
+<td><strong>令iter指向容器中上一个元素</strong></td>
+</tr>
+<tr>
+<td style="text-align:center"><strong>iter1 == iter2</strong></td>
+<td><strong>判断两个迭代器是否相等(不相等)，如果两个迭代器指示的是同一个元素或者是同一个容器的尾后迭代器，则相等。反之，不想等。</strong></td>
+</tr>
+<tr>
+<td style="text-align:center"><strong>iter1 != iter2</strong></td>
+<td>同上</td>
+</tr>
+</tbody>
+</table>
+</div>
+<h4 id="2-7-3-迭代器运算"><a href="#2-7-3-迭代器运算" class="headerlink" title="2.7.3 迭代器运算"></a>2.7.3 迭代器运算</h4><p>所有标准库容器都有支持递增运算的迭代器。</p>
+<p>string和vector迭代器支持更多运算。</p>
+
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+
+    
+      
+    
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Cpp/" <i class="fa fa-tag"> Cpp</a>
+          
+            <a href="/tags/Cpp学习笔记/" <i class="fa fa-tag"> Cpp学习笔记</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2020/09/30/第二章学习笔记/" rel="next" title="第二章学习笔记">
+                <i class="fa fa-chevron-left"></i> 第二章学习笔记
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2020/09/30/第四章学习笔记/" rel="prev" title="第四章学习笔记">
+                第四章学习笔记 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+  </div>
+
+
+          </div>
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image" src="/images/header.jpg" alt="Yw">
+            
+              <p class="site-author-name" itemprop="name">Yw</p>
+              <div class="site-description motion-element" itemprop="description">尽管眼下的日子十分艰难，可日后这段经历说不定会开花结果.</div>
+          </div>
+
+          
+            <nav class="site-state motion-element">
+              
+                <div class="site-state-item site-state-posts">
+                
+                  <a href="/archives/">
+                
+                    <span class="site-state-item-count">23</span>
+                    <span class="site-state-item-name">日志</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-categories">
+                  
+                    
+                      <a href="/categories/">
+                    
+                  
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">3</span>
+                    <span class="site-state-item-name">分类</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-tags">
+                  
+                    
+                      <a href="/tags/">
+                    
+                  
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">4</span>
+                    <span class="site-state-item-name">标签</span>
+                  </a>
+                </div>
+              
+            </nav>
+          
+
+          
+
+          
+
+          
+
+          
+
+          
+          
+
+          
+            
+          
+          
+
+        </div>
+      </div>
+
+      
+      <!--noindex-->
+        <div class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+            
+            
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#0x00-命名空间的using-声明"><span class="nav-text">0x00. 命名空间的using 声明</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#0x01-标准库类型string"><span class="nav-text">0x01. 标准库类型string</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-1-初始化"><span class="nav-text">1.1 初始化</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1-2-直接初始化和拷贝初始化"><span class="nav-text">1.2 直接初始化和拷贝初始化</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1-3-读写string-对象"><span class="nav-text">1.3 读写string 对象</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#1-3-1-读取未知数量的string对象"><span class="nav-text">1.3.1 读取未知数量的string对象</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#1-3-2-getline"><span class="nav-text">1.3.2 getline()</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1-4-empty-和size"><span class="nav-text">1.4 empty()和size()</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1-5-string的比较"><span class="nav-text">1.5 string的比较</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1-6-字面值和string对象相加"><span class="nav-text">1.6 字面值和string对象相加</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1-7-练习1"><span class="nav-text">1.7 练习1</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#1-7-1-编写一段程序从标准输入中一次读入一行，然后修改该程序使其一次读入一个词。"><span class="nav-text">1.7.1 编写一段程序从标准输入中一次读入一行，然后修改该程序使其一次读入一个词。</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#1-7-2-请说明string类的输入运算符和getline函数分别是如何处理空白字符的。"><span class="nav-text">1.7.2 请说明string类的输入运算符和getline函数分别是如何处理空白字符的。</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#1-7-3-编写一段程序读取两个字符串，比较其是否相等并输出结果。如果不相等，输出比较大的那个字符串。改写上述程序，比较输入的两个字符串是否等长，如果不等长，输出长度较大的那个字符串。"><span class="nav-text">1.7.3 编写一段程序读取两个字符串，比较其是否相等并输出结果。如果不相等，输出比较大的那个字符串。改写上述程序，比较输入的两个字符串是否等长，如果不等长，输出长度较大的那个字符串。</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1-8-处理string对象中的字符"><span class="nav-text">1.8 处理string对象中的字符</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#1-8-1-处理每个字符-gt-使用基于范围的for语句"><span class="nav-text">1.8.1 处理每个字符-&gt;使用基于范围的for语句</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#1-8-2-使用范围for语句改变字符串中的字符"><span class="nav-text">1.8.2 使用范围for语句改变字符串中的字符</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#1-8-3-只处理一部分字符"><span class="nav-text">1.8.3 只处理一部分字符</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#1-8-4-使用下标执行随机访问"><span class="nav-text">1.8.4 使用下标执行随机访问</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1-9-练习2"><span class="nav-text">1.9 练习2</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#1-9-1-编写一段程序，使用范围for语句将字符串内所有字符串用X代替"><span class="nav-text">1.9.1 编写一段程序，使用范围for语句将字符串内所有字符串用X代替</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#1-9-2-就上一题完成的程序而言，如果将循环控制变量的类型设为char将发生什么？先估计一下结果，然后就实际编程进行验证"><span class="nav-text">1.9.2 就上一题完成的程序而言，如果将循环控制变量的类型设为char将发生什么？先估计一下结果，然后就实际编程进行验证</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#1-9-3-分别用while循环和传统for循环重写第一题的程序，你觉得哪种形式更好呢？为什么"><span class="nav-text">1.9.3 分别用while循环和传统for循环重写第一题的程序，你觉得哪种形式更好呢？为什么?</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#1-9-4-下面的程序有何作业，它合法吗？如果不合法，为什么？"><span class="nav-text">1.9.4 下面的程序有何作业，它合法吗？如果不合法，为什么？</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#1-9-5-编写一段程序，读入一个包含标点符号的字符串，将标点符号去除后输出字符串剩余的部份。"><span class="nav-text">1.9.5 编写一段程序，读入一个包含标点符号的字符串，将标点符号去除后输出字符串剩余的部份。</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#1-9-6-下面的范围for语句合法吗？如果合法，c的类型是什么？"><span class="nav-text">1.9.6 下面的范围for语句合法吗？如果合法，c的类型是什么？</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#0x02-vector"><span class="nav-text">0x02. vector</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#2-1-定义和初始化"><span class="nav-text">2.1 定义和初始化</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-2-练习1"><span class="nav-text">2.2 练习1</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#2-2-1-下面vector对象的定义有什么不正确的吗？如果有，请指出。对于正确的，描述其执行结果。对于不正确的，说明其错误的原因"><span class="nav-text">2.2.1 下面vector对象的定义有什么不正确的吗？如果有，请指出。对于正确的，描述其执行结果。对于不正确的，说明其错误的原因</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-2-2-下列vector对象各包含多少个元素，这些元素的值分别是什么？"><span class="nav-text">2.2.2 下列vector对象各包含多少个元素，这些元素的值分别是什么？</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-3-添加元素"><span class="nav-text">2.3 添加元素</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-4-练习2"><span class="nav-text">2.4 练习2</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#2-4-1-编写一段程序，用cin读入一段整数并把它们存入一个vector对象"><span class="nav-text">2.4.1 编写一段程序，用cin读入一段整数并把它们存入一个vector对象</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-4-2-改写上题的程序，不过这次读入的是字符串"><span class="nav-text">2.4.2 改写上题的程序，不过这次读入的是字符串</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-5-其他vector操作"><span class="nav-text">2.5 其他vector操作</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-6-练习3"><span class="nav-text">2.6 练习3</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#2-6-1-从cin读入一组词并把它们存入一个vector对象，然后设法把所有词改写为大写形式，输出改变后的结果，每个词占一行。"><span class="nav-text">2.6.1 从cin读入一组词并把它们存入一个vector对象，然后设法把所有词改写为大写形式，输出改变后的结果，每个词占一行。</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-6-2-如果想定义一个含有10个元素的vector对象，所有元素值都是42，请列举出三种不同的实现方法，哪种方法更好呢？为什么？"><span class="nav-text">2.6.2 如果想定义一个含有10个元素的vector对象，所有元素值都是42，请列举出三种不同的实现方法，哪种方法更好呢？为什么？</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-6-3-读入一组整数并把它们存入一个vector对象，将每对相邻整数的和输出出来。改写你的程序，这次要求先输出第一个和最后一个元素的和，接着输出第2个和倒数第二2个元素的和，以此类推。"><span class="nav-text">2.6.3 读入一组整数并把它们存入一个vector对象，将每对相邻整数的和输出出来。改写你的程序，这次要求先输出第一个和最后一个元素的和，接着输出第2个和倒数第二2个元素的和，以此类推。</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-7-迭代器"><span class="nav-text">2.7 迭代器</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#2-7-1-使用迭代器"><span class="nav-text">2.7.1 使用迭代器</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-7-2-迭代器运算符"><span class="nav-text">2.7.2 迭代器运算符</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-7-3-迭代器运算"><span class="nav-text">2.7.3 迭代器运算</span></a></li></ol></li></ol></li></ol></div>
+            
+
+          </div>
+        </div>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+  
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <script src="/js/highlight.pack.js"></script>
+<script>hljs.initHighlightingOnLoad();</script>
+<div class="copyright">&copy; <span itemprop="copyrightYear">2020</span>
+  <span class="with-love" id="animate">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Yw</span>
+
+  
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-area-chart"></i>
+    </span>
+    
+      <span class="post-meta-item-text">站点总字数：</span>
+    
+    <span title="站点总字数">47k</span>
+  
+
+  
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+    
+      <span class="post-meta-item-text">站点阅读时长 &asymp;</span>
+    
+    <span title="站点阅读时长">1:19</span>
+  
+</div>
+
+
+
+
+
+
+
+
+
+        
+<div class="busuanzi-count">
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+  
+    <span class="post-meta-item-icon">
+      <i class="fa fa-user"></i>
+    </span>
+    <span class="site-uv" title="总访客量">
+      <span class="busuanzi-value" id="busuanzi_value_site_uv"></span>
+    </span>
+  
+
+  
+    <span class="post-meta-divider">|</span>
+  
+
+  
+    <span class="post-meta-item-icon">
+      <i class="fa fa-eye"></i>
+    </span>
+    <span class="site-pv" title="总访问量">
+      <span class="busuanzi-value" id="busuanzi_value_site_pv"></span>
+    </span>
+  
+</div>
+
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+    
+
+    
+  </div>
+
+  
+
+<script>
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script src="/lib/fancybox/source/jquery.fancybox.pack.js"></script>
+
+
+  
+
+
+  <script src="/js/utils.js?v=7.1.1"></script>
+
+  <script src="/js/motion.js?v=7.1.1"></script>
+
+
+
+  
+  
+
+
+  <script src="/js/affix.js?v=7.1.1"></script>
+
+  <script src="/js/schemes/pisces.js?v=7.1.1"></script>
+
+
+
+
+  
+  <script src="/js/scrollspy.js?v=7.1.1"></script>
+<script src="/js/post-details.js?v=7.1.1"></script>
+
+
+
+  
+
+
+  <script src="/js/next-boot.js?v=7.1.1"></script>
+
+
+  
+
+  
+
+  
+
+  
+
+
+  
+
+
+  
+  <script>
+    // Popup Window;
+    var isfetched = false;
+    var isXml = true;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length === 0) {
+      search_path = "search.xml";
+    } else if (/json$/i.test(search_path)) {
+      isXml = false;
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    var onPopupClose = function (e) {
+      $('.popup').hide();
+      $('#local-search-input').val('');
+      $('.search-result-list').remove();
+      $('#no-result').remove();
+      $(".local-search-pop-overlay").remove();
+      $('body').css('overflow', '');
+    }
+
+    function proceedsearch() {
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay"></div>')
+        .css('overflow', 'hidden');
+      $('.search-popup-overlay').click(onPopupClose);
+      $('.popup').toggle();
+      var $localSearchInput = $('#local-search-input');
+      $localSearchInput.attr("autocapitalize", "none");
+      $localSearchInput.attr("autocorrect", "off");
+      $localSearchInput.focus();
+    }
+
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+
+      // start loading animation
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay">' +
+          '<div id="search-loading-icon">' +
+          '<i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>' +
+          '</div>' +
+          '</div>')
+        .css('overflow', 'hidden');
+      $("#search-loading-icon").css('margin', '20% auto 0 auto').css('text-align', 'center');
+
+      
+
+      $.ajax({
+        url: path,
+        dataType: isXml ? "xml" : "json",
+        async: true,
+        success: function(res) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = isXml ? $("entry", res).map(function() {
+            return {
+              title: $("title", this).text(),
+              content: $("content",this).text(),
+              url: $("url" , this).text()
+            };
+          }).get() : res;
+          var input = document.getElementById(search_id);
+          var resultContent = document.getElementById(content_id);
+          var inputEventFunction = function() {
+            var searchText = input.value.trim().toLowerCase();
+            var keywords = searchText.split(/[\s\-]+/);
+            if (keywords.length > 1) {
+              keywords.push(searchText);
+            }
+            var resultItems = [];
+            if (searchText.length > 0) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var hitCount = 0;
+                var searchTextCount = 0;
+                var title = data.title.trim();
+                var titleInLowerCase = title.toLowerCase();
+                var content = data.content.trim().replace(/<[^>]+>/g,"");
+                
+                var contentInLowerCase = content.toLowerCase();
+                var articleUrl = decodeURIComponent(data.url).replace(/\/{2,}/g, '/');
+                var indexOfTitle = [];
+                var indexOfContent = [];
+                // only match articles with not empty titles
+                if(title != '') {
+                  keywords.forEach(function(keyword) {
+                    function getIndexByWord(word, text, caseSensitive) {
+                      var wordLen = word.length;
+                      if (wordLen === 0) {
+                        return [];
+                      }
+                      var startPosition = 0, position = [], index = [];
+                      if (!caseSensitive) {
+                        text = text.toLowerCase();
+                        word = word.toLowerCase();
+                      }
+                      while ((position = text.indexOf(word, startPosition)) > -1) {
+                        index.push({position: position, word: word});
+                        startPosition = position + wordLen;
+                      }
+                      return index;
+                    }
+
+                    indexOfTitle = indexOfTitle.concat(getIndexByWord(keyword, titleInLowerCase, false));
+                    indexOfContent = indexOfContent.concat(getIndexByWord(keyword, contentInLowerCase, false));
+                  });
+                  if (indexOfTitle.length > 0 || indexOfContent.length > 0) {
+                    isMatch = true;
+                    hitCount = indexOfTitle.length + indexOfContent.length;
+                  }
+                }
+
+                // show search results
+
+                if (isMatch) {
+                  // sort index by position of keyword
+
+                  [indexOfTitle, indexOfContent].forEach(function (index) {
+                    index.sort(function (itemLeft, itemRight) {
+                      if (itemRight.position !== itemLeft.position) {
+                        return itemRight.position - itemLeft.position;
+                      } else {
+                        return itemLeft.word.length - itemRight.word.length;
+                      }
+                    });
+                  });
+
+                  // merge hits into slices
+
+                  function mergeIntoSlice(text, start, end, index) {
+                    var item = index[index.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    var hits = [];
+                    var searchTextCountInSlice = 0;
+                    while (position + word.length <= end && index.length != 0) {
+                      if (word === searchText) {
+                        searchTextCountInSlice++;
+                      }
+                      hits.push({position: position, length: word.length});
+                      var wordEnd = position + word.length;
+
+                      // move to next position of hit
+
+                      index.pop();
+                      while (index.length != 0) {
+                        item = index[index.length - 1];
+                        position = item.position;
+                        word = item.word;
+                        if (wordEnd > position) {
+                          index.pop();
+                        } else {
+                          break;
+                        }
+                      }
+                    }
+                    searchTextCount += searchTextCountInSlice;
+                    return {
+                      hits: hits,
+                      start: start,
+                      end: end,
+                      searchTextCount: searchTextCountInSlice
+                    };
+                  }
+
+                  var slicesOfTitle = [];
+                  if (indexOfTitle.length != 0) {
+                    slicesOfTitle.push(mergeIntoSlice(title, 0, title.length, indexOfTitle));
+                  }
+
+                  var slicesOfContent = [];
+                  while (indexOfContent.length != 0) {
+                    var item = indexOfContent[indexOfContent.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    // cut out 100 characters
+                    var start = position - 20;
+                    var end = position + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if (end < position + word.length) {
+                      end = position + word.length;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    slicesOfContent.push(mergeIntoSlice(content, start, end, indexOfContent));
+                  }
+
+                  // sort slices in content by search text's count and hits' count
+
+                  slicesOfContent.sort(function (sliceLeft, sliceRight) {
+                    if (sliceLeft.searchTextCount !== sliceRight.searchTextCount) {
+                      return sliceRight.searchTextCount - sliceLeft.searchTextCount;
+                    } else if (sliceLeft.hits.length !== sliceRight.hits.length) {
+                      return sliceRight.hits.length - sliceLeft.hits.length;
+                    } else {
+                      return sliceLeft.start - sliceRight.start;
+                    }
+                  });
+
+                  // select top N slices in content
+
+                  var upperBound = parseInt('1');
+                  if (upperBound >= 0) {
+                    slicesOfContent = slicesOfContent.slice(0, upperBound);
+                  }
+
+                  // highlight title and content
+
+                  function highlightKeyword(text, slice) {
+                    var result = '';
+                    var prevEnd = slice.start;
+                    slice.hits.forEach(function (hit) {
+                      result += text.substring(prevEnd, hit.position);
+                      var end = hit.position + hit.length;
+                      result += '<b class="search-keyword">' + text.substring(hit.position, end) + '</b>';
+                      prevEnd = end;
+                    });
+                    result += text.substring(prevEnd, slice.end);
+                    return result;
+                  }
+
+                  var resultItem = '';
+
+                  if (slicesOfTitle.length != 0) {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + highlightKeyword(title, slicesOfTitle[0]) + "</a>";
+                  } else {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + title + "</a>";
+                  }
+
+                  slicesOfContent.forEach(function (slice) {
+                    resultItem += "<a href='" + articleUrl + "'>" +
+                      "<p class=\"search-result\">" + highlightKeyword(content, slice) +
+                      "...</p>" + "</a>";
+                  });
+
+                  resultItem += "</li>";
+                  resultItems.push({
+                    item: resultItem,
+                    searchTextCount: searchTextCount,
+                    hitCount: hitCount,
+                    id: resultItems.length
+                  });
+                }
+              })
+            };
+            if (keywords.length === 1 && keywords[0] === "") {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-search fa-5x"></i></div>'
+            } else if (resultItems.length === 0) {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-frown-o fa-5x"></i></div>'
+            } else {
+              resultItems.sort(function (resultLeft, resultRight) {
+                if (resultLeft.searchTextCount !== resultRight.searchTextCount) {
+                  return resultRight.searchTextCount - resultLeft.searchTextCount;
+                } else if (resultLeft.hitCount !== resultRight.hitCount) {
+                  return resultRight.hitCount - resultLeft.hitCount;
+                } else {
+                  return resultRight.id - resultLeft.id;
+                }
+              });
+              var searchResultList = '<ul class=\"search-result-list\">';
+              resultItems.forEach(function (result) {
+                searchResultList += result.item;
+              })
+              searchResultList += "</ul>";
+              resultContent.innerHTML = searchResultList;
+            }
+          }
+
+          if ('auto' === 'auto') {
+            input.addEventListener('input', inputEventFunction);
+          } else {
+            $('.search-icon').click(inputEventFunction);
+            input.addEventListener('keypress', function (event) {
+              if (event.keyCode === 13) {
+                inputEventFunction();
+              }
+            });
+          }
+
+          // remove loading animation
+          $(".local-search-pop-overlay").remove();
+          $('body').css('overflow', '');
+
+          proceedsearch();
+        }
+      });
+    }
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched === false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(onPopupClose);
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+    $(document).on('keyup', function (event) {
+      var shouldDismissSearchPopup = event.which === 27 &&
+        $('.search-popup').is(':visible');
+      if (shouldDismissSearchPopup) {
+        onPopupClose();
+      }
+    });
+  </script>
+
+
+
+
+
+  
+
+  
+
+  
+  
+
+  
+  
+
+  
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+<script>
+  $('.highlight').not('.gist .highlight').each(function(i, e) {
+    var $wrap = $('<div>').addClass('highlight-wrap');
+    $(e).after($wrap);
+    $wrap.append($('<button>').addClass('copy-btn').append('复制').on('click', function(e) {
+      var code = $(this).parent().find('.code').find('.line').map(function(i, e) {
+        return $(e).text();
+      }).toArray().join('\n');
+      var ta = document.createElement('textarea');
+      var yPosition = window.pageYOffset || document.documentElement.scrollTop;
+      ta.style.top = yPosition + 'px'; // Prevent page scroll
+      ta.style.position = 'absolute';
+      ta.style.opacity = '0';
+      ta.readOnly = true;
+      ta.value = code;
+      document.body.appendChild(ta);
+      ta.select();
+      ta.setSelectionRange(0, code.length);
+      ta.readOnly = false;
+      var result = document.execCommand('copy');
+      
+        if (result) $(this).text('复制成功');
+        else $(this).text('复制失败');
+      
+      ta.blur(); // For iOS
+      $(this).blur();
+    })).on('mouseleave', function(e) {
+      var $b = $(this).find('.copy-btn');
+      setTimeout(function() {
+        $b.text('复制');
+      }, 300);
+    }).append(e);
+  })
+</script><!-- hexo-inject:begin --><!-- Begin: Injected MathJax -->
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({"tex2jax":{"inlineMath":[["$","$"],["\\(","\\)"]],"skipTags":["script","noscript","style","textarea","pre","code"],"processEscapes":true},"TeX":{"equationNumbers":{"autoNumber":"AMS"}}});
+</script>
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for(i=0; i < all.length; i += 1) {
+      all[i].SourceElement().parentNode.className += ' has-jax';
+    }
+  });
+</script>
+
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js">
+</script>
+<!-- End: Injected MathJax -->
+<!-- hexo-inject:end -->
+
+
+  
+
+  
+
+</body>
+</html>
