@@ -1,6 +1,451 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title>第二章学习笔记</title>
+    <url>/2020/09/30/%E7%AC%AC%E4%BA%8C%E7%AB%A0%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/</url>
+    <content><![CDATA[<center><b>本章主要讲述了c++变量声明,以及各种修饰符的作用和技巧</b></center>
+
+<a id="more"></a>
+<h2 id="0x00-变量初始化和赋值"><a href="#0x00-变量初始化和赋值" class="headerlink" title="0x00. 变量初始化和赋值"></a>0x00. 变量初始化和赋值</h2><p><strong>初始化指变量在创建时给它赋予一个初始值，赋值是将当前对象的值擦除掉,而以一个新值来代替.  </strong></p>
+<pre><code class="lang-c++">int var1 = 1;  // 这是初始化。
+
+int var2;
+var2 = 3;       // 这是赋值。
+</code></pre>
+<h3 id="0-1-列表初始化"><a href="#0-1-列表初始化" class="headerlink" title="0.1 列表初始化"></a>0.1 列表初始化</h3><p>下面四条语句都可以定义int类型的units_sold的变量并初始化为0.</p>
+<pre><code class="lang-c++">int units_sold = 0;
+int units_sold = {0};
+int units_sold{0};
+int units_sold(0);s
+</code></pre>
+<pre><code class="lang-c++">long double ld = 3.1415926536;
+int a(ld), b = {ld};   // 错误： 转换未执行，因为存在丢失信息的危险。
+int c(ld), d = ld;        // 正确：转换执行，且确实丢失了部分值。
+</code></pre>
+<h3 id="0-2-默认初始化"><a href="#0-2-默认初始化" class="headerlink" title="0.2 默认初始化"></a>0.2 默认初始化</h3><p>如果定义变量时没有指定初值，则变量被默认初始化( default initialized), 此时变量被赋予了“默认值”。<strong>默认值到底是什么由变量类型决定，同时定义变量的位置也会对此有影响</strong>。</p>
+<p>如果是内置类型的变量未被显式初始化，它的值由定义的位置决定。定义于任何函数体之外的变量被初始化为0。一种例外情况是，定义在函数体内部的内置类型变量将不被初始化(uninitialized)。一个未被初始化的内置类型变量的值是未定义的，如果试图拷贝或以其他形式访问此类值将引发错误。</p>
+<p><strong>每个类各自决定其初始化对象的方式。而且，是否允许不经初始化就定义对象也由类自己决定。如果类允许这种行为，它将决定对象的初始值到底是什么。</strong></p>
+<pre><code class="lang-c++">class T1{ int number; };
+
+class T2
+{
+    public:
+        int number;
+        T2()
+        {};
+};
+
+int var1; // 静态非类，进行两阶段初始化：
+         // 1) 零初始化将 n 初始化为零
+         // 2) 默认初始化不做任何事，令 n 保留为零
+
+int main()
+{
+    int var2;               // 其值不确定，属于未定义行为
+    int var3 = var2;        //  未定义行为
+
+    std::string str1;       // 调用string的默认构造函数，值为&quot;&quot;
+    std::string strA[2];    // 每个元素都默认初始化为&quot;&quot;
+    // int &amp;r;              // error, 引用必须初始化
+    // const T1 t1;         // error ,T1只有隐式默认构造函数
+    T1 t1;                  // 调用隐式默认构造函数
+    const T2 t2;            // 调用用户提供的默认构造函数
+
+    return 0;
+}
+</code></pre>
+<h2 id="0x01-声明和定义"><a href="#0x01-声明和定义" class="headerlink" title="0x01. 声明和定义"></a>0x01. 声明和定义</h2><p><strong>声明: 使得名字被程序所知道,一个文件如果想使用别处定义的名字则必须包含那个对那个名字的声明。</strong></p>
+<p><strong>定义: 负责创建和名字关联的实体</strong></p>
+<p>声明一个变量而非定义它,就在变量名前添加关键字extern,而且不要显示化的初始化变量。</p>
+<pre><code class="lang-c++">extern int i;                    // 声明i但没定义i
+int j;                           //声明并定义j
+extern double pi = 3.1416;      // 定义pi
+</code></pre>
+<p><strong>变量只能被定义一次,但是可以被多次声明。</strong>  </p>
+<h2 id="0x02-字面值常量"><a href="#0x02-字面值常量" class="headerlink" title="0x02. 字面值常量"></a>0x02. 字面值常量</h2><h3 id="2-1-字面值介绍"><a href="#2-1-字面值介绍" class="headerlink" title="2.1 字面值介绍"></a>2.1 字面值介绍</h3><p>一个形如42的值被称为字面值常量。字面值是指只能通过它的值来称呼它，没有别名。</p>
+<p>类似的字符字面值和字符串字面值，‘a’, “hello world!”</p>
+<h3 id="2-2-指定字面值的类型"><a href="#2-2-指定字面值的类型" class="headerlink" title="2.2 指定字面值的类型"></a>2.2 指定字面值的类型</h3><pre><code class="lang-c++">    auto char_1 = L&#39;a&#39;;
+    auto string_1 = u8&quot;hi!&quot;;
+    auto ulonglong_1 = 42ULL;
+    auto float_1 = 1E-3F;
+    auto ldouble_1 = 3.14159L;
+</code></pre>
+<p><img src="https://cdn.mathpix.com/snip/images/MI-2K7rAaDg2cTqzcTM8gdkXaj5RNfZ-3v6VxH66hZU.original.fullsize.png"></p>
+<p>布尔类型的字面值是true 和 false. 而指针类型的字面值是<strong>nullptr</strong></p>
+<h3 id="2-3-练习"><a href="#2-3-练习" class="headerlink" title="2.3 练习"></a>2.3 练习</h3><p><img src="https://cdn.mathpix.com/snip/images/lSfilGRj7na2imGs4iAxUIA7l4ZFRl5gJkwJ5erRBJ4.original.fullsize.png" alt></p>
+<h4 id="2-3-1"><a href="#2-3-1" class="headerlink" title="2.3.1"></a>2.3.1</h4><pre><code>(a)组的数据类型分别是 char, wchar_t,  const char*, const wchar_t *。
+
+(b)组的数据类型分别是 int, unsigned int, long, unsigned long, 八进制的10, 十六进制的12。
+
+(c)组的数据类型:第一个却决于你所声明变量的类型，若是依靠编译器自动推导,类型是double.
+
+​    后面两个分别为float, long double.
+
+(d) 组的数据类型:int, unsigned int , 第三个为float或double，double。
+</code></pre><h4 id="2-3-2"><a href="#2-3-2" class="headerlink" title="2.3.2"></a>2.3.2</h4><pre><code>有区别，上面一组定义的字面值为十进制，下面一组定义的字面值为八进制。
+</code></pre><h4 id="2-3-3"><a href="#2-3-3" class="headerlink" title="2.3.3"></a>2.3.3</h4><pre><code>1024F 存在语法错误，编译不通过。
+
+\145 值为&#39;e&#39;,  \012值为 &#39;\n&#39;
+
+3.14e1L为long double.
+</code></pre><h2 id="0x03-复合类型"><a href="#0x03-复合类型" class="headerlink" title="0x03. 复合类型"></a>0x03. 复合类型</h2><p><strong>复合类型</strong>是指基于其他类型定义的类型，c++语言有几种复合类型， 本章将介绍其中的两种：引用和指针。 </p>
+<p>与我们已经掌握的变量声明相比，定义复合类型的变量要复杂很多。一条简单的声明语句由一个数据类型和紧随其后的一个变量名列表组成。</p>
+<p>其实更通用的描述是，一条声明语句由一个<strong>基本数据类型</strong>（basetype）和紧随其后的一个<strong>声明符</strong> （declarator）列表组成。每个声明符命名了一个变量并指定该变量为与基本数据类型有关 的某种类型。 目前为止，我们所接触的声明语句中，声明符其实就是变量，此时变量的类型也就是声明的基本数据类型。其实还可能有更复杂的声明符，它基于基本数据类型得到更复杂 的类型，并把它指定给变量．</p>
+<h3 id="3-1-引用"><a href="#3-1-引用" class="headerlink" title="3.1 引用"></a>3.1 引用</h3><p>引用分为<strong>左值引用</strong>和<strong>右值引用(c++11引入)</strong>通常在c++的引用指代的是左值引用。</p>
+<p>1)<strong>左值引用声明符</strong>：声明 type &D; 将 <code>D</code> 声明为到 <em>声明说明符序列</em> 所确定的类型 <strong>type</strong> 的左值引用。</p>
+<p>2)<strong>右值引用声明符</strong>：声明 S&amp;&amp; D; 将 <code>D</code> 声明为到 <em>声明说明符序列</em> 所确定的类型 <code>S</code> 的<em>右值引用</em>。</p>
+<p>这里主要介绍左值引用。</p>
+<h4 id="3-1-1-引用必须初始化"><a href="#3-1-1-引用必须初始化" class="headerlink" title="3.1.1 引用必须初始化"></a>3.1.1 引用必须初始化</h4><pre><code class="lang-c++">int ival = 1024;
+int &amp;refVal = ival;        // refVal指向ival, ival的另外一个名字。
+int refVal2;            // error, 引用必须初始化。
+</code></pre>
+<h4 id="3-1-2-引用即别名"><a href="#3-1-2-引用即别名" class="headerlink" title="3.1.2 引用即别名"></a>3.1.2 引用即别名</h4><p>引用并非是一个对象，它只是一个已经存在的对象所起的另外一个名字。也就是说，当定义一个对象的时候，对引用所做的操作都是在与之绑定的对象上所进行的。</p>
+<p>也因为引用不是一个对象，所以不能建立引用的引用， 也不存在引用的数组，不存在指向引用的指针, 不存在void的引用。</p>
+<pre><code class="lang-c++">int&amp; a[3]; // 错误
+int&amp;* p;   // 错误
+int&amp; &amp;r;   // 错误
+</code></pre>
+<h4 id="3-1-3-引用可以怎样被定义"><a href="#3-1-3-引用可以怎样被定义" class="headerlink" title="3.1.3 引用可以怎样被定义"></a>3.1.3 引用可以怎样被定义</h4><p><strong>引用必须被初始化为指代一个有效的对象或函数。</strong></p>
+<pre><code class="lang-c++">int &amp;refVal = 10;   // error, 引用类型初始值必须为对象。
+
+double val1 = 3.1415926;
+int &amp;refVal2 = val1; // error, 引用类型必须与绑定的类型严格匹配
+</code></pre>
+<p><strong>当函数的返回值是左值引用时，函数调用表达式成为左值表达式。</strong></p>
+<pre><code class="lang-c++">#include &lt;iostream&gt;
+#include &lt;string&gt;
+
+char&amp; char_number(std::string&amp; s, std::size_t n) {
+    return s.at(n); // string::at() 返回 char 的引用
+}
+
+int main() {
+    std::string str = &quot;Test&quot;;
+    char_number(str, 1) = &#39;a&#39;; // 函数调用是左值，可被赋值
+    std::cout &lt;&lt; str &lt;&lt; &#39;\n&#39;;    // &gt;&gt; Tast
+}
+</code></pre>
+<h4 id="3-1-4-练习"><a href="#3-1-4-练习" class="headerlink" title="3.1.4 练习"></a>3.1.4 练习</h4><p><img src="https://cdn.mathpix.com/snip/images/7ysUDJtcvu3EfNBTD59Dyz52LN3kFuPYa80xjNd0teo.original.fullsize.png" alt></p>
+<h5 id="3-1-4-1"><a href="#3-1-4-1" class="headerlink" title="3.1.4.1"></a>3.1.4.1</h5><pre><code>(b)不合法，引用初始化必须为有效对象或函数表达式。
+
+(d)不合法，引用必须初始化。
+</code></pre><h5 id="3-1-4-2"><a href="#3-1-4-2" class="headerlink" title="3.1.4.2"></a>3.1.4.2</h5><pre><code>(a)合法，改变变量b的值。
+
+(b)不合法，类型不匹配。
+
+(c) (d)合法，改变i的值。
+</code></pre><h3 id="3-2-指针"><a href="#3-2-指针" class="headerlink" title="3.2 指针"></a>3.2 指针</h3><p>指针（pointer）是“指向(point to)”另外一种类型的复合类型。与引用类似，指针也实现了对其他对象的间接访问。然向指针与引用相比又有很多不同点．<strong>其一，指针本身就是一个对象，允许对指针献值和拷贝，而且在指针的生命周期内它可以先后指向几个不同的对象</strong>．<strong>其二，指针无须在定义时赋初值，和其他内置类型一样，在块作用域内定义的指针如果没有被初始化，也将拥有一个不确定的值</strong>。</p>
+<h4 id="3-2-1-获取对象的值"><a href="#3-2-1-获取对象的值" class="headerlink" title="3.2.1 获取对象的值"></a>3.2.1 获取对象的值</h4><p>指针存放某个对象的地址，想要获取该地址，需要使用取地址符&amp;。</p>
+<h4 id="3-2-2-指针值约定"><a href="#3-2-2-指针值约定" class="headerlink" title="3.2.2 指针值约定"></a>3.2.2 指针值约定</h4><ol>
+<li>指向一个对象。</li>
+<li>指向紧邻对象所占空间的下一个对象。</li>
+<li>空指针。</li>
+<li>无效指针，也就是上述情况的其他值。</li>
+</ol>
+<h4 id="3-2-3-void-指针"><a href="#3-2-3-void-指针" class="headerlink" title="3.2.3 void* 指针"></a>3.2.3 void* 指针</h4><p>void<em> 是一种特殊的指针类型，可用于存放任意对象的地址。一个void</em> 指针存放一个地址，但是无法确定是什么类型的对象。</p>
+<h4 id="3-2-4-练习"><a href="#3-2-4-练习" class="headerlink" title="3.2.4 练习"></a>3.2.4 练习</h4><p><img src="https://cdn.mathpix.com/snip/images/C5myQv2_1A50RkbvoRKauTQDn6-mZdIo-DF0dPWR-bI.original.fullsize.png" alt></p>
+<pre><code>19题:
+    见下面的3.3
+
+20题:
+    i = i^2;
+
+21题：
+​    (a)中类型不匹配，指针类型必须与所指对象的类型严格匹配。
+​    (b)非法，没有取地址符号&amp;。
+​    (c)正确。
+
+22题：
+       if(p) // ... 判断p是不是一个空指针。
+​    if(*p)  是将p指向的内存区域所存放的内容解析为布尔表达式。
+
+23题：
+​    给定一个指针，如果该指针没有被初始化，那么指针的值是一个不确定的值，这时使用指针是十分危险的。所以给定一个指针要知它所指的值是否合法，首先要清楚指针是否合法。
+
+24题：
+​    根据定义，void *指针是一种特殊的指针类型，可用于存放任意对象的地址，所以合法。而其他类型的指针必须与所指对象的类型严格匹配。
+</code></pre><h3 id="3-3-指针和引用的区别"><a href="#3-3-指针和引用的区别" class="headerlink" title="3.3 指针和引用的区别"></a>3.3 指针和引用的区别</h3><ol>
+<li>引用不是一个对象，引用只是一个对象的别名，而指针是一个对象。</li>
+<li>引用必须初始化，且绑定了对象就能在更改，而指针不需要在定义的时候赋初值，可以重新赋值指向不同的对象。</li>
+</ol>
+<h3 id="3-4-复合类型的声明"><a href="#3-4-复合类型的声明" class="headerlink" title="3.4 复合类型的声明"></a>3.4 复合类型的声明</h3><p><strong>变量的定义包括一个基本数据类型和一组声明符.</strong></p>
+<h4 id="3-4-1-指向指针的指针"><a href="#3-4-1-指向指针的指针" class="headerlink" title="3.4.1 指向指针的指针"></a>3.4.1 指向指针的指针</h4><pre><code class="lang-c++">int iVal = 1024;
+int *pi = &amp;iVal; 
+int **ppi = &amp;pi;  // 指向指针的指针,*个数可以区分指针的级别. ***代表指向指针的指针的指针.
+</code></pre>
+<h4 id="3-4-2-指向指针的引用"><a href="#3-4-2-指向指针的引用" class="headerlink" title="3.4.2 指向指针的引用."></a>3.4.2 指向指针的引用.</h4><p>因为引用不是一个对象,所以不存在指向引用的指针。但是指针是一个对象,所以就存在指向指针的引用.</p>
+<pre><code class="lang-c++">int i = 42;
+int *p;            // p是一个int类型指针
+int *&amp;r = p;    // r是指针p的引用.
+
+r = &amp;i;
+*r = 0;            // 改变了i的值.
+</code></pre>
+<p>当多种声明符复合在一起<strong>(或一条比较复杂的的指针或引用语句)</strong>,从右往左阅读可以帮助你理解它的真实含义.</p>
+<h4 id="3-4-3-练习"><a href="#3-4-3-练习" class="headerlink" title="3.4.3 练习"></a>3.4.3 练习</h4><h5 id="3-4-3-1-说明下列变量的类型和值"><a href="#3-4-3-1-说明下列变量的类型和值" class="headerlink" title="3.4.3.1 说明下列变量的类型和值."></a>3.4.3.1 说明下列变量的类型和值.</h5><p><strong>(a) int <em>ip, i, &amp;r = i;   (b)int i, </em>ip = 0; (c) int *ip, ip2;</strong></p>
+<pre><code>(a) ip是一个指向int类型指针, i 是int类型变量, r是i的引用.
+
+(b) i是int 类型变量, ip int类型的空指针.
+
+(c) ip 指向一个int类型的指针, ip2是一个int类型变量.
+</code></pre><h2 id="0x04-const限定符"><a href="#0x04-const限定符" class="headerlink" title="0x04. const限定符"></a>0x04. const限定符</h2><h3 id="4-0-相关概念"><a href="#4-0-相关概念" class="headerlink" title="4.0 相关概念"></a>4.0 相关概念</h3><p>const对象一旦创建之后其值就不能再改变,所以const对象必须初始化.</p>
+<pre><code class="lang-c++">const int i = getSize();    // 运行时初始化
+const int j = 42;            // 编译时初始化.
+const int k;                 // error,未初始化
+</code></pre>
+<p>指向常量的指针和应用都是自以为是,就是不能通过本身去改变指向对象的值。</p>
+<p>但是如果利用一个对象曲初始化另一个对象,则它们是不是const都无关紧要.</p>
+<pre><code class="lang-c++">int i = 42;
+const int ci = i;
+int j = ci;
+</code></pre>
+<p>且默认情况下,const对象仅在文件内有效,如果要在多个文件之间共享const变量,必须在变量定义之前添加extern关键字.</p>
+<h4 id="4-0-1-顶层const-底层const"><a href="#4-0-1-顶层const-底层const" class="headerlink" title="4.0.1 顶层const, 底层const"></a>4.0.1 顶层const, 底层const</h4><p><strong>顶层const : 表示本身是一个常量</strong></p>
+<p><strong>底层const : 表示指向的对象是一个常量</strong></p>
+<h4 id="4-0-2-类型转换"><a href="#4-0-2-类型转换" class="headerlink" title="4.0.2 类型转换"></a>4.0.2 类型转换</h4><p>前面学到，如果我们想把引用或指针绑定到一个对象上，则引用或指针的类型必须与对象的类型是一致的，但是存在两个例外：</p>
+<ol>
+<li><strong>初始化常量引用的时候允许用任意表达式作为初始值，只要表达式的结果能转换成引用的类型即可。</strong>(p144)</li>
+<li><strong>可以将基类的指针或引用绑定在派生类对象上。</strong>（p534)</li>
+</ol>
+<h4 id="4-0-3-练习"><a href="#4-0-3-练习" class="headerlink" title="4.0.3 练习"></a>4.0.3 练习</h4><p>下面哪些句子是合法?如果有不合法的句子,请说明为什么?</p>
+<p>(a) const int buf;       (b) int cnt = 0;   (C) const int sz = cnt;    (d)++cnt; ++sz;</p>
+<pre><code>a)不合法,const对象必须初始化
+b)合法
+c)合法,初始化对象,无关const
+d)cnt可以自增, sz是一个顶层const,不能自增.
+</code></pre><h3 id="4-1-const-和-指针"><a href="#4-1-const-和-指针" class="headerlink" title="4.1 const 和 指针"></a>4.1 const 和 指针</h3><h4 id="4-1-1-指向常量的指针"><a href="#4-1-1-指向常量的指针" class="headerlink" title="4.1.1 指向常量的指针"></a>4.1.1 指向常量的指针</h4><p>与引用一样，也可以令指针指向常量或非常量(类似于常量引用)，称为<strong>指向常量的指针</strong>。其不能改变其所指对象的值。要想存放常量对象的地址，只能使用指向常量的指针。</p>
+<pre><code class="lang-c++">const double pi = 3.14;            // 常量pi， 它的值不能改变。                        
+double *ptr = &amp;pi;            // 不能使用一个非常量指针指向一个常量。
+const double *cptr = &amp;pi;    // true
+*cptr = 42;                    // 错误， 不能给*cptr赋值
+</code></pre>
+<p>指针类型必须与所指对象的类型保持一致，但是有两个例外。第一个例外情况是允许令一个指向常量的指针指向一个非常量对象。</p>
+<pre><code class="lang-c++">double pi = 3.1415;
+const double *cptr = &amp;pi;
+</code></pre>
+<h4 id="4-1-2-常量指针"><a href="#4-1-2-常量指针" class="headerlink" title="4.1.2 常量指针"></a>4.1.2 常量指针</h4><p>指针是对象，因此像其他对象类型一样，允许把指针本身定为常量。<strong>常量指针</strong>必须初始化，一旦初始化完成，它的值就不能再改变了。</p>
+<pre><code class="lang-c++">int errNumber = 0;
+int *const curErr = &amp;errNumber;        //curErr是一个常量指针。
+const double pi = 3.14159;
+const double *const pip = &amp;pi;        //pip是一个指向常量对象的常量指针
+</code></pre>
+<p>从第二条声明我们可以看到，离curErr最近的的符号是<strong>const</strong>,意味着curErr本身是一个常量对象，而对象的类型由声明符其余部分确定，声明符下一个符号是*，意思是curErr是一个常量指针。</p>
+<h4 id="4-1-3-练习"><a href="#4-1-3-练习" class="headerlink" title="4.1.3 练习"></a>4.1.3 练习</h4><p><img src="https://cdn.mathpix.com/snip/images/FG2pazGL_8m4c6efRsU8qZJJbMWB6uqIcKJGrkuW2k0.original.fullsize.png" alt></p>
+<pre><code>题27：
+    (a)不合法，非常量引用需要用对象初始化，不能用字面值初始化。
+    (b)合法
+    (c)合法，常量引用可以使用字面值初始化。
+    (d)合法
+    (e)合法
+    (f)不合法，引用必须初始化且引用不能使用顶层const,因为引用不是对象。
+    (g)合法。
+题28：
+    (a)定义一个int类型的变量，和一个指向int的常量指针cp.不合法，const指针必须初始化。
+    (b)定义一个指向int的指针p1和常量指针p2.不合法，const指针必须初始化。
+    (c)ic未初始化，不合法。
+    (d)const指针必须初始化，不合法。
+    (e)合法，指向常量的指针不必初始化。
+题29：
+    (a)合法，常量赋值给普通变量
+    (b)不合法，p3是指向常量的指针不能赋值给普通指针。
+    (c)不合法，普通指针不能指向常量。
+    (d)合法。p3是指向常量的指针。
+    (e)合法。普通指针可以初始化常量指针。
+    (f)合法。
+</code></pre><h3 id="4-2-const引用"><a href="#4-2-const引用" class="headerlink" title="4.2 const引用"></a>4.2 const引用</h3><p>将引用绑定在const对象上,就像绑定在其他对象上一样，称为<strong>对常量的引用</strong>。与普通引用相比，对常量的引用不能用作修改它所绑定的对象。</p>
+<pre><code class="lang-c++">const int ci = 1024;
+const int &amp;ri = ci;        // true, 引用及其对应的对象都是常量。
+
+ri = 42;     // error,ri是对常量的引用。
+int &amp;r2 = ci;    // error, 试图用一个非常量的引用指向一个常量的对象。
+</code></pre>
+<p>c++并不允许随意改变引用所绑定的对象，所以从意义上理解所有的引用又算是常量，所以对常量的引用常被称为常量引用。此外，引用的对象是常量还是非常量可以决定其所能参与的操作，都无论如何都不会影响引用和对象的绑定关系本身。</p>
+<h4 id="4-2-1-初始化和对const的引用"><a href="#4-2-1-初始化和对const的引用" class="headerlink" title="4.2.1 初始化和对const的引用"></a>4.2.1 初始化和对const的引用</h4><pre><code class="lang-c++">const int var1 = 100;
+int var2 = 10;
+
+const int &amp;rv1 = var2;        
+int &amp;rv2 = var2;
+const int &amp;rv3 = var1;
+
+rv1 = 100;    //error, 不可以通过常量引用修改var2的值.
+rv2 = 100;     //true。
+rv3 = 100; //error, 不能通过常量引用修改var3的值。
+</code></pre>
+<p>允许一个常量引用绑定非常量的对象，字面值，甚至是一个一般表达式。</p>
+<pre><code class="lang-c++">int i = 42;
+const int &amp;r1 = i;        // 非常量对象初始化常量引用。
+const int &amp;r2 = 42;        // 字面值.....
+const int &amp;r3 = r1 * 2;    // 表达式
+int &amp;r4 = r1 * 2;        // error, r4是一个非常量引用。
+</code></pre>
+<p>如何去理解这种例外情况的原因呢？我们看看当一个常量引用被绑定到另外一种类型会发生什么：</p>
+<pre><code class="lang-c++">double dVal = 3.14;
+const int &amp;ri = dval;
+
+// 上面的代码编译器会转换成以下代码
+const int temp = dval;    // 生成一个临时的整型对象。
+const int &amp;ri = temp;
+</code></pre>
+<p>在这种情况下，ri绑定了一个临时量对象。所谓<strong>临时量对象</strong>就是当编译器需要一个空间来暂存表达式的求值结果时临时创建的一个未命名的对象。所以想象以下，如果ri不是常量引用时，如果执行了类似上面的初始化过程将带来一个极其错误的后果。当ri是一个非常量引用时，可以允许对ri进行赋值，这样就会改变ri所引用对象的值。既然通过ri来引用dval,当然是想通过ri来改变dval的值，那这样写通过对ri进行赋值，本质上是改变临时对象的值而没有达到改变dval的值，所以在c++中将ri绑定在一个临时对象上的行为视为非法。</p>
+<h4 id="4-2-2-对const引用可能引用一个并非const对象"><a href="#4-2-2-对const引用可能引用一个并非const对象" class="headerlink" title="4.2.2 对const引用可能引用一个并非const对象"></a>4.2.2 对const引用可能引用一个并非const对象</h4><p>我们必须知道：<strong>常量引用仅对引用可参与的操作做出了限定， 对于引用的对象本身是不是一个常量未作限定。因为对象也可能是一个非常量。</strong></p>
+<pre><code class="lang-c++">int i = 42;
+int &amp;r1 = i;
+const int &amp;r2 = i;    // 常量引用绑定一个非常量对象，但不能通过r2去修改i的值。
+r1 = 0;        // r1并非常量，i的值修改为0。
+r2 = 0;        // error,r2是常量引用，不能通过r2去修改i的值。
+</code></pre>
+<p>如上面的代码所示，常量引用r2绑定了一个非常量对象，不能通过r2去修改i的值，但是可以通过其他的途径去修改i的值。</p>
+<blockquote>
+<p>所谓的常量指针或引用，只不过是指针或引用“自以为是”罢了，它们觉得自己指向了常量，所以很自觉地不去改变所指向对象的值。                       ———- 《c++ primer 5th》</p>
+</blockquote>
+<h2 id="0x05-constexpr和常量表达式"><a href="#0x05-constexpr和常量表达式" class="headerlink" title="0x05. constexpr和常量表达式"></a>0x05. constexpr和常量表达式</h2><h3 id="5-1-常量表达式"><a href="#5-1-常量表达式" class="headerlink" title="5.1 常量表达式"></a>5.1 常量表达式</h3><blockquote>
+<p> <strong>常量表达式是指不会改变并且在编译过程就能得到计算结果的表达式。</strong></p>
+</blockquote>
+<p>很显然，字面值属于常量表达式。</p>
+<p>一个对象(或表达式)是不是常量表达式是由它的数据类型和初始值共同决定。</p>
+<pre><code class="lang-c++">const int buf_size = 20;        // 常量表达式
+const int limit = buf_size + 1  // 常量表达式
+int size = 10;                  // 不是常量表达式
+</code></pre>
+<h3 id="5-2-constexpr变量"><a href="#5-2-constexpr变量" class="headerlink" title="5.2 constexpr变量"></a>5.2 constexpr变量</h3><p>c++11新标准规定：<strong>允许将变量声明为constexpr以便由编译器来验证变量的值是否为常量表达式。</strong></p>
+<p>声明为constexpr变量一定是一个常量,而且必须用常量表达式初始化。</p>
+<pre><code class="lang-c++">constexpr int mf = 20;
+constexpr int limit = mf + 1;
+constexpr int sz = size(); //size()是一个constexpr函数的时候才是一条正确声明语句。
+</code></pre>
+<h3 id="5-3-字面值类型"><a href="#5-3-字面值类型" class="headerlink" title="5.3 字面值类型"></a>5.3 字面值类型</h3><p>常量表达式的值需要在编译时就得到计算，因此对声明constexpr时用到的类型必须有所限制。因为这些类型一般比较简单，值也显血易见、容易得到，就把它们称为“<strong>字面值类型</strong>”（literaltype)。</p>
+<p>到目前为止接触过的数据类型中，算术类型、引用和指针都属羊字面值类型.尽管指针和引用都能定义成constexpr，但它们的初始值却受到严格限制。</p>
+<p>函数体内定义的变量一般来说并非存放在固定地址中，因此constexpr指针不能指向这样的变量。相反的，定义于所有函数体之外的对象其地址固定不变，能用来初始化constexpr指针．同样是在（第185页）中还将提到，允许函数定义一类有效范围超出函数本身的变量，这类变量和定义在函数体之外的变 量一样也有固定地址。因此，const-expr引用能绑定到这样的变量上，constexpr指 针也能指向这样的变量．</p>
+<h3 id="5-4-指针和constexpr"><a href="#5-4-指针和constexpr" class="headerlink" title="5.4 指针和constexpr"></a>5.4 指针和constexpr</h3><p>在constexpr声明中如果定义了一个指针，限定符constexpr仅对指针有效，与所指的对象无效。<strong>一个 constexpr指针的初始值心须是nullptr或者0，或者是存储于某个固定地址中的对象</strong>。</p>
+<pre><code class="lang-c++">const int *p = nullptr;            // p是一个指向整型常量的指针。
+constexpr int *q = nullptr;        // q是一个指向整数的常量指针。
+</code></pre>
+<p>p,q的类型相差很远，原因是constexpr将所定义的对象置为了顶层const.当然与其他常量指针类似，constexpr指针可以指向常量也可以指向一个非常量。</p>
+<pre><code class="lang-c++">constexpr int *np =  nullptr; // np是一个指向整数的常量指针。
+int j = 0;            
+constexpr int i = 42;        // i是常量，是固定地址。
+constexpr const int *p = &amp;i; // p是一个指向常量的常量指针。j不是局部变量不能用来初始化constexpr指针
+
+// i和j都必须定义在函数体之外
+constexpr const int *p = &amp;i;    // p是一个指向常量的常量指针。
+constexpr int *p1  = &amp;j;        // p1是常量指针，指向整数j
+</code></pre>
+<h2 id="0x06-类型别名"><a href="#0x06-类型别名" class="headerlink" title="0x06 类型别名"></a>0x06 类型别名</h2><h3 id="6-1-相关使用"><a href="#6-1-相关使用" class="headerlink" title="6.1 相关使用"></a>6.1 相关使用</h3><p>类型别名是一个名字，它是某种类型的同义词。使用类型别名有很多好处，它让复杂的类型名字变得简单名了，易于理解和使用。有两种方法可用于定义类型别名：</p>
+<p>第一种是传统方法使用关键字<strong>typedef</strong>，含有typedef的声明语句定义的不再是变量而是类型别名。</p>
+<p>第二种是新标准规定的新方法：使用<strong>别名声明</strong>来定义类型的别名。</p>
+<pre><code class="lang-c++">typedef double wages;         // wages是double的同义词。
+typedef wafes base, *p;     // base是douwble的同义词，p是double*的同义词
+
+using SI = Sales_item; //    SI是Sales_item的同义词。
+</code></pre>
+<p>类型别名和类型的名字等价，只要是类型的名字能出现的地方，就能使用类型别名。</p>
+<pre><code class="lang-c++">wages hourly, weekly;     // 等价double hourly,weekly;
+SI item;                // 等价月Sales_item;
+</code></pre>
+<h3 id="6-2-指针，常量和类型别名"><a href="#6-2-指针，常量和类型别名" class="headerlink" title="6.2 指针，常量和类型别名"></a>6.2 指针，常量和类型别名</h3><p>如果某个类型别名指代的是复合类型或常量，那么把它用到声明语句里就会产生意想<br>不到的后果，例如下面的声明语句用到了类型<strong>pstring</strong>，它实际上是类型<strong>char *</strong>的别名：</p>
+<pre><code class="lang-c++">typedef char* pstring;
+const pstring cstr = 0;//cstr是指向char的常量指针
+const pstring *ps;    //ps是一个指针，它的对象是指向char的常量指针
+</code></pre>
+<p>​    上述两条声明语句的基本数据类型都是<strong>const pstring</strong>，和过去一样，<strong>const是对给定类型的修饰。pstring实际上是指向char的指针，因此，const pstring就是指向char的常量指针，而非指向常量字符的指针。</strong></p>
+<blockquote>
+<p><strong>上面的这句话是理解这一要点的关键之处.</strong></p>
+</blockquote>
+<p>遇到一条使用了类型别名的声明语句时，人们往往会错误地尝试把类型别名替换成它本来的样子，以理解该语句的含义：</p>
+<pre><code class="lang-c++">const char *cstr = 0;    //是对const pstring cstr的错误理解
+</code></pre>
+<p>再强调一遍：这种理解是错误的．声明语句中用到<strong>pstring</strong>时，其基本数据类型是指针。可是用<strong>char*</strong>重写了声明语句后，数据类型就变成了<strong>char*</strong>,·成为了声明符的一部分。这样改写的结果是，<strong>const char</strong>成了基本数据类型。前后两种声明含义截然不同，前者声明了一个指向char的常量指针，改写后的形式则声明了一个指向<strong>const char</strong>的指针。</p>
+<p>谈谈我自己的想法:</p>
+<pre><code class="lang-c++">typedef char* pstring;
+const pstring cstr = 0;
+const pstring *ps;    //ps是一个指针，它的对象是指向char的常量指针
+
+/*
+    第一条语句:pstring直接是类型别名,数据类型就是指向char的指针.
+    第二条语句:const直接修饰给定类型,cstr就是指向char的常量指针.
+    第三条语句:ps本质上就是一个指针,前面声明符都是它的指向的类型,代表ps指向一个指向char的常量指针.
+*/
+</code></pre>
+<h2 id="0x07-auto"><a href="#0x07-auto" class="headerlink" title="0x07. auto"></a>0x07. auto</h2><h3 id="7-1-相关概念"><a href="#7-1-相关概念" class="headerlink" title="7.1 相关概念"></a>7.1 相关概念</h3><p> C++11新标准引入了auto类型说明符，用它就能让编译器替我们去分析表达式所属的类型。和原来那些只对应一种特定类型的说明符（比如double）不同，auto让编译器通 过初始值来推算变量的类型。显然，auto定义的变量必须有初始值： </p>
+<pre><code class="lang-c++">//由vall和va12相加的结长可以推断出item的类型 
+auto item = vall + va12;    //item初始化为vall和va12相加的结果
+</code></pre>
+<p>此处编译器将根据val1和val2相加的结果来推断item的类型。如果vall和va12 是类Sales_item的对象，则item的类型就是Salesitem: 如果这两个变量的类型是double,则item的类型就是double，以此类推。 使用auto也能在一条语句中声明多个变量。<strong>因为一条声明语句只能有一个基本数据类型，所以该语句中所有变量的初始基本数据类型都必须一样：</strong> </p>
+<pre><code class="lang-c++">auto i = 0, *p = &amp;i;    //true,i是整数,p是指向整数的指针.
+auto sz = 0, pi = 3.14; // error, sz和pi的类型不一致.
+</code></pre>
+<h3 id="7-2-复合类型-常量和auto"><a href="#7-2-复合类型-常量和auto" class="headerlink" title="7.2 复合类型,常量和auto"></a>7.2 复合类型,常量和auto</h3><p>编译器推断出来的auto类型有时候和初始值的类型并不完全一样，编译器会适当地 改变结果类型使其史符合初始化规则。 首先，正如我们所熟知的，使用引用其实是使用引用的对象，特别是当引用被用作初始值时，真正参与初始化的其实是引用对象的值．此时编译器以引用对象的类型作为auto 的类型：</p>
+<pre><code class="lang-c++">int i = 0, &amp;r = i;
+auto a = r;        // 采用引用r初始化a,实质上是采用i的值取初始化a
+</code></pre>
+<p>其次,auto <strong>一般忽略掉顶层const，保留底层const</strong>。</p>
+<pre><code class="lang-c++">int i = 0;
+const int ci = i, &amp;cr = ci;    // cr是一个指向整数常量的引用,是底层const, ci是整数常量,是顶层const
+auto b = ci;    // b是一个整数 ci顶层const特性被忽略掉
+auto a = cr;    // c是一个整数(cr是ci的引用,本质上用ci初始化)
+auto d = &amp;i;    // d是一个整形指针
+auto e = &amp;ci;   // e是一个指向常量整数的指针,对常量对象取地址底层const
+</code></pre>
+<p>如果你希望推断出的auto类型是一个顶层const,需要明确指出:</p>
+<pre><code class="lang-c++">const auto f = ci; // 这个时候f才有顶层const特性, f是const int
+</code></pre>
+<p>还可以将引用的类型设置为 <strong>auto</strong>,此时原来的初始化规则仍然适用:</p>
+<pre><code class="lang-c++">auto &amp;g = ci;    // ci是整数常量(顶层const),g是一个整型常量引用(底层const)
+auto &amp;h = 42;    // 错误,非常量引用不能绑定字面值
+const auto &amp;j = 42;    // 可以为常量引用绑定字面值.
+</code></pre>
+<p>要在一条语句中定义多个变量,切记，<strong>符号&amp;和*只从属于某个声明符，而非基本数据类型的一部分</strong>，因此初始值必须是同一种类型： </p>
+<pre><code class="lang-c++">auto k = ci, &amp;l = i;     //k是整数，l是整型引用(底层const)
+auto &amp;m = ci, *p = &amp;ci;    //m是对整型常量的引用(底层const)，p是指向整型常量的指针(底层const)
+
+// error, i的类型是int, 而&amp;ci的类型是const int
+auto &amp;n = i, *p2 = &amp;ci;        // n是整型引用, p2是指向整型常量的指针(忽略了顶层const).
+</code></pre>
+<h3 id="7-3-练习"><a href="#7-3-练习" class="headerlink" title="7.3 练习"></a>7.3 练习</h3><p><img src="https://cdn.mathpix.com/snip/images/QUp7uLPrwBsM4F_gJuESdQiJfxS209iB2k3QdWWy6Sk.original.fullsize.png"></p>
+<pre><code>题33:
+    a=42; // a 是 int,合法
+    b=42; // b 是一个 int,(ci的顶层const在拷贝时被忽略掉了)
+    c=42; // c 也是一个int
+    d=42; // d 是一个 int *,所以语句非法
+    e=42; // e 是一个 const int *, 所以语句非法
+    g=42; // g 是一个 const int 的引用，引用都是底层const，所以不能被赋值
+题35:
+    j是int, k是const int &amp;, p是const int *, j2是const int, k2是const int &amp;
+</code></pre><h2 id="0x08-decltype类型指示符"><a href="#0x08-decltype类型指示符" class="headerlink" title="0x08. decltype类型指示符"></a>0x08. decltype类型指示符</h2><h3 id="8-1-相关概念"><a href="#8-1-相关概念" class="headerlink" title="8.1 相关概念"></a>8.1 相关概念</h3><p>有时会遇到这种情况：希望从表达式的类型推断出要定义的变量的类型，但是不想用该表达式的值初始化变量。为了满是这一要求，C++目新标准引入了第二种类型说明符<strong>decltype</strong>,它的作用是选择并返回操作数的数据类型。在此过程中，编译器分析表达式并得到它的类型，却不实际计算表达式的值：</p>
+<pre><code class="lang-c++">decltype(function()) sum = x;
+</code></pre>
+<p><strong>编译器并不实际调用函数,而是使用当调用发生时f的返回值类型作为sum的类型</strong>。换句话说，编译器为sum指定的类型是什么呢？就是假如f被调用的话将会返回的那个类型。<br>decLtype处理顶层const和引用的方式与auto有些许不同。如果decltype使用的表达式是一个变量，则decltype返回该变量的类型（包括顶层const和引用在内）：</p>
+<pre><code class="lang-c++">const int ci = 0, &amp;cj = ci;
+decltype(ci) x = 0;    //x类型是const int 
+decltype(cj) y = x; // y类型是const int &amp;, y绑定到变量x.
+decltype(cj) z;        // 错误, z是const int &amp;, 必须初始化.
+</code></pre>
+<h3 id="8-2-decltype和引用"><a href="#8-2-decltype和引用" class="headerlink" title="8.2 decltype和引用"></a>8.2 decltype和引用</h3><p>如果decltype使用的表达式不是一个变量，则decltype返回表达式结果对应的类型。有些表达式将向decltype返回一个引用类型。一般来说当这种情况发生时，意咪着该表达式的结果对象能作为一条赋值语句的左值：</p>
+<pre><code class="lang-c++">//decltype的结果可以是引用类型
+int i = 42, *p = &amp;i, &amp;r = i;
+decltype(r + 0) b;        // 正确，加法的结果是int,因此b是一个(未初始化的)int.
+decltype(*p) c;            // 正确，c是int&amp;,必须初始化。
+</code></pre>
+<p>​        因为r是一个引用，因此<strong>decltype（r）</strong>的结果是引用类型。如果想让结果类型是r所指的类型，可以把r作为表达式的一部分，如<strong>r+0</strong>，显然这个表达式的结果将是一个具体值而非一个引用。</p>
+<p>另一方面，<strong>如果表达式的内容是解引用操作，则decltype将得到引用类型，正如我们所熟悉的那样，解引用指针可以得到指针所指的对象</strong>，而且还能给这个对象赋值，因此，<strong>decltype(*p)</strong>的结果类型就是int&amp;，而非int*.</p>
+<p>decltype和auto的另一处重要区别是，<strong>decltype的结果类型与表达式形式密切相关</strong>。有一种情况需要特别注意：对于decltype所用的表达式来说，如果变量名加上了一对括号，则得到的类型与小加括号时会有不同。如果decltype使用的是一个不加括号的变量。则得到的结果就是该变量的类型：如果给变量加上了一层或多层括号，编译器就会把它当成是一个表达式。变量是一种可以作为赋值语句左值的特殊表达式，所以这样的decltype就会得到引用类型。</p>
+<pre><code class="lang-c++">decltype((i)) d;     // 错误，d是int&amp;,必须初始化。
+decltype(i) e;        // 正确，e是一个未初始化的int.
+</code></pre>
+<ul>
+<li>decltype(( variable ))结果永远是引用</li>
+<li>decltype( variable ) 只有variable本身是引用才是引用。</li>
+</ul>
+]]></content>
+      <categories>
+        <category>Cpp Primer</category>
+      </categories>
+      <tags>
+        <tag>Cpp</tag>
+        <tag>Cpp学习笔记</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>第十六章学习笔记</title>
     <url>/2020/03/03/C++-Primer-%E7%AC%AC%E5%8D%81%E5%85%AD%E7%AB%A0%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/</url>
     <content><![CDATA[]]></content>
